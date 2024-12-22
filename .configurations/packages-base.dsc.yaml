@@ -12,7 +12,7 @@ properties:
         description: Verify minimum OS version
         allowPrerelease: true
       settings:
-        MinVersion: '10.0.26100'
+        MinVersion: "10.0.26100"
   resources:
     # Install packages
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -72,11 +72,11 @@ properties:
           Enabled: false
         ColorPicker:
           Enabled: true
-          ActivationShortcut: 'Win+Shift+C'
+          ActivationShortcut: "Win+Shift+C"
           ActivationAction: OpenColorPickerAndThenEditor
         CropAndLock:
           Enabled: true
-          ThumbnailHotkey: 'Win+Shift+T'
+          ThumbnailHotkey: "Win+Shift+T"
         EnvironmentVariables:
           Enabled: true
         FancyZones:
@@ -113,8 +113,8 @@ properties:
           DoNotActivateOnGameMode: true
           ToolbarPosition: top
           InputTime: 300
-          SelectedLang: German
-          ExcludedApps: ''
+          SelectedLang: "CUR,DE,IPA,SPECIAL"
+          ExcludedApps: ""
           ShowUnicodeDescription: true
           SortByUsageFrequency: false
           StartSelectionFromTheLeft: false
@@ -138,4 +138,4 @@ properties:
         GeneralSettings:
           Startup: true
       dependsOn:
-      - Microsoft.PowerToys
+        - Microsoft.PowerToys
