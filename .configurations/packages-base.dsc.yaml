@@ -64,6 +64,8 @@ properties:
         description: Configure Microsoft.PowerToys
         allowPrerelease: true
       settings:
+        AdvancedPaste:
+          Enabled: false
         AlwaysOnTop:
           Enabled: false
         Awake:
@@ -101,6 +103,8 @@ properties:
           Enabled: false
         MouseWithoutBorders:
           Enabled: false
+        NewPlus:
+          Enabled: false
         Peek:
           Enabled: false
         PowerAccent:
@@ -128,6 +132,8 @@ properties:
         ShortcutGuide:
           Enabled: false
         VideoConference:
+          Enabled: false
+        Workspaces:
           Enabled: false
         GeneralSettings:
           Startup: true
