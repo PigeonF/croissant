@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[misc]
+assume_yes = true
+ignore_failures = ["system"]
+cleanup = true
+
+[windows]
+self_rename = true

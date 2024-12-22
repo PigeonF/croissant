@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[sendemail]
+  smtpserver = smtp.gmail.com
+  smtpuser = fnoegip@gmail.com
+  smtpencryption = tls
+  smtpserverport = 587
+
+[user]
+  email = fnoegip@gmail.com
+  name = Jonas Fierlings
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+2wAQrbFDe18oFY2Mv6qsUcYWJZPAcsV+Xr4ZHzncL
+  useConfigOnly = true

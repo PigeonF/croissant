@@ -1,0 +1,151 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+properties:
+  configurationVersion: 0.2.0
+  assertions:
+    - resource: Microsoft.Windows.Developer/OsVersion
+      directives:
+        description: Verify minimum OS version
+        allowPrerelease: true
+      settings:
+        MinVersion: '10.0.26100'
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Alacritty.Alacritty
+        allowPrerelease: true
+      settings:
+        id: Alacritty.Alacritty
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Docker.DockerDesktop
+        allowPrerelease: true
+      settings:
+        id: Docker.DockerDesktop
+        source: winget
+     # TODO(PigeonF): Migrate to chocolatey
+     - resource: Microsoft.WinGet.DSC/WinGetPackage
+       directives:
+         description: Install eza-community.eza
+         allowPrerelease: true
+       settings:
+         id: eza-community.eza
+         source: winget
+    # TODO(PigeonF): Migrate to chocolatey
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install eza-community.eza
+        allowPrerelease: true
+      settings:
+        id: eza-community.eza
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install KDE.Kate
+        allowPrerelease: true
+      settings:
+        id: KDE.Kate
+        source: winget
+    # TODO(PigeonF): Migrate to chocolatey
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install martinvonz.jj
+        allowPrerelease: true
+      settings:
+        id: martinvonz.jj
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+         description: Install Meld.Meld
+         allowPrerelease: true
+       settings:
+         id: Meld.Meld
+         source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Microsoft.VisualStudio.2022.Community
+        allowPrerelease: true
+      settings:
+        id: Microsoft.VisualStudio.2022.Community
+        source: winget
+      id: Microsoft.VisualStudio.2022.Community
+    # TODO(PigeonF): Migrate to chocolatey
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install SuperCuber.dotter
+        allowPrerelease: true
+      settings:
+        id: SuperCuber.dotter
+        source: winget
+    - resource: Microsoft.VisualStudio.DSC/VSComponents
+      directives:
+        description: Install Microsoft.VisualStudio.2022.Community Workloads
+        allowPrerelease: true
+        securityContext: elevated
+      settings:
+        productId: Microsoft.VisualStudio.Product.Community
+        channelId: VisualStudio.17.Release
+        includeRecommended: true
+        vsConfigFile: '${WinGetConfigRoot}\.vsconfig'
+      dependsOn:
+        - Microsoft.VisualStudio.2022.Community
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for cargo
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: CARGO_HOME
+        ValueData: "%LOCALAPPDATA%\\cargo"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure CARGO_HOME
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set EDITOR environment variable
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: EDITOR
+        ValueData: "hx"
+        ValueType: String
+        Ensure: Present
+      id: Configure EDITOR
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for rustup
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: RUSTUP_HOME
+        ValueData: "%LOCALAPPDATA%\\rustup"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure RUSTUP_HOME
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for starship
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: STARSHIP_CONFIG
+        ValueData: "%APPDATA%\\starship.toml"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure STARSHIP_CONFIG
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set XDG_CONFIG_HOME environment variable
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: XDG_CONFIG_HOME
+        ValueData: "%APPDATA%"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure XDG_CONFIG_HOME

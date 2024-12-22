@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://aka.ms/configuration-dsc-schema/0.2
+
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+properties:
+  configurationVersion: 0.2.0
+  assertions:
+    - resource: Microsoft.Windows.Developer/OsVersion
+      directives:
+        description: Verify minimum OS version
+        allowPrerelease: true
+      settings:
+        MinVersion: '10.0.26100'
+  resources:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Brave.Brave
+        allowPrerelease: true
+      settings:
+        id: Brave.Brave
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install DigitalScholar.Zotero
+        allowPrerelease: true
+      settings:
+        id: DigitalScholar.Zotero
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install dotPDN.PaintDotNet
+        allowPrerelease: true
+      settings:
+        id: dotPDN.PaintDotNet
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Dropbox.Dropbox
+        allowPrerelease: true
+      settings:
+        id: Dropbox.Dropbox
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install flux.flux
+        allowPrerelease: true
+      settings:
+        id: flux.flux
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install SlackTechnologies.Slack
+        allowPrerelease: true
+      settings:
+        id: SlackTechnologies.Slack
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Spotify.Spotify
+        allowPrerelease: true
+      settings:
+        id: Spotify.Spotify
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install Zulip.Zulip
+        allowPrerelease: true
+      settings:
+        id: Zulip.Zulip
+        source: winget

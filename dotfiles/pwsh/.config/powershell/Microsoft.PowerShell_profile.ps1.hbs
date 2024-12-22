@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+{{#if (is_executable "eza")}}
+Set-Alias -Name ls -Value eza -Option AllScope
+
+function la {
+    eza -la @args
+}
+{{/if}}
+
+{{#if (is_executable "fd")}}
+function fda {
+    fd --hidden @args
+}
+
+function fdA {
+    fd --no-ignore --hidden @args
+}
+
+$FdCompletions = Get-ChildItem -Recurse '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\fd\tools\' -Include 'fd.ps1'
+if (($FdCompletions | Measure-Object).Count -ge 1) {
+    . (($FdCompletions | Sort-Object -Property FullName -Descending)[0].FullName)
+}
+{{/if}}
+
+{{#if (is_executable "jj")}}
+function jjj {
+    jj --ignore-working-copy @args
+}
+{{/if}}
+
+{{#if (is_executable "rg")}}
+function rga {
+    rg --hidden @args
+}
+
+function rgA {
+    rg --no-ignore --hidden @args
+}
+
+$RipgrepCompletions = Get-ChildItem -Recurse '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\ripgrep\tools\' -Include '_rg.ps1'
+if (($RipgrepCompletions | Measure-Object).Count -ge 1) {
+    . (($RipgrepCompletions | Sort-Object -Property FullName -Descending)[0].FullName)
+}
+{{/if}}
+
+{{#if (is_executable "starship")}}
+Invoke-Expression (& starship init powershell --print-full-init | Out-String)
+{{/if}}
+
+{{#if (is_executable "zoxide")}}
+Invoke-Expression (& zoxide init powershell | Out-String)
+$ZoxideCompletions = '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\zoxide\tools\completions\_zoxide.ps1'
+
+if (Test-Path -Path $ZoxideCompletions) {
+    . $ZoxideCompletions
+}
+{{/if}}
