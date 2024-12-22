@@ -20,3 +20,55 @@ properties:
         allowPrerelease: true
       settings:
         Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Enable long paths support
+        allowPrerelease: true
+      settings:
+        Key: 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+        ValueName: LongPathsEnabled
+        ValueData: 1
+        ValueType: DWord
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Containres
+        allowPrerelease: true
+      settings:
+        Name: Containers
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Hyper-V
+        allowPrerelease: true
+      settings:
+        Name: Microsoft-Hyper-V-All
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Virtual Machine Platform
+        allowPrerelease: true
+      settings:
+        Name: VirtualMachinePlatform
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Windows Hypervisor Platform
+        allowPrerelease: true
+      settings:
+        Name: HypervisorPlatform
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Windows Sandbox
+        allowPrerelease: true
+      settings:
+        Name: Containers-DisposableClientVM
+        Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
+      directives:
+        description: Enable Windows Subsystem for Linux
+        allowPrerelease: true
+      settings:
+        Name: Microsoft-Windows-Subsystem-Linux
+        Ensure: Present
