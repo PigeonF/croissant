@@ -28,6 +28,12 @@ properties:
         FileExtensions: Show
         HiddenFiles: Show
         ItemCheckBoxes: Hide
+    - resource: Microsoft.Windows.Developer/EnableDarkMode
+      directives:
+        description: Enable Dark Mode
+        allowPrerelease: true
+      settings:
+        Ensure: Present
     - resource: xPSDesiredStateConfiguration/xRegistry
       directives:
         description: Enable long paths support
