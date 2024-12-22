@@ -86,7 +86,7 @@ function Initialize-WinGet {
 function Invoke-ChocolateyInstalls {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     param(
-        [Parameter(HelpMessage = "Path to .configurations directory")]
+        [Parameter(HelpMessage = "Path to .configurations directory", Mandatory=$true)]
         [string]$Directory,
         [Parameter(HelpMessage = "Package files to call `choco install` on")]
         [string[]]$Packages = @(
@@ -109,7 +109,7 @@ function Invoke-ChocolateyInstalls {
 function Invoke-WinGetConfigurations {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     param(
-        [Parameter(HelpMessage = "Path to .configurations directory")]
+        [Parameter(HelpMessage = "Path to .configurations directory", Mandatory=$true)]
         [string]$Directory,
         [Parameter(HelpMessage = "Configuration files to call `winget configure` on")]
         [string[]]$Configurations = @(
@@ -134,7 +134,7 @@ function Invoke-WinGetConfigurations {
 function Bootstrap {
     [CmdletBinding(SupportsShouldProcess)]
     param(
-        [Parameter(HelpMessage = "Path to the repository root")]
+        [Parameter(HelpMessage = "Path to the repository root", Mandatory=$true)]
         [string]$RepositoryRoot
     )
 
