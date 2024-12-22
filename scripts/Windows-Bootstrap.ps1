@@ -71,14 +71,48 @@ function Initialize-WinGet {
     }
 }
 
+function Invoke-WinGetConfigurations {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    param(
+        [Parameter(HelpMessage = "Path .configurations directory")]
+        [string]$Directory,
+        [Parameter(HelpMessage = "Configuration files to call `winget configure` on")]
+        [string[]]$Configurations = @(
+            "settings.dsc.yaml"
+        )
+    )
+
+    process {
+        foreach ($Configuration in $Configurations) {
+            $WinGetConfiguration = Join-Path $Directory $Configuration
+            if ($PSCmdlet.ShouldProcess($WinGetConfiguration, "winget configure")) {
+                Write-Output "Applying WinGet Configuration $WinGetConfiguration"
+                winget configure --disable-interactivity --ignore-warnings -f $WinGetConfiguration
+            }
+        }
+    }
+}
+
 function Bootstrap {
     [CmdletBinding(SupportsShouldProcess)]
-    param()
+    param(
+        [Parameter(HelpMessage = "Path to the repository root")]
+        [string]$RepositoryRoot
+    )
+
+    begin {
+        $ConfigurationsDir = Join-Path $RepositoryRoot ".configurations"
+    }
 
     process {
         if ($PSCmdlet.ShouldProcess("WinGet", "Initialize")) {
             Write-Output "Initializing WinGet"
             Initialize-WinGet
+        }
+
+        if ($PSCmdlet.ShouldProcess("WinGet Configurations", "Apply")) {
+            Write-Output "Applying WinGet Configurations"
+            Invoke-WinGetConfigurations -Directory $ConfigurationsDir
         }
     }
 }
@@ -88,7 +122,8 @@ If (-not (($MyInvocation.InvocationName -eq ".") -or ($MyInvocation.InvocationNa
         if ($Help) {
             Get-Help $PSCommandPath
         } else {
-            Bootstrap
+            $RepositoryRoot = Split-Path -Parent $PSScriptRoot
+            Bootstrap -RepositoryRoot $RepositoryRoot
         }
     } catch {
         Write-Error $_
