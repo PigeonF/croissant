@@ -29,16 +29,28 @@ param (
     [switch]$Help
 )
 
-function Initialize-WinGet {
+function Initialize-Chocolatey {
     [CmdletBinding(SupportsShouldProcess)]
     param ()
 
-    begin {
-        $DownloadDir = [System.IO.Path]::GetTempPath()
-        $MsixBundle = Join-Path $DownloadDir "winget.msixbundle"
-        $WingetReleaseUrl = "https://api.github.com/repos/microsoft/winget-cli/releases/latest"
-        $MsixBundleExists = Test-Path -Path $MsixBundle
+    process {
+        try {
+            choco --version | Out-Null
+            Write-Output "chocolatey is already installed"
+        } catch {
+            try {
+                $wc = New-Object System.Net.WebClient
+                iex ($wc.DownloadString('https://community.chocolatey.org/install.ps1'))
+            } catch {
+                Throw "$($_.Exception.Message)"
+            }
+        }
     }
+}
+
+function Initialize-WinGet {
+    [CmdletBinding(SupportsShouldProcess)]
+    param ()
 
     process {
         try {
@@ -71,14 +83,40 @@ function Initialize-WinGet {
     }
 }
 
+function Invoke-ChocolateyInstalls {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    param(
+        [Parameter(HelpMessage = "Path to .configurations directory")]
+        [string]$Directory,
+        [Parameter(HelpMessage = "Package files to call `choco install` on")]
+        [string[]]$Packages = @(
+            "packages-personal.config",
+            "packages-development.config"
+        )
+    )
+
+    process {
+        foreach ($Package in $Packages) {
+            $PackagesConfig = Join-Path $Directory $Package
+            if ($PSCmdlet.ShouldProcess($PackagesConfig, "choco install")) {
+                Write-Output "Install Chocolatey Packages Configuration $PackagesConfig"
+                choco install --yes $PackagesConfig
+            }
+        }
+    }
+}
+
 function Invoke-WinGetConfigurations {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     param(
-        [Parameter(HelpMessage = "Path .configurations directory")]
+        [Parameter(HelpMessage = "Path to .configurations directory")]
         [string]$Directory,
         [Parameter(HelpMessage = "Configuration files to call `winget configure` on")]
         [string[]]$Configurations = @(
-            "settings.dsc.yaml"
+            "settings.dsc.yaml",
+            "packages-base.dsc.yaml",
+            "packages-personal.dsc.yaml",
+            "packages-development.dsc.yaml"
         )
     )
 
@@ -87,7 +125,7 @@ function Invoke-WinGetConfigurations {
             $WinGetConfiguration = Join-Path $Directory $Configuration
             if ($PSCmdlet.ShouldProcess($WinGetConfiguration, "winget configure")) {
                 Write-Output "Applying WinGet Configuration $WinGetConfiguration"
-                winget configure --disable-interactivity --ignore-warnings -f $WinGetConfiguration
+                winget configure --accept-configuration-agreements -f $WinGetConfiguration
             }
         }
     }
@@ -105,14 +143,16 @@ function Bootstrap {
     }
 
     process {
-        if ($PSCmdlet.ShouldProcess("WinGet", "Initialize")) {
-            Write-Output "Initializing WinGet"
-            Initialize-WinGet
-        }
-
         if ($PSCmdlet.ShouldProcess("WinGet Configurations", "Apply")) {
             Write-Output "Applying WinGet Configurations"
+            Initialize-WinGet
             Invoke-WinGetConfigurations -Directory $ConfigurationsDir
+        }
+
+        if ($PSCmdlet.ShouldProcess("Chocolatey Packages", "Install")) {
+            Write-Output "Installing Chocolatey Packages"
+            Initialize-Chocolatey
+            Invoke-ChocolateyInstalls -Directory $ConfigurationsDir
         }
     }
 }
