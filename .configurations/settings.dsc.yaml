@@ -20,6 +20,14 @@ properties:
         allowPrerelease: true
       settings:
         Ensure: Present
+    - resource: Microsoft.Windows.Developer/WindowsExplorer
+      directives:
+        description: Configure Windows Explorer
+        allowPrerelease: true
+      settings:
+        FileExtensions: Show
+        HiddenFiles: Show
+        ItemCheckBoxes: Hide
     - resource: xPSDesiredStateConfiguration/xRegistry
       directives:
         description: Enable long paths support
