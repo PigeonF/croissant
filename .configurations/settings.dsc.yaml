@@ -12,7 +12,7 @@ properties:
         description: Verify minimum OS version
         allowPrerelease: true
       settings:
-        MinVersion: '10.0.26100'
+        MinVersion: "10.0.26100"
   resources:
     - resource: Microsoft.Windows.Developer/DeveloperMode
       directives:
@@ -30,46 +30,4 @@ properties:
         ValueData: 1
         ValueType: DWord
         Force: true
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Containres
-        allowPrerelease: true
-      settings:
-        Name: Containers
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Hyper-V
-        allowPrerelease: true
-      settings:
-        Name: Microsoft-Hyper-V-All
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Virtual Machine Platform
-        allowPrerelease: true
-      settings:
-        Name: VirtualMachinePlatform
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Windows Hypervisor Platform
-        allowPrerelease: true
-      settings:
-        Name: HypervisorPlatform
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Windows Sandbox
-        allowPrerelease: true
-      settings:
-        Name: Containers-DisposableClientVM
-        Ensure: Present
-    - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
-      directives:
-        description: Enable Windows Subsystem for Linux
-        allowPrerelease: true
-      settings:
-        Name: Microsoft-Windows-Subsystem-Linux
         Ensure: Present
