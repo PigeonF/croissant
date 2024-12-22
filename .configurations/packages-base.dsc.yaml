@@ -12,7 +12,7 @@ properties:
         description: Verify minimum OS version
         allowPrerelease: true
       settings:
-        MinVersion: '10.0.26100'
+        MinVersion: "10.0.26100"
   resources:
     # Install packages
     - resource: Microsoft.WinGet.DSC/WinGetPackage
@@ -64,17 +64,19 @@ properties:
         description: Configure Microsoft.PowerToys
         allowPrerelease: true
       settings:
+        AdvancedPaste:
+          Enabled: false
         AlwaysOnTop:
           Enabled: false
         Awake:
           Enabled: false
         ColorPicker:
           Enabled: true
-          ActivationShortcut: 'Win+Shift+C'
+          ActivationShortcut: "Win+Shift+C"
           ActivationAction: OpenColorPickerAndThenEditor
         CropAndLock:
           Enabled: true
-          ThumbnailHotkey: 'Win+Shift+T'
+          ThumbnailHotkey: "Win+Shift+T"
         EnvironmentVariables:
           Enabled: true
         FancyZones:
@@ -101,6 +103,8 @@ properties:
           Enabled: false
         MouseWithoutBorders:
           Enabled: false
+        NewPlus:
+          Enabled: false
         Peek:
           Enabled: false
         PowerAccent:
@@ -109,6 +113,8 @@ properties:
           DoNotActivateOnGameMode: true
           ToolbarPosition: top
           InputTime: 300
+          SelectedLang: "CUR,DE,IPA,SPECIAL"
+          ExcludedApps: ""
           SelectedLang: German
           ExcludedApps: ''
           ShowUnicodeDescription: true
@@ -129,7 +135,9 @@ properties:
           Enabled: false
         VideoConference:
           Enabled: false
+        Workspaces:
+          Enabled: false
         GeneralSettings:
           Startup: true
       dependsOn:
-      - Microsoft.PowerToys
+        - Microsoft.PowerToys

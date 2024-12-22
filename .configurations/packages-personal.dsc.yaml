@@ -12,7 +12,7 @@ properties:
         description: Verify minimum OS version
         allowPrerelease: true
       settings:
-        MinVersion: '10.0.26100'
+        MinVersion: "10.0.26100"
   resources:
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
