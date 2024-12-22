@@ -29,6 +29,7 @@ properties:
         ValueName: LongPathsEnabled
         ValueData: 1
         ValueType: DWord
+        Force: true
         Ensure: Present
     - resource: xPSDesiredStateConfiguration/xWindowsOptionalFeature
       directives:
