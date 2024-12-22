@@ -115,6 +115,8 @@ properties:
           InputTime: 300
           SelectedLang: "CUR,DE,IPA,SPECIAL"
           ExcludedApps: ""
+          SelectedLang: German
+          ExcludedApps: ''
           ShowUnicodeDescription: true
           SortByUsageFrequency: false
           StartSelectionFromTheLeft: false
