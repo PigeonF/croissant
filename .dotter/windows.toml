@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[alacritty.files]
+"dotfiles/alacritty/.config/" = "~/AppData/Roaming/"
+"dotfiles/alacritty/.config/alacritty/terminal.toml.hbs" = { target = "~/AppData/Roaming/alacritty/terminal.toml", type = "template" }
+
+[bin.files]
+# In the PATH by default
+"bin/alarm.ps1" = "~/AppData/Local/Microsoft/WindowsApps/alarm.ps1"
+
+[git.files]
+"dotfiles/git/.config/" = "~/AppData/Roaming/"
+"dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/AppData/Roaming/git/commit.gitconfig", type = "template" }
+
+[helix.files]
+"dotfiles/helix/.config/" = "~/AppData/Roaming/"
+
+[jj.files]
+"dotfiles/jj/.config/" = "~/AppData/Roaming/"
+"dotfiles/jj/.config/jj/config.toml.hbs" = { target = "~/AppData/Roaming/jj/config.toml", type = "template" }
+
+[powershell.files]
+"dotfiles/powershell/" = "~/Documents/WindowsPowerShell/"
+"dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = { target = "~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1", type = "template" }
+
+[pwsh.files]
+"dotfiles/pwsh/.config/powershell/" = "~/Documents/PowerShell/"
+"dotfiles/pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1.hbs" = { target = "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", type = "template" }
+
+[spicetify.files]
+"dotfiles/spicetify/.config/" = "~/AppData/Roaming/"
+"dotfiles/spicetify/.config/spicetify/config-xpui.ini.hbs" = { target = "~/AppData/Roaming/spicetify/config-xpui.ini", type = "template" }
+"dotfiles/spicetify/.config/spicetify/Themes/" = { target = "~/AppData/Roaming/spicetify/Themes/", type = "symbolic" }
+
+[starship.files]
+"dotfiles/starship/.config/" = "~/AppData/Roaming/"
+
+[topgrade.files]
+"dotfiles/topgrade/.config/" = "~/AppData/Roaming/"

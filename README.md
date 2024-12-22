@@ -14,4 +14,7 @@ Use the [installation](./scripts/Windows-Install.ps1), and [bootstrap](./scripts
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 irm 'https://raw.githubusercontent.com/PigeonF/croissant/refs/heads/main/scripts/Windows-Install.ps1' | iex
 Invoke-Bootstrap -Revision "heads/refs/main"
+jj git clone git@github.com:PigeonF/croissant.git D:\code\croissant
+cd D:\code\croissant
+just dotfiles
 ```

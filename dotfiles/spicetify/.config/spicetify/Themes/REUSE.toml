@@ -1,0 +1,8 @@
+version = 1
+
+[[annotations]]
+# https://github.com/catppuccin/spicetify
+path = ["catppuccin/**/*"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2021 Catppuccin"
+SPDX-License-Identifier = "MIT"

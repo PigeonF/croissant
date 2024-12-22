@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+#
+# [Alacritty Configuration](https://alacritty.org/config-alacritty.html).
+
+[mouse]
+
+[keyboard]
+bindings = [
+  { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
+  # { key = "Space", mods = "Shift|Control", action = "None" },
+  # { key = "Slash", mods = "Control", chars = "\u001F" },
+  # { key = "Slash", mods = "Shift|Control", chars = "\u001F" },
+  # { key = "6", mods = "Control", chars = "\u001E" },
+  # { key = "6", mods = "Shift|Control", chars = "\u001E" },
+  # { key = "\\", mods = "Control", chars = "\u001C" },
+  # { key = "\\", mods = "Shift|Control", chars = "\u001C" },
+  # # Backslash does not work, so we use the key next to it..
+  # { key = "'", mods = "Control", chars = "\u001C" },
+  # { key = "'", mods = "Shift|Control", chars = "\u001C" },
+  # # Also disables Vi mode
+  # # https://github.com/neovim/neovim/issues/8435
+  # # Currently does not map to C-Space in neovim.
+  # { key = "Space", mods = "Control", chars = "\u001b[32;5u" },
+  # { key = "Space", mods = "Shift|Control", chars = "\u001b[32;5u" },
+  # { key = "2", mods = "Control", chars = "\u0000" },
+  # { key = "2", mods = "Shift|Control", chars = "\u0000" },
+]

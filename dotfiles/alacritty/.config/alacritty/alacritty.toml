@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+#
+# [Alacritty Configuration](https://alacritty.org/config-alacritty.html).
+
+[general]
+import = [
+  "themes/catppuccin-macchiato.toml",
+  "terminal.toml",
+  "keybindings.toml",
+]
+
+[env]
+
+[window]
+padding = { x = 16, y = 9 }
+dynamic_padding = true
+resize_increments = true
+
+[scrolling]
+
+[font]
+normal = { family = "RecMonoDuotone Nerd Font", style = "Regular" }
+bold = { family = "VictorMono Nerd Font", style = "Bold" }
+italic = { family = "VictorMono Nerd Font", style = "Italic" }
+bold_italic = { family = "VictorMono Nerd Font", style = "Bold Italic" }
+size = 17
+builtin_box_drawing = false
+
+[bell]
+
+[selection]
+
+[cursor]
+vi_mode_style = { shape = "Beam" }
+
+[hints]
+
+[debug]

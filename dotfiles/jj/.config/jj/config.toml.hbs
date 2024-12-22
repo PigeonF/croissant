@@ -1,0 +1,106 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[user]
+# Set with `jj config set --repo user.email "fnoegip@gmail.com"
+# Not set to default value so that projects always use the correct E-Mail by forcing me to choose
+# manually.
+# email = "fnoegip@gmail.com"
+name = "Jonas Fierlings"
+
+[core]
+{{#if (eq dotter.os "windows") }}
+fsmonitor = "watchman"
+{{/if}}
+
+[ui]
+default-command = "log"
+# TODO(PigeonF): Figure out something cross platform.
+# diff-editor = "diffedit3-ssh"
+# merge-editor = "vscodium"
+paginate = "never"
+
+[git]
+push-bookmark-prefix = "PigeonF/push-"
+private-commits = "description(glob:\"private:*\")"
+
+[signing]
+backend = "ssh"
+key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+2wAQrbFDe18oFY2Mv6qsUcYWJZPAcsV+Xr4ZHzncL"
+sign-all = false
+
+[merge-tools.diffedit3-ssh]
+program = "diffedit3"
+edit-args = [
+  "$left",
+  "$right",
+  "$output",
+  "--port",
+  "17376-17380",
+  "--no-browser",
+]
+
+[merge-tools.vscodium]
+program = "codium"
+merge-args = ["--wait", "--merge", "$left", "$right", "$base", "$output"]
+merge-tool-edits-conflict-markers = true
+diff-invocation-mode = "file-by-file"
+
+[aliases]
+d = ["diff"]
+ds = ["diff", "--stat"]
+g = ["git"]
+l = ["log", "-T", "builtin_log_compact"]
+ll = ["log", "-T", "builtin_log_detailed"]
+s = ["status"]
+sign = [
+  "describe",
+  "--no-edit",
+  "--reset-author",
+  "--config-toml",
+  "signing.sign-all = true",
+]
+
+[templates]
+log = "builtin_log_comfortable"
+
+draft_commit_description = '''
+concat(
+  description,
+  "\n",
+  surround(
+    "JJ: HEAD detached at ", "\n",
+    concat(commit_id, "\n"),
+  ),
+  surround(
+    "JJ: This commit contains the following changes:\n", "\n",
+    indent("JJ:     ", diff.summary()),
+  ),
+  surround(
+    "JJ: ------------------------ >8 ------------------------\n",
+    "",
+    indent("JJ: ", diff.git()),
+  )
+)
+'''
+
+[template-aliases]
+starship = '''
+separate(" ",
+  change_id.shortest(6),
+  bookmarks.map(|x| if(
+    x.name().substr(0, 20).starts_with(x.name()),
+    x.name().substr(0, 20),
+    x.name().substr(0, 19) ++ "…")
+  ).join(" "),
+  if(
+    description.first_line().substr(0, 24).starts_with(description.first_line()),
+    description.first_line().substr(0, 24),
+    description.first_line().substr(0, 23) ++ "…"
+  ),
+  if(conflict, "conflict"),
+  if(divergent, "divergent"),
+  if(hidden, "hidden"),
+)
+'''

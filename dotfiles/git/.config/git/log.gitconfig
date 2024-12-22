@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[alias]
+  l = lrm
+  la = llast 1
+  lg = lrgm
+  ll = log --pretty=pretty --abbrev-commit --date=local
+  llast = "!f() { git l HEAD...HEAD~$1; }; f"
+  llg = ll --graph
+  lls = log --pretty=pretty-sig --abbrev-commit --date=local
+  lr = log --pretty=pretty --abbrev-commit --date=relative
+  lrg = lr --pretty=pretty --abbrev-commit --date=relative --graph
+  lrgm = lr --pretty=pretty --abbrev-commit --date=relative --graph main...@
+  lrm = log --pretty=pretty --abbrev-commit --date=relative main...@
+  lrs = log --pretty=pretty-sig --abbrev-commit --date=relative
+  lrsm = log --pretty=pretty-sig --abbrev-commit --date=relative main...@
+  lg = lrgm
+  ls = lrsm
+
+[diff]
+  colorMoved = default
+  colorMovedWS = "allow-indentation-change"
+
+[pretty]
+  pretty = format:%C(yellow)%h%C(reset) %C(bold white)?%C(reset) %C(bold blue)%an%C(reset) %s %C(green)(%ad)%C(reset) %C(magenta)%d%C(reset)
+  pretty-sig = format:%C(yellow)%h%C(reset) %C(bold white)%G?%C(reset) %C(bold blue)%an%C(reset) %s %C(green)(%ad)%C(reset) %C(magenta)%d%C(reset)

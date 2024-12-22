@@ -36,6 +36,14 @@ properties:
        settings:
          id: eza-community.eza
          source: winget
+    # TODO(PigeonF): Migrate to chocolatey
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install eza-community.eza
+        allowPrerelease: true
+      settings:
+        id: eza-community.eza
+        source: winget
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
         description: Install KDE.Kate
@@ -58,8 +66,8 @@ properties:
        settings:
          id: Meld.Meld
          source: winget
-     - resource: Microsoft.WinGet.DSC/WinGetPackage
-       directives:
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Install Microsoft.VisualStudio.2022.Community
         allowPrerelease: true
       settings:
@@ -86,53 +94,58 @@ properties:
         vsConfigFile: '${WinGetConfigRoot}\.vsconfig'
       dependsOn:
         - Microsoft.VisualStudio.2022.Community
-     - resource: xPSDesiredStateConfiguration/xRegistry
-       directives:
-         description: Set environment variable for cargo
-         allowPrerelease: true
-       settings:
-         Key: 'HKCU:\Environment'
-         ValueName: CARGO_HOME
-         ValueData: "%LOCALAPPDATA%\\cargo"
-         ValueType: ExpandString
-         Ensure: Present
-     - resource: xPSDesiredStateConfiguration/xRegistry
-       directives:
-         description: Set EDITOR environment variable
-         allowPrerelease: true
-       settings:
-         Key: 'HKCU:\Environment'
-         ValueName: EDITOR
-         ValueData: "hx"
-         ValueType: String
-         Ensure: Present
-     - resource: xPSDesiredStateConfiguration/xRegistry
-       directives:
-         description: Set environment variable for rustup
-         allowPrerelease: true
-       settings:
-         Key: 'HKCU:\Environment'
-         ValueName: RUSTUP_HOME
-         ValueData: "%LOCALAPPDATA%\\rustup"
-         ValueType: ExpandString
-         Ensure: Present
-     - resource: xPSDesiredStateConfiguration/xRegistry
-       directives:
-         description: Set environment variable for starship
-         allowPrerelease: true
-       settings:
-         Key: 'HKCU:\Environment'
-         ValueName: STARSHIP_CONFIG
-         ValueData: "%APPDATA%\\starship.toml"
-         ValueType: ExpandString
-         Ensure: Present
-     - resource: xPSDesiredStateConfiguration/xRegistry
-       directives:
-         description: Set XDG_CONFIG_HOME environment variable
-         allowPrerelease: true
-       settings:
-         Key: 'HKCU:\Environment'
-         ValueName: XDG_CONFIG_HOME
-         ValueData: "%APPDATA%"
-         ValueType: ExpandString
-         Ensure: Present
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for cargo
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: CARGO_HOME
+        ValueData: "%LOCALAPPDATA%\\cargo"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure CARGO_HOME
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set EDITOR environment variable
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: EDITOR
+        ValueData: "hx"
+        ValueType: String
+        Ensure: Present
+      id: Configure EDITOR
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for rustup
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: RUSTUP_HOME
+        ValueData: "%LOCALAPPDATA%\\rustup"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure RUSTUP_HOME
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set environment variable for starship
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: STARSHIP_CONFIG
+        ValueData: "%APPDATA%\\starship.toml"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure STARSHIP_CONFIG
+    - resource: xPSDesiredStateConfiguration/xRegistry
+      directives:
+        description: Set XDG_CONFIG_HOME environment variable
+        allowPrerelease: true
+      settings:
+        Key: 'HKCU:\Environment'
+        ValueName: XDG_CONFIG_HOME
+        ValueData: "%APPDATA%"
+        ValueType: ExpandString
+        Ensure: Present
+      id: Configure XDG_CONFIG_HOME
