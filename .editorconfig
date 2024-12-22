@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2024 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ps1]
+indent_size = 4
+
+[LICENSES/*.txt]
+indent_size = unset
