@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+---
+name: ci
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: nix flake check
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nixbuild/nix-quick-install-action@v29
+      - uses: nix-community/cache-nix-action@v5
+        with:
+          primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
+      - name: check
+        run: nix flake check
