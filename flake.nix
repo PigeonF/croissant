@@ -58,7 +58,11 @@
       flakeModules = {
         deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
       };
+      nixosModules = {
+        disk = ./nix/modules/nixos/disk;
+      };
       lib = import ./nix/lib.nix {
+        extraNixOsModules = builtins.attrValues nixosModules;
         inherit (nixpkgs) lib;
         home-manager-lib = inputs.home-manager.lib;
       };
@@ -82,7 +86,7 @@
         ] ++ builtins.attrValues flakeModules;
 
         flake = {
-          inherit flakeModules lib;
+          inherit flakeModules lib nixosModules;
         };
 
         perSystem =
