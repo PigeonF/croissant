@@ -26,5 +26,9 @@
       # Run last
       priority = 99;
     };
+
+    prettier = {
+      excludes = [ "*secrets.yaml" ];
+    };
   };
 }

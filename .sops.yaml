@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+#
+# Configuration file for [sops](https://github.com/getsops/sops).
+---
+# Keys are generated using [age](github.com/FiloSottile/age).
+#
+# Administrators are expected to have a secret key available here. To add a new administrator, an
+# existing administrator must re-encrypt all secrets using `sops updatekeys <file>`.
+#
+# The keys for the different hosts are derived from the host SSH keys using
+# `ssh-keyscan <host> | ssh-to-age`.
+#
+# Technically there is no reason for the host specific secrets to also be encrypted for the
+# administrators. The only reason they are is for convenience: since my trustmodel considers all
+# administrators trustworthy the tradeoff between security and convenience is worth it.
+_keys:
+  # Administrators
+  #
+  # curl -sSfL https://github.com/PigeonF.keys | ssh-to-age
+  - &pigeonf age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry
+
+  # Hosts
+  #
+  # ssh-keyscan serenno.incus | ssh-to-age
+  - &serenno age1uy36cenckhndm0v9x0uc99z5lv3dfj3g83xaa7dz3s7z476sccfsjujw5v
+
+creation_rules:
+  - key_groups:
+      - age:
+          - *pigeonf
+          - *serenno
+    path_regex: ^nix/configurations/nixos/serenno/secrets\.yaml$
+
+stores:
+  yaml:
+    indent: 2

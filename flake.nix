@@ -25,6 +25,10 @@
       inputs.flake-compat.follows = "flake-compat";
       inputs.utils.follows = "flake-utils";
     };
+    sops-nix = {
+      url = "github:Mic92/sops-nix?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -88,6 +92,14 @@
               default = pkgs.mkShellNoCC {
                 name = "croissant";
                 inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+              };
+              secrets = pkgs.mkShellNoCC {
+                name = "secrets";
+                packages = [
+                  pkgs.age
+                  pkgs.ssh-to-age
+                  pkgs.sops
+                ];
               };
               treefmt = config.treefmt.build.devShell;
             };
