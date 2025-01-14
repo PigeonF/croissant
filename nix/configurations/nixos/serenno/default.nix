@@ -2,24 +2,36 @@
 #
 # SPDX-License-Identifier: 0BSD
 { inputs, ... }:
+let
+  system = "x86_64-linux";
+  deploySystem = "x86_64-linux";
+  deployLib = inputs.deploy-rs.lib.${deploySystem};
+in
 {
   _file = ./default.nix;
 
+  deploy-rs.nodes.serenno = {
+    hostname = "serenno.incus";
+    profiles = {
+      system = {
+        user = "root";
+        sshUser = "root";
+        path = deployLib.activate.nixos inputs.self.nixosConfigurations.serenno;
+      };
+    };
+  };
+
   flake = {
     nixosConfigurations = {
-      serenno =
-        let
-          system = "x86_64-linux";
-        in
-        inputs.nixpkgs.lib.nixosSystem {
-          inherit system;
+      serenno = inputs.nixpkgs.lib.nixosSystem {
+        inherit system;
 
-          specialArgs = { inherit inputs system; };
-          modules = [
-            ./configuration.nix
-            ./hardware-configuration.nix
-          ];
-        };
+        specialArgs = { inherit inputs system; };
+        modules = [
+          ./configuration.nix
+          ./hardware-configuration.nix
+        ];
+      };
     };
   };
 

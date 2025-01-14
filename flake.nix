@@ -15,6 +15,16 @@
       url = "github:hercules-ci/flake-parts?ref=main";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    flake-utils = {
+      url = "github:numtide/flake-utils?ref=main";
+      inputs.systems.follows = "systems";
+    };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.utils.follows = "flake-utils";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,6 +38,11 @@
       treefmt-nix,
       ...
     }:
+    let
+      flakeModules = {
+        deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
+      };
+    in
     flake-parts.lib.mkFlake { inherit inputs; } (_: {
       _file = ./flake.nix;
 
@@ -36,7 +51,11 @@
       imports = [
         ./nix/configurations/nixos/serenno
         treefmt-nix.flakeModule
-      ];
+      ] ++ builtins.attrValues flakeModules;
+
+      flake = {
+        inherit flakeModules;
+      };
 
       perSystem =
         {
@@ -55,11 +74,11 @@
           };
 
           devShells = {
-            treefmt = config.treefmt.build.devShell;
             default = pkgs.mkShellNoCC {
               name = "croissant";
               inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
             };
+            treefmt = config.treefmt.build.devShell;
           };
         };
     });
