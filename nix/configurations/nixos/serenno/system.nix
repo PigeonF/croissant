@@ -9,6 +9,13 @@
   _file = ./system.nix;
 
   config = {
+    boot = {
+      loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+    };
+
     services = {
       resolved.domains = [ "incus" ];
     };
@@ -18,7 +25,6 @@
         matchConfig = {
           Name = lib.mkDefault "en* eth0";
           Type = lib.mkDefault "ether";
-          Kind = lib.mkDefault "veth";
         };
         networkConfig = {
           DHCP = lib.mkDefault "yes";

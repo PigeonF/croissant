@@ -25,9 +25,16 @@
       inputs.flake-compat.follows = "flake-compat";
       inputs.utils.follows = "flake-utils";
     };
+    disko = {
+      url = "github:nix-community/disko?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-facter-modules = {
+      url = "github:numtide/nixos-facter-modules?ref=main";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix?ref=master";
@@ -104,6 +111,16 @@
                 packages = [
                   pkgs.home-manager
                   pkgs.nh
+                ];
+              };
+              provisioning = pkgs.mkShellNoCC {
+                name = "provisioning";
+                inputsFrom = [ self'.devShells.secrets ];
+                packages = [
+                  pkgs.just
+                  pkgs.nixos-anywhere
+                  pkgs.openssh
+                  pkgs.yq-go
                 ];
               };
               secrets = pkgs.mkShellNoCC {

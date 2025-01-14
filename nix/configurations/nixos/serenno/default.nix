@@ -41,7 +41,7 @@ in
       serenno = croissant-lib.mkNixOsConfiguration {
         inherit system;
 
-        specialArgs = { inherit inputs system; };
+        specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
           ./hardware-configuration.nix

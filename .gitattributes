@@ -2,4 +2,5 @@
 #
 # SPDX-License-Identifier: 0BSD
 
+facter.json   linguist-generated=true
 secrets.yaml  linguist-generated=true
