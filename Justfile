@@ -13,3 +13,7 @@ _default:
 # Install the dotfiles using [dotter](https://github.com/SuperCuber/dotter).
 dotfiles *ARGS:
     dotter -v {{ ARGS }}
+
+# Update the encrypted secrets in the repository (e.g. after changing the keys in .sops.yaml)
+update-secrets:
+    find . -name "secrets.yaml" -print0 | xargs -0 sops updatekeys --yes

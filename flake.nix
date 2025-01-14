@@ -7,10 +7,31 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default?ref=main";
-    flake-compat.url = "github:edolstra/flake-compat?ref=master";
+    flake-compat = {
+      url = "github:edolstra/flake-compat?ref=master";
+      flake = false;
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts?ref=main";
       inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+    flake-utils = {
+      url = "github:numtide/flake-utils?ref=main";
+      inputs.systems.follows = "systems";
+    };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.utils.follows = "flake-utils";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix?ref=main";
@@ -20,43 +41,81 @@
 
   outputs =
     inputs@{
-      systems,
       flake-parts,
+      nixpkgs,
+      systems,
       treefmt-nix,
       ...
     }:
-    flake-parts.lib.mkFlake { inherit inputs; } (_: {
-      _file = ./flake.nix;
+    let
+      flakeModules = {
+        deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
+      };
+      lib = import ./nix/lib.nix {
+        inherit (nixpkgs) lib;
+        home-manager-lib = inputs.home-manager.lib;
+      };
+    in
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+        specialArgs = {
+          croissant-lib = lib;
+        };
+      }
+      (_: {
+        _file = ./flake.nix;
 
-      systems = import systems;
+        systems = import systems;
 
-      imports = [
-        treefmt-nix.flakeModule
-      ];
+        imports = [
+          ./nix/configurations/home/root
+          ./nix/configurations/nixos/serenno
+          treefmt-nix.flakeModule
+        ] ++ builtins.attrValues flakeModules;
 
-      perSystem =
-        {
-          self',
-          config,
-          pkgs,
-          ...
-        }:
-        {
-          treefmt = import ./treefmt.nix;
+        flake = {
+          inherit flakeModules lib;
+        };
 
-          checks = {
-            reuse = pkgs.runCommandLocal "reuse" { } ''
-              ${pkgs.lib.getExe pkgs.reuse} --root ${./.} lint | tee $out
-            '';
-          };
+        perSystem =
+          {
+            self',
+            config,
+            pkgs,
+            ...
+          }:
+          {
+            treefmt = import ./treefmt.nix;
 
-          devShells = {
-            treefmt = config.treefmt.build.devShell;
-            default = pkgs.mkShellNoCC {
-              name = "croissant";
-              inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+            checks = {
+              reuse = pkgs.runCommandLocal "reuse" { } ''
+                ${pkgs.lib.getExe pkgs.reuse} --root ${./.} lint | tee $out
+              '';
+            };
+
+            devShells = {
+              default = pkgs.mkShellNoCC {
+                name = "croissant";
+                inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+              };
+              home-manager = pkgs.mkShellNoCC {
+                name = "home-manager";
+                packages = [
+                  pkgs.home-manager
+                  pkgs.nh
+                ];
+              };
+              secrets = pkgs.mkShellNoCC {
+                name = "secrets";
+                packages = [
+                  pkgs.age
+                  pkgs.ssh-to-age
+                  pkgs.sops
+                ];
+              };
+              treefmt = config.treefmt.build.devShell;
             };
           };
-        };
-    });
+      });
 }
