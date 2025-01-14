@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
+  extraNixOsModules ? [ ],
   home-manager-lib,
   lib,
 }:
@@ -28,16 +29,19 @@ let
       args@{
         croissantPresetsPath ? ./modules/nixos/presets,
         specialArgs ? { },
+        modules ? [ ],
         ...
       }:
       lib.nixosSystem (
         {
+          modules = extraNixOsModules ++ args.modules;
           specialArgs = {
             inherit croissantPresetsPath;
           } // args.specialArgs;
         }
         // builtins.removeAttrs args [
           "croissantPresetsPath"
+          "modules"
           "specialArgs"
         ]
       );

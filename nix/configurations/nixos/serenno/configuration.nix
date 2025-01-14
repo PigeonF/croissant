@@ -16,11 +16,11 @@
     "${croissantPresetsPath}/bash.nix"
     "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/openssh.nix"
     "${croissantPresetsPath}/users.nix"
     "${modulesPath}/profiles/perlless.nix"
     inputs.sops-nix.nixosModules.sops
   ];
-
   config = {
     networking = {
       hostName = "serenno";
