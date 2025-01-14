@@ -5,6 +5,7 @@
   config,
   croissantPresetsPath,
   inputs,
+  modulesPath,
   ...
 }:
 {
@@ -16,6 +17,7 @@
     "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
     "${croissantPresetsPath}/users.nix"
+    "${modulesPath}/profiles/perlless.nix"
     inputs.sops-nix.nixosModules.sops
   ];
 
