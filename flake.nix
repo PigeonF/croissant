@@ -33,8 +33,9 @@
 
   outputs =
     inputs@{
-      systems,
       flake-parts,
+      nixpkgs,
+      systems,
       treefmt-nix,
       ...
     }:
@@ -42,44 +43,54 @@
       flakeModules = {
         deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
       };
-    in
-    flake-parts.lib.mkFlake { inherit inputs; } (_: {
-      _file = ./flake.nix;
-
-      systems = import systems;
-
-      imports = [
-        ./nix/configurations/nixos/serenno
-        treefmt-nix.flakeModule
-      ] ++ builtins.attrValues flakeModules;
-
-      flake = {
-        inherit flakeModules;
+      lib = import ./nix/lib.nix {
+        inherit (nixpkgs) lib;
       };
-
-      perSystem =
-        {
-          self',
-          config,
-          pkgs,
-          ...
-        }:
-        {
-          treefmt = import ./treefmt.nix;
-
-          checks = {
-            reuse = pkgs.runCommandLocal "reuse" { } ''
-              ${pkgs.lib.getExe pkgs.reuse} --root ${./.} lint | tee $out
-            '';
-          };
-
-          devShells = {
-            default = pkgs.mkShellNoCC {
-              name = "croissant";
-              inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
-            };
-            treefmt = config.treefmt.build.devShell;
-          };
+    in
+    flake-parts.lib.mkFlake
+      {
+        inherit inputs;
+        specialArgs = {
+          croissant-lib = lib;
         };
-    });
+      }
+      (_: {
+        _file = ./flake.nix;
+
+        systems = import systems;
+
+        imports = [
+          ./nix/configurations/nixos/serenno
+          treefmt-nix.flakeModule
+        ] ++ builtins.attrValues flakeModules;
+
+        flake = {
+          inherit flakeModules lib;
+        };
+
+        perSystem =
+          {
+            self',
+            config,
+            pkgs,
+            ...
+          }:
+          {
+            treefmt = import ./treefmt.nix;
+
+            checks = {
+              reuse = pkgs.runCommandLocal "reuse" { } ''
+                ${pkgs.lib.getExe pkgs.reuse} --root ${./.} lint | tee $out
+              '';
+            };
+
+            devShells = {
+              default = pkgs.mkShellNoCC {
+                name = "croissant";
+                inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+              };
+              treefmt = config.treefmt.build.devShell;
+            };
+          };
+      });
 }

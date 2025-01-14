@@ -1,8 +1,13 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-_: {
+{ croissantPresetsPath, ... }:
+{
   _file = ./configuration.nix;
+
+  imports = [
+    "${croissantPresetsPath}/nix.nix"
+  ];
 
   config = {
     networking = {

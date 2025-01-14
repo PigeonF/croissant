@@ -1,7 +1,12 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-{ inputs, ... }:
+{
+  inputs,
+  self,
+  croissant-lib,
+  ...
+}:
 let
   system = "x86_64-linux";
   deploySystem = "x86_64-linux";
@@ -16,14 +21,14 @@ in
       system = {
         user = "root";
         sshUser = "root";
-        path = deployLib.activate.nixos inputs.self.nixosConfigurations.serenno;
+        path = deployLib.activate.nixos self.nixosConfigurations.serenno;
       };
     };
   };
 
   flake = {
     nixosConfigurations = {
-      serenno = inputs.nixpkgs.lib.nixosSystem {
+      serenno = croissant-lib.mkNixOsConfiguration {
         inherit system;
 
         specialArgs = { inherit inputs system; };
@@ -37,7 +42,7 @@ in
 
   perSystem = {
     packages = {
-      serenno = inputs.self.nixosConfigurations.serenno.config.system.build.toplevel;
+      serenno = self.nixosConfigurations.serenno.config.system.build.toplevel;
     };
   };
 }
