@@ -60,6 +60,10 @@
 
     facter = {
       reportPath = ./facter.json;
+      detected = {
+        dhcp.enable = false;
+        graphics.enable = false;
+      };
     };
 
     virtualisation.incus.agent.enable = true;
