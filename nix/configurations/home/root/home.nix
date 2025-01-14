@@ -2,10 +2,15 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
+  croissantPresetsPath,
   userName,
   ...
 }:
 {
+  imports = [
+    "${croissantPresetsPath}/sysadmin.nix"
+  ];
+
   config = {
     home = {
       extraOutputsToInstall = [

@@ -7,7 +7,23 @@
 }:
 let
   croissant-lib = {
-    mkHomeConfiguration = home-manager-lib.homeManagerConfiguration;
+    mkHomeConfiguration =
+      args@{
+        croissantPresetsPath ? ./modules/home/presets,
+        extraSpecialArgs ? { },
+        ...
+      }:
+      home-manager-lib.homeManagerConfiguration (
+        {
+          extraSpecialArgs = {
+            inherit croissantPresetsPath;
+          } // args.extraSpecialArgs;
+        }
+        // builtins.removeAttrs args [
+          "croissantPresetsPath"
+          "extraSpecialArgs"
+        ]
+      );
     mkNixOsConfiguration =
       args@{
         croissantPresetsPath ? ./modules/nixos/presets,
