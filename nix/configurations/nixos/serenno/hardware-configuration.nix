@@ -20,7 +20,10 @@
     croissant = {
       disk = {
         enable = true;
-        ext4.enable = true;
+        zfs = {
+          enable = true;
+          rollback.enable = true;
+        };
       };
     };
 

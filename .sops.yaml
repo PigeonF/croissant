@@ -7,7 +7,7 @@
 # Keys are generated using [ssh-to-age](https://github.com/Mic92/ssh-to-age).
 _keys:
   - &pigeonf age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry
-  - &serenno "age1r24eslpd8dfp6a40zm9jv695vym8k29elstwtsad8g258aqh9gxsrmz3gm"
+  - &serenno "age1gdgdknfg8khx60nm4mw2n25nxw0dksn7tu6h645lms608l37fyrqhyah3e"
 creation_rules:
   - key_groups:
       - age:
