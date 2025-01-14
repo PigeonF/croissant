@@ -10,6 +10,7 @@
     "${croissantPresetsPath}/bash.nix"
     "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/users.nix"
   ];
 
   config = {
