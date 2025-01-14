@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+---
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
