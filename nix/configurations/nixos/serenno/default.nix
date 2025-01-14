@@ -17,11 +17,21 @@ in
 
   deploy-rs.nodes.serenno = {
     hostname = "serenno.incus";
+    profilesOrder = [
+      "system"
+      "root"
+    ];
+
     profiles = {
       system = {
         user = "root";
         sshUser = "root";
         path = deployLib.activate.nixos self.nixosConfigurations.serenno;
+      };
+      root = {
+        user = "root";
+        sshUser = "root";
+        path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
     };
   };

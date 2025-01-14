@@ -2,10 +2,12 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
+  home-manager-lib,
   lib,
 }:
 let
   croissant-lib = {
+    mkHomeConfiguration = home-manager-lib.homeManagerConfiguration;
     mkNixOsConfiguration =
       args@{
         croissantPresetsPath ? ./modules/nixos/presets,

@@ -25,6 +25,10 @@
       inputs.flake-compat.follows = "flake-compat";
       inputs.utils.follows = "flake-utils";
     };
+    home-manager = {
+      url = "github:nix-community/home-manager?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -49,6 +53,7 @@
       };
       lib = import ./nix/lib.nix {
         inherit (nixpkgs) lib;
+        home-manager-lib = inputs.home-manager.lib;
       };
     in
     flake-parts.lib.mkFlake
@@ -64,6 +69,7 @@
         systems = import systems;
 
         imports = [
+          ./nix/configurations/home/root
           ./nix/configurations/nixos/serenno
           treefmt-nix.flakeModule
         ] ++ builtins.attrValues flakeModules;
@@ -92,6 +98,13 @@
               default = pkgs.mkShellNoCC {
                 name = "croissant";
                 inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+              };
+              home-manager = pkgs.mkShellNoCC {
+                name = "home-manager";
+                packages = [
+                  pkgs.home-manager
+                  pkgs.nh
+                ];
               };
               secrets = pkgs.mkShellNoCC {
                 name = "secrets";
