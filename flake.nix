@@ -7,7 +7,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     systems.url = "github:nix-systems/default?ref=main";
-    flake-compat.url = "github:edolstra/flake-compat?ref=master";
+    flake-compat = {
+      url = "github:edolstra/flake-compat?ref=master";
+      flake = false;
+    };
     flake-parts = {
       url = "github:hercules-ci/flake-parts?ref=main";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -31,6 +34,7 @@
       systems = import systems;
 
       imports = [
+        ./nix/configurations/nixos/serenno
         treefmt-nix.flakeModule
       ];
 
