@@ -39,60 +39,44 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.enable && cfg.ext4.enable) (
-    lib.mkMerge [
-      {
-        disko = {
-          devices = {
-            disk = {
-              disk1 = {
-                name = "main";
-                type = "disk";
-                device = lib.mkDefault cfg.device;
-                content = {
-                  type = cfg.partitionType;
-                  partitions =
-                    let
-                      ext4 = {
-                        type = "filesystem";
-                        format = "ext4";
-                        mountpoint = "/";
-                      };
-                      luks = {
-                        type = "luks";
-                        name = "cryptroot";
-                        settings = {
-                          allowDiscards = true;
-                        };
-                      };
-                      name = if cfg.encryption.enable then "cryptroot" else "root";
-                    in
-                    partition
-                    // {
-                      "${name}" = {
-                        size = "100%";
-                        priority = 2;
-                        content = if cfg.encryption.enable then (luks // { content = ext4; }) else ext4;
-                      };
+  config = lib.mkIf (cfg.enable && cfg.ext4.enable) {
+    disko = {
+      devices = {
+        disk = {
+          disk1 = {
+            name = "main";
+            type = "disk";
+            device = lib.mkDefault cfg.device;
+            content = {
+              type = cfg.partitionType;
+              partitions =
+                let
+                  ext4 = {
+                    type = "filesystem";
+                    format = "ext4";
+                    mountpoint = "/";
+                  };
+                  luks = {
+                    type = "luks";
+                    name = "cryptroot";
+                    settings = {
+                      allowDiscards = true;
                     };
+                  };
+                  name = if cfg.encryption.enable then "cryptroot" else "root";
+                in
+                partition
+                // {
+                  "${name}" = {
+                    size = "100%";
+                    priority = 2;
+                    content = if cfg.encryption.enable then (luks // { content = ext4; }) else ext4;
+                  };
                 };
-              };
             };
           };
         };
-      }
-      (lib.mkIf cfg.encryption.remoteUnlock.enable {
-        boot.initrd.systemd.services.remote-unlock = {
-          description = "Prepare .profile for remote unlock";
-          wantedBy = [ "initrd.target" ];
-          after = [ "network-online.target" ];
-          unitConfig.DefaultDependencies = "no";
-          serviceConfig.Type = "oneshot";
-          script = ''
-            echo "systemctl default" > /var/empty/.profile
-          '';
-        };
-      })
-    ]
-  );
+      };
+    };
+  };
 }

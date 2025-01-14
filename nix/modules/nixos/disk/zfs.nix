@@ -40,93 +40,85 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.enable && cfg.zfs.enable) (
-    lib.mkMerge [
-      {
-        assertions = [
-          {
-            assertion = cfg.zfs.enable -> !cfg.encryption.enable;
-            message = ''
-              Encryption is currently not supported for zfs.
-            '';
-          }
-        ];
-
-        disko = {
-          devices = {
-            disk = {
-              disk1 = {
-                name = "main";
-                type = "disk";
-                device = lib.mkDefault cfg.device;
-                content = {
-                  type = cfg.partitionType;
-                  partitions = partition // {
-                    rpool = {
-                      size = "100%";
-                      priority = 2;
-                      content = {
-                        type = "zfs";
-                        pool = "rpool";
-                      };
-                    };
+  config = lib.mkIf (cfg.enable && cfg.zfs.enable) {
+    disko = {
+      devices = {
+        disk = {
+          disk1 = {
+            name = "main";
+            type = "disk";
+            device = lib.mkDefault cfg.device;
+            content = {
+              type = cfg.partitionType;
+              partitions = partition // {
+                rpool = {
+                  size = "100%";
+                  priority = 2;
+                  content = {
+                    type = "zfs";
+                    pool = "rpool";
                   };
                 };
               };
             };
-            zpool = {
-              rpool = {
-                type = "zpool";
-                rootFsOptions = {
+          };
+        };
+        zpool = {
+          rpool = {
+            type = "zpool";
+            rootFsOptions =
+              {
+                "com.sun:auto-snapshot" = "false";
+                compression = "zstd";
+                mountpoint = "none";
+              }
+              // lib.attrsets.optionalAttrs cfg.encryption.enable {
+                encryption = "aes-256-gcm";
+                keyformat = "passphrase";
+              };
+            datasets = {
+              nix = {
+                mountpoint = "/nix";
+                options = {
+                  atime = "off";
                   "com.sun:auto-snapshot" = "false";
-                  compression = "zstd";
-                  mountpoint = "none";
                 };
-                datasets = {
-                  nix = {
-                    mountpoint = "/nix";
-                    options = {
-                      atime = "off";
-                      "com.sun:auto-snapshot" = "false";
-                    };
-                    type = "zfs_fs";
-                  };
-                  root = {
-                    mountpoint = "/";
-                    options = {
-                      "com.sun:auto-snapshot" = "false";
-                    };
-                    type = "zfs_fs";
-                  };
+                type = "zfs_fs";
+              };
+              root = {
+                mountpoint = "/";
+                options = {
+                  "com.sun:auto-snapshot" = "false";
                 };
+                type = "zfs_fs";
               };
             };
           };
-          imageBuilder = {
-            extraRootModules = [ "zfs" ];
-          };
         };
+      };
+      imageBuilder = {
+        extraRootModules = [ "zfs" ];
+      };
+    };
 
-        environment = {
-          systemPackages = [ pkgs.zfs-prune-snapshots ];
-        };
+    environment = {
+      systemPackages = [ pkgs.zfs-prune-snapshots ];
+    };
 
-        networking = {
-          hostId = lib.mkDefault (
-            builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName)
-          );
-        };
+    networking = {
+      hostId = lib.mkDefault (
+        builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName)
+      );
+    };
 
-        services = {
-          zfs = {
-            autoScrub = {
-              enable = true;
-              pools = [ "rpool" ];
-            };
-            trim.enable = true;
-          };
+    services = {
+      zfs = {
+        autoScrub = {
+          enable = true;
+          pools = [ "rpool" ];
         };
-      }
-    ]
-  );
+        trim.enable = true;
+      };
+    };
+  };
 }

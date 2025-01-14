@@ -150,6 +150,18 @@ in
             };
             wait-online.anyInterface = true;
           };
+          services = {
+            remote-unlock = {
+              description = "Prepare .profile for remote unlock";
+              wantedBy = [ "initrd.target" ];
+              after = [ "network-online.target" ];
+              unitConfig.DefaultDependencies = "no";
+              serviceConfig.Type = "oneshot";
+              script = ''
+                echo "systemctl default" > /var/empty/.profile
+              '';
+            };
+          };
           # systemctl does not recognize many TERM variables otherwise.
           storePaths = [ pkgs.ncurses ];
         };
