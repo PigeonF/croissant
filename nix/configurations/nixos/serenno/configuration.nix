@@ -6,6 +6,7 @@
   _file = ./configuration.nix;
 
   imports = [
+    "${croissantPresetsPath}/bash.nix"
     "${croissantPresetsPath}/nix.nix"
   ];
 
