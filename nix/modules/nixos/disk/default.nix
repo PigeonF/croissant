@@ -18,6 +18,7 @@ in
   imports = [
     inputs.disko.nixosModules.disko
     ./ext4.nix
+    ./zfs.nix
   ];
 
   options.croissant = {
@@ -89,21 +90,29 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = lib.lists.any (submodule: submodule.enable) (
-          builtins.attrValues { inherit (cfg) ext4; }
-        );
-        message = ''
-          Croissant disk setup enabled, but none of the filesystem formats are enabled.
-          Enable {option}`croissant.disk.ext4.enable`.
-        '';
-      }
-      {
-        assertion = cfg.encryption.remoteUnlock.enable -> cfg.encryption.remoteUnlock.ssh.enable;
-        message = "Remote unlock is currently only possible with ssh";
-      }
-    ];
+    assertions =
+      let
+        filesystems = builtins.attrValues { inherit (cfg) ext4 zfs; };
+      in
+      [
+        {
+          assertion = lib.lists.any (submodule: submodule.enable) filesystems;
+          message = ''
+            Croissant disk setup enabled, but none of the filesystem formats are enabled.
+            Enable any of {option}`croissant.disk.ext4.enable {option}`croissant.disk.zfs.enable`.
+          '';
+        }
+        {
+          assertion = (lib.lists.count (submodule: submodule.enable) filesystems) == 1;
+          message = ''
+            Croissant disk setup enabled, but more than one filesystem formats is enabled.
+          '';
+        }
+        {
+          assertion = cfg.encryption.remoteUnlock.enable -> cfg.encryption.remoteUnlock.ssh.enable;
+          message = "Remote unlock is currently only possible with ssh";
+        }
+      ];
 
     boot = {
       initrd = lib.mkIf cfg.encryption.remoteUnlock.enable {
