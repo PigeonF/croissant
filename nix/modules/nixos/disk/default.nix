@@ -5,6 +5,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -39,6 +40,51 @@ in
         '';
         type = types.enum [ "gpt" ];
       };
+
+      encryption = {
+        enable = mkEnableOption "enable disk encryption";
+
+        remoteUnlock = {
+          enable = mkEnableOption "enable remote disk decryption";
+
+          ssh = {
+            enable = mkOption {
+              default = cfg.encryption.remoteUnlock.enable;
+              description = ''
+                Whether to remotely decrypt the disk via ssh
+              '';
+              type = types.bool;
+            };
+
+            port = mkOption {
+              type = types.port;
+              default = 2222;
+              description = ''
+                Port on which SSH service should listen.
+              '';
+            };
+
+            hostKeys = mkOption {
+              type = types.listOf (types.either types.str types.path);
+              default = [
+                "/secrets/boot/ssh/ssh_host_ed25519_key"
+              ];
+              description = ''
+                Specify SSH host keys.
+              '';
+            };
+
+            authorizedKeys = mkOption {
+              type = types.listOf types.str;
+              default = config.users.users.root.openssh.authorizedKeys.keys;
+              defaultText = lib.literalExpression "config.users.users.root.openssh.authorizedKeys.keys";
+              description = ''
+                Authorized keys that can unlock the disk.
+              '';
+            };
+          };
+        };
+      };
     };
   };
 
@@ -53,7 +99,53 @@ in
           Enable {option}`croissant.disk.ext4.enable`.
         '';
       }
+      {
+        assertion = cfg.encryption.remoteUnlock.enable -> cfg.encryption.remoteUnlock.ssh.enable;
+        message = "Remote unlock is currently only possible with ssh";
+      }
     ];
+
+    boot = {
+      initrd = lib.mkIf cfg.encryption.remoteUnlock.enable {
+        network = {
+          ssh = {
+            inherit (cfg.encryption.remoteUnlock.ssh)
+              enable
+              port
+              hostKeys
+              authorizedKeys
+              ;
+          };
+        };
+        secrets = {
+          # Populated by `just generate-initrd-ssh-host-key <host>`
+          "/secrets/boot/ssh/ssh_host_ed25519_key" =
+            lib.mkForce "/persist/secrets/boot/etc/ssh/ssh_host_ed25519_key";
+        };
+        systemd = {
+          enable = true;
+          network = {
+            enable = true;
+            networks = {
+              "10-uplink" = {
+                matchConfig = {
+                  Type = "ether";
+                };
+                networkConfig = {
+                  DHCP = "yes";
+                };
+                linkConfig = {
+                  RequiredForOnline = "routable";
+                };
+              };
+            };
+            wait-online.anyInterface = true;
+          };
+          # systemctl does not recognize many TERM variables otherwise.
+          storePaths = [ pkgs.ncurses ];
+        };
+      };
+    };
 
     # https://github.com/nix-community/disko/issues/678
     # disko = {

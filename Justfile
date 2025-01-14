@@ -21,6 +21,11 @@ generate-ssh-host-key host:
     mkdir -p {{ quote(".provisioning" / host / "persist" / "etc" / "ssh") }}
     ssh-keygen -t ed25519 -N "" -C "" -f {{ quote(".provisioning" / host / "persist" / "etc" / "ssh" / HOSTKEY) }}
 
+# Generate a ssh host key for the `host` initrd.
+generate-initrd-ssh-host-key host:
+    mkdir -p {{ quote(".provisioning" / host / "persist" / "secrets" / "boot" / "etc" / "ssh") }}
+    ssh-keygen -t ed25519 -N "" -C "" -f {{ quote(".provisioning" / host / "persist" / "secrets" / "boot" / "etc" / "ssh" / HOSTKEY) }}
+
 # Prepare for provisioning the `host`
 prepare-provision host: (generate-ssh-host-key host) (update-ssh-host-key host) (update-secrets)
 

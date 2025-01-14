@@ -40,6 +40,12 @@ The solution is to generate the SSH host keys ourselves and copy them using [`ni
 just prepare-provision serenno
 ```
 
+If the target uses the initrd to decrypt any encrypted disks, you also have to generate SSH host keys for the initrd.
+
+```console
+just generate-initrd-ssh-host-key serenno
+```
+
 <details>
 <summary>
 Example incus VM setup for testing
