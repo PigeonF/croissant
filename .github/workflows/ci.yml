@@ -26,3 +26,20 @@ jobs:
           primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
       - name: check
         run: nix flake check
+
+  nixos:
+    name: build nixos configuration
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        nixos-system: ["serenno"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nixbuild/nix-quick-install-action@v29
+      - uses: nix-community/cache-nix-action@v5
+        with:
+          primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
+      - name: build
+        run: nix build '.#nixosConfigurations.${{ matrix.nixos-system }}.config.system.build.toplevel'
