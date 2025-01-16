@@ -37,13 +37,20 @@ without provisioning the machine we don't know the SSH host key, and without the
 The solution is to generate the SSH host keys ourselves and copy them using [`nixos-anywhere`].
 
 ```console
-just prepare-provision serenno
+just prepare-ssh-host-key serenno
+just prepare-microvm-ssh-host-key serenno raxus
 ```
 
 If the target uses the initrd to decrypt any encrypted disks, you also have to generate SSH host keys for the initrd.
 
 ```console
 just generate-initrd-ssh-host-key serenno
+```
+
+Re-encrypt any secrets that need updating for the new host keys.
+
+```console
+just update-secrets
 ```
 
 <details>

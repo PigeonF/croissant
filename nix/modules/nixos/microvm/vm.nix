@@ -34,6 +34,12 @@ in
             tag = "ro-store";
             proto = "virtiofs";
           }
+          {
+            mountPoint = "/persist";
+            proto = "virtiofs";
+            source = "/persist/microvms/${hostName}/";
+            tag = "persist";
+          }
         ];
       };
 

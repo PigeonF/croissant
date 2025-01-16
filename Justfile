@@ -25,24 +25,40 @@ deploy-vm host vm:
     nix run {{ quote(".#nixosConfigurations." + vm + ".config.microvm.deploy.installOnHost") }} {{ quote(host) }}
     ssh {{ quote(host) }} systemctl restart {{ quote("microvm@" + vm) }}
 
+_generate-ssh-key file:
+    mkdir -p {{ quote(parent_directory(file)) }}
+    ssh-keygen -t ed25519 -N "" -C "" -f {{ quote(file) }}
+
+_update-ssh-key name file:
+    key=$(ssh-to-age -i {{ quote(file) }}) yq -i {{ quote('(._keys[] | select(anchor == "' + name + '")) = strenv(key)') }} .sops.yaml
+
 # Generate a ssh host key for use during provisioning `host`.
 generate-ssh-host-key host:
-    mkdir -p {{ quote(".provisioning" / host / "persist" / "etc" / "ssh") }}
-    ssh-keygen -t ed25519 -N "" -C "" -f {{ quote(".provisioning" / host / "persist" / "etc" / "ssh" / HOSTKEY) }}
+    @just --justfile {{ quote(source_file()) }} _generate-ssh-key {{ quote(".provisioning" / host / "persist" / "etc" / "ssh" / HOSTKEY) }}
+# Update a ssh host public key in .sops.yaml for `host`.
+update-ssh-host-key host:
+    @just --justfile {{ quote(source_file()) }} _update-ssh-key {{ quote(host) }} {{ quote(".provisioning" / host / "persist" / "etc" / "ssh" / (HOSTKEY + ".pub")) }}
+
+# Prepare a ssh host key for `host`.
+prepare-ssh-host-key host:
+    just --justfile {{ quote(source_file()) }} generate-ssh-host-key {{ quote(host) }}
+    just --justfile {{ quote(source_file()) }} update-ssh-host-key {{ quote(host) }}
 
 # Generate a ssh host key for the `host` initrd.
 generate-initrd-ssh-host-key host:
-    mkdir -p {{ quote(".provisioning" / host / "persist" / "secrets" / "boot" / "etc" / "ssh") }}
-    ssh-keygen -t ed25519 -N "" -C "" -f {{ quote(".provisioning" / host / "persist" / "secrets" / "boot" / "etc" / "ssh" / HOSTKEY) }}
+    @just --justfile {{ quote(source_file()) }} _generate-ssh-key {{ quote (".provisioning" / host / "persist" / "secrets" / "boot" / "etc" / "ssh" / HOSTKEY) }}
 
-# Prepare for provisioning the `host`
-prepare-provision host: (generate-ssh-host-key host) (update-ssh-host-key host) (update-secrets)
+# Generate a ssh host key for the `microvm` on the `host`
+generate-microvm-ssh-host-key host microvm:
+    @just --justfile {{ quote(source_file()) }} _generate-ssh-key {{ quote(".provisioning" / host / "persist" / "microvms" / microvm / "etc" / "ssh" / HOSTKEY) }}
+# Update a ssh host key in .sops.yaml for the `microvm` on the `host`
+update-microvm-ssh-host-key host microvm:
+    @just --justfile {{ quote(source_file()) }} _update-ssh-key {{ quote(host + "-" + microvm) }} {{ quote(".provisioning" / host / "persist" / "microvms" / microvm / "etc" / "ssh" / (HOSTKEY + ".pub")) }}
+# Prepare a ssh host key for the `microvm` on the `host`.
+prepare-microvm-ssh-host-key host microvm:
+    just --justfile {{ quote(source_file()) }} generate-microvm-ssh-host-key {{ quote(host) }} {{ quote(microvm) }}
+    just --justfile {{ quote(source_file()) }} update-microvm-ssh-host-key {{ quote(host) }} {{ quote(microvm) }}
 
-# Update the encrypted secrets in the repository (e.g. after changing the keys in .sops.yaml)
+# Update the encrypted secrets in the repository.
 update-secrets:
     find . -name "secrets.yaml" -print0 | xargs -0 sops updatekeys --yes
-
-# Update the key in `.sops.yaml` with the public key for the `host`.
-update-ssh-host-key host:
-    key=$(find {{ quote(".provisioning" / host) }} -name {{ quote(HOSTKEY + ".pub") }} -exec ssh-to-age -i {} \;) \
-        yq -i {{ quote('(._keys[] | select(anchor == "' + host + '")) = strenv(key)') }} .sops.yaml
