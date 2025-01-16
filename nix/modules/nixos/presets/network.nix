@@ -15,7 +15,9 @@
         enable = lib.mkDefault false;
 
         iwd = {
-          enable = lib.mkDefault true;
+          # Usually only laptops need `iwd`, which represents the smallest
+          # amount of configurations for this repo.
+          enable = lib.mkDefault false;
           settings = {
             General.UseDefaultInterface = lib.mkDefault true;
             DriverQuirks = {
