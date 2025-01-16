@@ -118,7 +118,9 @@ in
                     type = "zfs_fs";
                     mountpoint = "/nix";
                     options = {
+                      acltype = "posixacl";
                       atime = "off";
+                      xattr = "sa";
                       "com.sun:auto-snapshot" = "false";
                     };
                   };
@@ -157,6 +159,20 @@ in
                     };
                     postCreateHook = ''
                       zfs list -t snapshot -H -o name | grep -E '^rpool/safe/persist@blank$' || zfs snapshot rpool/safe/persist@blank
+                    '';
+                  };
+                  "safe/shared" = {
+                    type = "zfs_fs";
+                    mountpoint = "/var/shared";
+                    options = {
+                      acltype = "posixacl";
+                      atime = "on";
+                      relatime = "on";
+                      xattr = "sa";
+                      "com.sun:auto-snapshot" = "true";
+                    };
+                    postCreateHook = ''
+                      zfs list -t snapshot -H -o name | grep -E '^rpool/safe/shared@blank$' || zfs snapshot rpool/safe/shared@blank
                     '';
                   };
 

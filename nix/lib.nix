@@ -8,6 +8,10 @@
 }:
 let
   croissant-lib = {
+    microVMToApp = configuration: {
+      type = "app";
+      program = "${configuration.config.microvm.declaredRunner}/bin/microvm-run";
+    };
     mkHomeConfiguration =
       args@{
         croissantPresetsPath ? ./modules/home/presets,

@@ -16,6 +16,15 @@ _default:
 dotfiles *ARGS:
     dotter -v {{ ARGS }}
 
+# Deploy the deploy-rs `target`
+deploy target *ARGS:
+    deploy {{ quote(".#" + target) }} {{ ARGS }}
+
+# Deploy the `vm` to the `host`
+deploy-vm host vm:
+    nix run {{ quote(".#nixosConfigurations." + vm + ".config.microvm.deploy.installOnHost") }} {{ quote(host) }}
+    ssh {{ quote(host) }} systemctl restart {{ quote("microvm@" + vm) }}
+
 # Generate a ssh host key for use during provisioning `host`.
 generate-ssh-host-key host:
     mkdir -p {{ quote(".provisioning" / host / "persist" / "etc" / "ssh") }}

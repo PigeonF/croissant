@@ -34,7 +34,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        nixos-system: ["serenno"]
+        nixos-system: ["serenno", "raxus"]
     steps:
       - uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@v29

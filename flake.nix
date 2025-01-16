@@ -33,6 +33,14 @@
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    impermanence = {
+      url = "github:nix-community/impermanence?ref=master";
+    };
+    microvm = {
+      url = "github:astro/microvm.nix?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     nixos-facter-modules = {
       url = "github:numtide/nixos-facter-modules?ref=main";
     };
@@ -60,9 +68,17 @@
       };
       nixosModules = {
         disk = ./nix/modules/nixos/disk;
+        microvm-host = ./nix/modules/nixos/microvm/host.nix;
+        microvm-vm = ./nix/modules/nixos/microvm/vm.nix;
+        microvms = ./nix/modules/nixos/microvms.nix;
       };
       lib = import ./nix/lib.nix {
-        extraNixOsModules = builtins.attrValues nixosModules;
+        extraNixOsModules = builtins.attrValues (
+          builtins.removeAttrs nixosModules [
+            "microvm-host"
+            "microvm-vm"
+          ]
+        );
         inherit (nixpkgs) lib;
         home-manager-lib = inputs.home-manager.lib;
       };
@@ -81,6 +97,7 @@
 
         imports = [
           ./nix/configurations/home/root
+          ./nix/configurations/microvm/raxus
           ./nix/configurations/nixos/serenno
           treefmt-nix.flakeModule
         ] ++ builtins.attrValues flakeModules;
