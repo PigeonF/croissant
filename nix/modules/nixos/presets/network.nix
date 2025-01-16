@@ -33,7 +33,11 @@
     };
 
     systemd = {
-      network.enable = lib.mkDefault true;
+      network = {
+        enable = lib.mkDefault true;
+        # Set by the iwd module by default, but we want to use the systemd naming scheme.
+        links."80-iwd".linkConfig.NamePolicy = lib.mkOverride 999 "keep kernel database onboard slot path";
+      };
     };
   };
 }
