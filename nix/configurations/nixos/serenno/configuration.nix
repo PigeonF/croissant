@@ -5,6 +5,7 @@
   config,
   croissantPresetsPath,
   inputs,
+  lib,
   modulesPath,
   ...
 }:
@@ -19,9 +20,23 @@
     "${croissantPresetsPath}/openssh.nix"
     "${croissantPresetsPath}/users.nix"
     "${modulesPath}/profiles/perlless.nix"
+    inputs.impermanence.nixosModules.impermanence
+    inputs.microvm.nixosModules.host
+    inputs.self.nixosModules.microvm-host
     inputs.sops-nix.nixosModules.sops
   ];
+
   config = {
+    environment = {
+      persistence."/persist" = {
+        hideMounts = true;
+
+        directories = [
+          "/var/lib/nixos"
+        ];
+      };
+    };
+
     networking = {
       hostName = "serenno";
     };
@@ -39,8 +54,22 @@
       };
     };
 
+    croissant.microvm.host.externalInterface = "enp5s0";
+
+    microvm = {
+      autostart = [
+        "raxus"
+      ];
+      vms = {
+        raxus = {
+          flake = inputs.self;
+        };
+      };
+    };
+
     system = {
       stateVersion = "25.05";
+      forbiddenDependenciesRegexes = lib.mkForce [ ];
     };
 
     users = {
