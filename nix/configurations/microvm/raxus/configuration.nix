@@ -17,6 +17,7 @@
     "${croissantPresetsPath}/users.nix"
     inputs.microvm.nixosModules.microvm
     inputs.self.nixosModules.microvm-vm
+    inputs.sops-nix.nixosModules.sops
   ];
 
   config = {
@@ -27,6 +28,11 @@
 
     networking = {
       hostName = "raxus";
+    };
+
+    sops = {
+      defaultSopsFile = ./secrets.yaml;
+      secrets = { };
     };
 
     services = {
