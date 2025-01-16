@@ -243,7 +243,7 @@ in
         };
 
         systemd = {
-          tmpfiles.rules = [
+          tmpfiles.rules = (lib.mkIf config.networking.wireless.iwd.enable) [
             "d /persist/var/lib/iwd - - - -"
             "L+ /var/lib/iwd - - - - /persist/var/lib/iwd"
           ];
