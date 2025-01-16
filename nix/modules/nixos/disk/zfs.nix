@@ -212,7 +212,7 @@ in
                   serviceConfig.Type = "oneshot";
                   script = ''
                     ${lib.strings.toShellVar "datasets" cfg.zfs.rollback.datasets}
-                    for dataset in ''${datasets[@]}; do
+                    for dataset in "''${datasets[@]}"; do
                       zfs rollback -r "$dataset@blank"
                     done
                   '';
