@@ -20,10 +20,9 @@ dotfiles *ARGS:
 deploy target *ARGS:
     deploy {{ quote(".#" + target) }} {{ ARGS }}
 
-# Deploy the `vm` to the `host`
-deploy-vm host vm:
-    nix run {{ quote(".#nixosConfigurations." + vm + ".config.microvm.deploy.installOnHost") }} {{ quote(host) }}
-    ssh {{ quote(host) }} systemctl restart {{ quote("microvm@" + vm) }}
+# Deploy the `microvm` to the `host`
+deploy-vm host microvm:
+    nix run {{ quote(".#nixosConfigurations." + microvm + ".config.microvm.deploy.rebuild") }} {{ quote(host) }} {{ quote(microvm) }}
 
 _generate-ssh-key file:
     mkdir -p {{ quote(parent_directory(file)) }}
