@@ -89,3 +89,18 @@ Once the system has been provisioned, it can be updated using [`deploy-rs`].
 ```console
 deploy ".#serenno"
 ```
+
+To deploy changes to a microvm, use `deploy-vm`.
+
+```console
+just deploy-vm serenno.incus raxus
+```
+
+Since the microvms are generally not exposed outside of the microvm host, you have to configure a SSH jump host for the microvm address.
+
+```ssh-config
+Host raxus raxus.serenno.incus
+  User root
+  HostName raxus
+  ProxyJump root@serenno.incus
+```
