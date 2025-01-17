@@ -24,6 +24,10 @@ jobs:
       - uses: nix-community/cache-nix-action@v5
         with:
           primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
+          purge: true
+          purge-prefixes: build-${{ runner.os }}-
+          purge-created: 0
+          purge-primary-key: never
       - name: check
         run: nix flake check
 
@@ -41,5 +45,9 @@ jobs:
       - uses: nix-community/cache-nix-action@v5
         with:
           primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
+          purge: true
+          purge-prefixes: build-${{ runner.os }}-
+          purge-created: 0
+          purge-primary-key: never
       - name: build
         run: nix build '.#nixosConfigurations.${{ matrix.nixos-system }}.config.system.build.toplevel'
