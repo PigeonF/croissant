@@ -4,7 +4,7 @@
 
 [misc]
 assume_yes = true
-ignore_failures = ["system"]
+ignore_failures = ["containers"]
 cleanup = true
 
 [windows]
