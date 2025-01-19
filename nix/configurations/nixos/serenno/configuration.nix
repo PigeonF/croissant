@@ -14,6 +14,7 @@
 
   imports = [
     ./system.nix
+    ./webserver.nix
     "${croissantPresetsPath}/bash.nix"
     "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
@@ -54,7 +55,12 @@
       };
     };
 
-    croissant.microvm.host.externalInterface = "enp5s0";
+    croissant = {
+      microvm.host.externalInterface = "enp5s0";
+      serenno.virtualhosts = {
+        "fierlings.family" = "raxus";
+      };
+    };
 
     microvm = {
       autostart = [
