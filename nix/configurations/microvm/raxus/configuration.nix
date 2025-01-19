@@ -2,8 +2,9 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
-  inputs,
+  config,
   croissantPresetsPath,
+  inputs,
   ...
 }:
 {
@@ -39,13 +40,53 @@
       openssh.enable = true;
       nginx = {
         enable = true;
-        virtualHosts.default = {
-          serverName = "_";
-          locations."/" = {
-            return = "200 '<html><body>It works</body></html>'";
-            extraConfig = ''
-              default_type text/html;
-            '';
+
+        recommendedGzipSettings = true;
+        recommendedOptimisation = true;
+        recommendedProxySettings = true;
+
+        commonHttpConfig = ''
+          log_format main '$remote_addr - $remote_user [$time_local] '
+                          '{$host} "$request" $status $body_bytes_sent '
+                          '"$http_referer" "$http_user_agent"';
+
+          access_log syslog:server=unix:/dev/log main;
+
+          set_real_ip_from ${config.croissant.microvms.host.ipv4};
+          set_real_ip_from ${config.croissant.microvms.host.ipv6};
+
+          real_ip_header proxy_protocol;
+        '';
+
+        defaultListen = [
+          {
+            addr = "0.0.0.0";
+            port = 80;
+            proxyProtocol = true;
+          }
+          {
+            addr = "[::0]";
+            port = 80;
+            proxyProtocol = true;
+          }
+        ];
+
+        virtualHosts = {
+          "fierlings.family" = {
+            locations."/" = {
+              return = "200 '<html><body>It works</body></html>'";
+              extraConfig = ''
+                default_type text/html;
+              '';
+            };
+          };
+          "test.fierlings.family" = {
+            locations."/" = {
+              return = "200 '<html><body>It does work!!!</body></html>'";
+              extraConfig = ''
+                default_type text/html;
+              '';
+            };
           };
         };
       };
