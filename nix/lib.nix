@@ -5,6 +5,7 @@
   extraNixOsModules ? [ ],
   home-manager-lib,
   lib,
+  nix-darwin-lib,
 }:
 let
   croissant-lib = {
@@ -12,6 +13,23 @@ let
       type = "app";
       program = "${configuration.config.microvm.declaredRunner}/bin/microvm-run";
     };
+    mkDarwinConfiguration =
+      args@{
+        croissantNixOsPresetsPath ? ./modules/nixos/presets,
+        specialArgs ? { },
+        ...
+      }:
+      nix-darwin-lib.darwinSystem (
+        {
+          specialArgs = {
+            inherit croissantNixOsPresetsPath;
+          } // args.specialArgs;
+        }
+        // builtins.removeAttrs args [
+          "croissantNixOsPresetsPath"
+          "specialArgs"
+        ]
+      );
     mkHomeConfiguration =
       args@{
         croissantPresetsPath ? ./modules/home/presets,

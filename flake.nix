@@ -6,6 +6,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin?ref=master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     systems.url = "github:nix-systems/default?ref=main";
     flake-compat = {
       url = "github:edolstra/flake-compat?ref=master";
@@ -86,6 +90,7 @@
         );
         inherit (nixpkgs) lib;
         home-manager-lib = inputs.home-manager.lib;
+        nix-darwin-lib = inputs.nix-darwin.lib;
       };
     in
     flake-parts.lib.mkFlake
@@ -101,11 +106,15 @@
         systems = import systems;
 
         imports = [
+          ./nix/configurations/darwin/kamino
           ./nix/configurations/home/root
           ./nix/configurations/microvm/raxus
           ./nix/configurations/nixos/serenno
           treefmt-nix.flakeModule
         ] ++ builtins.attrValues flakeModules;
+
+        # https://github.com/serokell/deploy-rs/issues/216
+        deploy-rs.flakeCheck = false;
 
         flake = {
           inherit flakeModules lib nixosModules;
@@ -131,6 +140,8 @@
               default = pkgs.mkShellNoCC {
                 name = "croissant";
                 inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
+
+                packages = [ pkgs.git ];
               };
               home-manager = pkgs.mkShellNoCC {
                 name = "home-manager";

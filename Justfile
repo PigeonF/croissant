@@ -64,8 +64,9 @@ generate-ssh-key file:
 [group('test')]
 test:
     nix flake check
-    nix build ".#serenno"
-    nix build ".#raxus"
+    {{ if os() == "linux" { "nix build '.#serenno'" } else { "" } }}
+    {{ if os() == "linux" { "nix build '.#raxus'" } else { "" } }}
+    {{ if os() == "macos" { "nix build '.#kamino'" } else { "" } }}
 
 # Update a ssh host key in .sops.yaml for the `microvm` on the `host`
 [group('update')]
