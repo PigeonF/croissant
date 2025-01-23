@@ -16,17 +16,20 @@
       package = pkgs.nixVersions.stable;
 
       settings = {
-        extra-experimental-features = [
-          "auto-allocate-uids"
-          "cgroups"
-          "flakes"
-          "nix-command"
-          "no-url-literals"
-        ];
+        extra-experimental-features =
+          [
+            "flakes"
+            "nix-command"
+            "no-url-literals"
+          ]
+          ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+            "auto-allocate-uids"
+            "cgroups"
+          ];
 
-        auto-allocate-uids = lib.mkDefault true;
+        auto-allocate-uids = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         system-features = [ "uid-range" ];
-        use-cgroups = lib.mkDefault true;
+        use-cgroups = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         use-xdg-base-directories = lib.mkDefault true;
       };
     };

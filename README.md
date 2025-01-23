@@ -76,8 +76,8 @@ Install the configuration using [`nixos-anywhere`].
 
 ```console
 HOST=root@serenno.incus
-nixos-anywhere --flake ".#serenno" --phases kexec --generate-hardware-config nixos-facter ./nix/configurations/nixos/serenno/facter.json --target-host "$HOST"
-nixos-anywhere --flake ".#serenno" --phases disko,install,reboot --extra-files ".provisioning/serenno/" --target-host "$HOST"
+nixos-anywhere --flake '.#serenno' --phases kexec --generate-hardware-config nixos-facter ./nix/configurations/nixos/serenno/facter.json --target-host "$HOST"
+nixos-anywhere --flake '.#serenno' --phases disko,install,reboot --extra-files ".provisioning/serenno/" --target-host "$HOST"
 ssh-keygen -R serenno.incus
 rm -rf .provisioning/serenno
 ```
@@ -87,7 +87,7 @@ rm -rf .provisioning/serenno
 Once the system has been provisioned, it can be updated using [`deploy-rs`].
 
 ```console
-deploy ".#serenno"
+deploy '.#serenno'
 ```
 
 To deploy changes to a microvm, use `deploy-vm`.
@@ -103,4 +103,22 @@ Host raxus raxus.serenno.incus
   User root
   HostName raxus
   ProxyJump root@serenno.incus
+```
+
+## Kamino
+
+Install nix using the [lix-installer](https://lix.systems/install/#on-any-other-linuxmacos-system).
+Install the XCode tools using `sudo xcode-select --install`.
+
+Set up passwordless sudo for `wheel`.
+
+```console
+$ visudo -f /etc/sudoers.d/wheel
+%wheel  ALL=(ALL) NOPASSWD: ALL
+```
+
+You can deploy to kamino from another machine, but beware that you have to pass the `--skip-checks` flag if you deploy from a linux machine.
+
+```console
+deploy --skip-checks --remote-build '.#kamino'
 ```
