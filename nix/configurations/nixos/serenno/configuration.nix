@@ -22,6 +22,7 @@
     "${croissantPresetsPath}/users.nix"
     "${modulesPath}/profiles/perlless.nix"
     inputs.impermanence.nixosModules.impermanence
+    inputs.lix-modules.nixosModules.default
     inputs.microvm.nixosModules.host
     inputs.self.nixosModules.microvm-host
     inputs.sops-nix.nixosModules.sops
