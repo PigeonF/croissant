@@ -30,24 +30,3 @@ jobs:
           purge-primary-key: never
       - name: check
         run: nix flake check
-
-  nixos:
-    name: build nixos configuration
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-    strategy:
-      matrix:
-        nixos-system: ["serenno", "raxus"]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: nixbuild/nix-quick-install-action@v29
-      - uses: nix-community/cache-nix-action@v5
-        with:
-          primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
-          purge: true
-          purge-prefixes: build-${{ runner.os }}-
-          purge-created: 0
-          purge-primary-key: never
-      - name: build
-        run: nix build '.#nixosConfigurations.${{ matrix.nixos-system }}.config.system.build.toplevel'
