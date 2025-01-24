@@ -1,7 +1,11 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  ...
+}:
 {
   _file = ./nix.nix;
 
@@ -9,7 +13,7 @@
     nix = {
       channel.enable = lib.mkDefault false;
 
-      package = pkgs.nixVersions.nix_2_25;
+      package = pkgs.nixVersions.stable;
 
       settings = {
         extra-experimental-features = [

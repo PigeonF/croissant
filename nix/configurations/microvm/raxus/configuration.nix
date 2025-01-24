@@ -16,6 +16,7 @@
     "${croissantPresetsPath}/nix.nix"
     "${croissantPresetsPath}/openssh.nix"
     "${croissantPresetsPath}/users.nix"
+    inputs.lix-modules.nixosModules.default
     inputs.microvm.nixosModules.microvm
     inputs.self.nixosModules.microvm-vm
     inputs.sops-nix.nixosModules.sops
