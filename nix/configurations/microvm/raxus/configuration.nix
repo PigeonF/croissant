@@ -11,6 +11,7 @@
   _file = ./configuration.nix;
 
   imports = [
+    ./homepage-dashboard.nix
     "${croissantPresetsPath}/bash.nix"
     "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
@@ -39,6 +40,7 @@
 
     services = {
       openssh.enable = true;
+
       nginx = {
         enable = true;
 
@@ -71,25 +73,6 @@
             proxyProtocol = true;
           }
         ];
-
-        virtualHosts = {
-          "fierlings.family" = {
-            locations."/" = {
-              return = "200 '<html><body>It works</body></html>'";
-              extraConfig = ''
-                default_type text/html;
-              '';
-            };
-          };
-          "test.fierlings.family" = {
-            locations."/" = {
-              return = "200 '<html><body>It does work!!!</body></html>'";
-              extraConfig = ''
-                default_type text/html;
-              '';
-            };
-          };
-        };
       };
     };
 
