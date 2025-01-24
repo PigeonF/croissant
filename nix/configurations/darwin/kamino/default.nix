@@ -19,6 +19,7 @@ in
     hostname = "kamino.local";
     profilesOrder = [
       "system"
+      "root"
     ];
 
     profiles = {
@@ -26,6 +27,12 @@ in
         user = "root";
         sshUser = "pigeonf";
         path = deployLib.activate.darwin self.darwinConfigurations.kamino;
+      };
+      root = {
+        user = "root";
+        sshUser = "pigeonf";
+        sudo = "sudo --login -u";
+        path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
     };
   };

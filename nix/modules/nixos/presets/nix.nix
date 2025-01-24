@@ -28,7 +28,7 @@
           ];
 
         auto-allocate-uids = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
-        system-features = [ "uid-range" ];
+        system-features = lib.mkIf pkgs.stdenv.hostPlatform.isLinux [ "uid-range" ];
         use-cgroups = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         use-xdg-base-directories = lib.mkDefault true;
       };
