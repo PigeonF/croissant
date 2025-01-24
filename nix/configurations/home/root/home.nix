@@ -4,6 +4,7 @@
 {
   croissantPresetsPath,
   userName,
+  pkgs,
   ...
 }:
 {
@@ -18,7 +19,7 @@
         "doc"
         "man"
       ];
-      homeDirectory = "/root";
+      homeDirectory = if pkgs.stdenv.hostPlatform.isDarwin then "/var/root" else "/root";
       stateVersion = "25.05";
       username = userName;
     };
