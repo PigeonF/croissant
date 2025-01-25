@@ -9,11 +9,11 @@
     { pkgs, ... }:
     {
       homeConfigurations = {
-        root = croissant-lib.mkHomeConfiguration {
+        pigeonf = croissant-lib.mkHomeConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = {
-            userName = "root";
+            userName = "pigeonf";
           };
 
           modules = [ ./home.nix ];

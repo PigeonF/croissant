@@ -2,16 +2,11 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
-  croissantPresetsPath,
-  pkgs,
   userName,
+  pkgs,
   ...
 }:
 {
-  imports = [
-    "${croissantPresetsPath}/sysadmin.nix"
-  ];
-
   config = {
     home = {
       extraOutputsToInstall = [
@@ -19,7 +14,8 @@
         "doc"
         "man"
       ];
-      homeDirectory = if pkgs.stdenv.hostPlatform.isDarwin then "/var/${userName}" else "/${userName}";
+      homeDirectory =
+        if pkgs.stdenv.hostPlatform.isDarwin then "/Users/${userName}" else "/home/${userName}";
       stateVersion = "25.05";
       username = userName;
     };

@@ -74,6 +74,7 @@
     let
       flakeModules = {
         deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
+        home-modules = ./nix/modules/flake-parts/home-modules.nix;
       };
       nixosModules = {
         disk = ./nix/modules/nixos/disk;
@@ -107,6 +108,7 @@
 
         imports = [
           ./nix/configurations/darwin/kamino
+          ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
           ./nix/configurations/microvm/raxus
           ./nix/configurations/nixos/serenno
