@@ -76,6 +76,9 @@
         deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
         home-modules = ./nix/modules/flake-parts/home-modules.nix;
       };
+      homeModules = {
+        dotfiles = ./nix/modules/home/dotfiles.nix;
+      };
       nixosModules = {
         disk = ./nix/modules/nixos/disk;
         microvm-host = ./nix/modules/nixos/microvm/host.nix;
@@ -119,7 +122,12 @@
         deploy-rs.flakeCheck = false;
 
         flake = {
-          inherit flakeModules lib nixosModules;
+          inherit
+            flakeModules
+            lib
+            nixosModules
+            homeModules
+            ;
         };
 
         perSystem =
