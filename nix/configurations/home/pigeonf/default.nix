@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-{ croissant-lib, ... }:
+{ croissant-lib, inputs, ... }:
 {
   _file = ./default.nix;
 
@@ -13,6 +13,7 @@
           inherit pkgs;
 
           extraSpecialArgs = {
+            inherit inputs;
             userName = "pigeonf";
           };
 
