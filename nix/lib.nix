@@ -15,18 +15,18 @@ let
     };
     mkDarwinConfiguration =
       args@{
-        croissantNixOsPresetsPath ? ./modules/nixos/presets,
+        croissantPresetsPath ? ./modules/nixos/presets,
         specialArgs ? { },
         ...
       }:
       nix-darwin-lib.darwinSystem (
         {
           specialArgs = {
-            inherit croissantNixOsPresetsPath;
+            inherit croissantPresetsPath;
           } // args.specialArgs;
         }
         // builtins.removeAttrs args [
-          "croissantNixOsPresetsPath"
+          "croissantPresetsPath"
           "specialArgs"
         ]
       );

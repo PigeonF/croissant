@@ -11,11 +11,12 @@
   _file = ./configuration.nix;
 
   imports = [
-    "${croissantPresetsPath}/bash.nix"
-    "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/nixos/bash.nix"
+    "${croissantPresetsPath}/nixos/network.nix"
+    "${croissantPresetsPath}/nixos/users.nix"
+    "${croissantPresetsPath}/nixos/xdg.nix"
     "${croissantPresetsPath}/openssh.nix"
-    "${croissantPresetsPath}/users.nix"
     inputs.lix-modules.nixosModules.default
     inputs.microvm.nixosModules.microvm
     inputs.self.nixosModules.microvm-vm
