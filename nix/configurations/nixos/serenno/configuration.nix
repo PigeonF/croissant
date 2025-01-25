@@ -15,11 +15,12 @@
   imports = [
     ./system.nix
     ./webserver.nix
-    "${croissantPresetsPath}/bash.nix"
-    "${croissantPresetsPath}/network.nix"
     "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/nixos/bash.nix"
+    "${croissantPresetsPath}/nixos/network.nix"
+    "${croissantPresetsPath}/nixos/users.nix"
+    "${croissantPresetsPath}/nixos/xdg.nix"
     "${croissantPresetsPath}/openssh.nix"
-    "${croissantPresetsPath}/users.nix"
     "${modulesPath}/profiles/perlless.nix"
     inputs.impermanence.nixosModules.impermanence
     inputs.lix-modules.nixosModules.default
