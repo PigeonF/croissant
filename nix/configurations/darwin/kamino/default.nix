@@ -20,6 +20,7 @@ in
     profilesOrder = [
       "system"
       "root"
+      "pigeonf"
     ];
 
     profiles = {
@@ -33,6 +34,13 @@ in
         sshUser = "pigeonf";
         sudo = "sudo --login -u";
         path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
+      };
+      pigeonf = {
+        user = "pigeonf";
+        sshUser = "pigeonf";
+        path =
+          deployLib.activate.home-manager
+            inputs.self.legacyPackages.${system}.homeConfigurations.pigeonf;
       };
     };
   };
