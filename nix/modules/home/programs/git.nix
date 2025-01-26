@@ -26,5 +26,11 @@ in
   config = lib.mkIf cfg.enable {
     # Cannot use program.git because it unconditionally writes ~/.config/git/config.
     home.packages = [ cfg.package ];
+
+    programs = {
+      zsh.shellAliases = {
+        g = "git";
+      };
+    };
   };
 }
