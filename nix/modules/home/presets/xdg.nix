@@ -13,5 +13,11 @@
       dataHome = "${config.home.homeDirectory}/.local/share";
       stateHome = "${config.home.homeDirectory}/.local/state";
     };
+
+    home = {
+      sessionVariables = {
+        LESSHISTFILE = "$XDG_DATA_HOME/lesshst";
+      };
+    };
   };
 }

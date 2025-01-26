@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: 0BSD
 {
   config,
-  pkgs,
   lib,
   ...
 }:
@@ -19,7 +18,6 @@ in
   options.croissant.programs = {
     helix = {
       enable = mkEnableOption "set up helix";
-      package = lib.mkPackageOption pkgs "helix" { };
     };
   };
 
@@ -27,7 +25,6 @@ in
     programs = {
       helix = {
         enable = lib.mkDefault true;
-        package = lib.mkDefault cfg.package;
         defaultEditor = lib.mkDefault true;
       };
     };

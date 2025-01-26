@@ -34,13 +34,12 @@
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        zsh.enable = true;
       };
     };
 
     programs = {
       home-manager.enable = true;
-      # Make sure to add the home manager variables to the path.
-      zsh.enable = true;
     };
   };
 }

@@ -39,6 +39,10 @@ in
         enable = lib.mkDefault true;
         package = lib.mkDefault cfg.package;
       };
+
+      zsh.shellAliases = {
+        jjj = "jj --ignore-working-copy";
+      };
     };
   };
 }
