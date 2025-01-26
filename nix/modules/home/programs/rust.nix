@@ -12,6 +12,8 @@
 let
   inherit (lib)
     mkEnableOption
+    mkOption
+    types
     ;
   cfg = config.croissant.programs.rust;
 in
@@ -24,10 +26,23 @@ in
       fastLinker = mkEnableOption "use a faster linker by default" // {
         default = true;
       };
+      cargoConfig = mkOption {
+        default = "";
+        type = types.lines;
+        description = ''
+          Contents of the $CARGO_HOME/config.toml file.
+        '';
+      };
     };
   };
 
   config = lib.mkMerge [
+    (lib.mkIf (cfg.cargoConfig != "") {
+      home = {
+        file."${lib.removePrefix "${config.home.homeDirectory}/" config.xdg.dataHome}/cargo/config.toml".text =
+          cfg.cargoConfig;
+      };
+    })
     (lib.mkIf cfg.enable {
       home = {
         packages = builtins.attrValues {
@@ -55,17 +70,26 @@ in
           RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         };
       };
+
+      croissant = {
+        programs = {
+          rust = {
+            cargoConfig = ''
+              [alias]
+              t = "nextest run"
+            '';
+          };
+        };
+      };
     })
     (lib.mkIf (cfg.fastLinker && pkgs.stdenv.hostPlatform.isLinux) {
+      croissant.programs.rust.cargoConfig = ''
+        [target.${croissant-lib.systemToRustPlatform system}]
+        linker = "${lib.getExe pkgs.clang}"
+        rustflags = ["-C", "link-arg=--ld-path=${lib.getExe pkgs.mold}"]
+      '';
       home = {
         packages = builtins.attrValues { inherit (pkgs) clang mold; };
-
-        file."${lib.removePrefix "${config.home.homeDirectory}/" config.xdg.dataHome}/cargo/config.toml".text =
-          ''
-            [target.${croissant-lib.systemToRustPlatform system}]
-            linker = "${lib.getExe pkgs.clang}"
-            rustflags = ["-C", "link-arg=--ld-path=${lib.getExe pkgs.mold}"]
-          '';
       };
     })
   ];
