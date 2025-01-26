@@ -37,6 +37,13 @@ in
           rustup
           ;
       };
+
+      sessionPath = [ "$CARGO_HOME/bin" ];
+
+      sessionVariables = {
+        CARGO_HOME = "${config.xdg.dataHome}/cargo";
+        RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
+      };
     };
   };
 }
