@@ -31,6 +31,7 @@
         enable = true;
       };
       programs = {
+        git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
       };
