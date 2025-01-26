@@ -24,7 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       helix = {
-        enable = lib.mkDefault true;
+        enable = true;
         defaultEditor = lib.mkDefault true;
       };
     };
