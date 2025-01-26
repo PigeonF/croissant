@@ -10,14 +10,14 @@ let
   inherit (lib)
     mkEnableOption
     ;
-  cfg = config.croissant.programs.zsh;
+  cfg = config.croissant.programs.bash;
 in
 {
-  _file = ./zsh.nix;
+  _file = ./bash.nix;
 
   options.croissant.programs = {
-    zsh = {
-      enable = mkEnableOption "set up zsh";
+    bash = {
+      enable = mkEnableOption "set up bash";
     };
   };
 
@@ -26,17 +26,9 @@ in
       packages = config.croissant.shell.extraPackages;
     };
     programs = {
-      zsh = {
+      bash = {
         enable = true;
-        dotDir = ".config/zsh";
-        defaultKeymap = "emacs";
-        history = {
-          path = "${config.xdg.dataHome}/zsh/zsh_history";
-        };
-        initExtraBeforeCompInit = ''
-          bindkey "^[[1;5C" forward-word
-          bindkey "^[[1;5D" backward-word
-        '';
+        historyFile = "${config.xdg.dataHome}/bash/bash_history";
         shellAliases = config.croissant.shell.aliases;
       };
     };
