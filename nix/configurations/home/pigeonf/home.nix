@@ -2,11 +2,14 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
-  userName,
+  croissantPresetsPath,
   pkgs,
+  userName,
   ...
 }:
 {
+  imports = [ "${croissantPresetsPath}/nix.nix" ];
+
   config = {
     home = {
       extraOutputsToInstall = [
@@ -25,12 +28,15 @@
         enable = true;
       };
       programs = {
+        helix.enable = true;
         jujutsu.enable = true;
       };
     };
 
     programs = {
       home-manager.enable = true;
+      # Make sure to add the home manager variables to the path.
+      zsh.enable = true;
     };
   };
 }

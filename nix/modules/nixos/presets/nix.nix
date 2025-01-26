@@ -16,6 +16,8 @@
       package = pkgs.nixVersions.stable;
 
       settings = {
+
+        auto-allocate-uids = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         extra-experimental-features =
           [
             "flakes"
@@ -26,9 +28,8 @@
             "auto-allocate-uids"
             "cgroups"
           ];
-
-        auto-allocate-uids = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         system-features = lib.mkIf pkgs.stdenv.hostPlatform.isLinux [ "uid-range" ];
+        trusted-users = [ "@wheel" ];
         use-cgroups = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
         use-xdg-base-directories = lib.mkDefault true;
       };
