@@ -15,3 +15,6 @@
 
 [starship.files]
 "dotfiles/starship/.config/" = "~/.config/"
+
+[zellij.files]
+"dotfiles/zellij/.config" = "~/.config/"

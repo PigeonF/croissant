@@ -37,6 +37,7 @@
         helix.enable = true;
         jujutsu.enable = true;
         starship.enable = true;
+        zellij.enable = true;
         zsh.enable = true;
       };
     };
