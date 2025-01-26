@@ -26,6 +26,14 @@
       username = userName;
     };
 
-    programs.home-manager.enable = true;
+    croissant = {
+      git.enable = true;
+      helix.enable = true;
+      starship.enable = true;
+    };
+
+    programs = {
+      home-manager.enable = true;
+    };
   };
 }

@@ -11,7 +11,6 @@
     bat.enable = true;
     btop.enable = true;
     fd.enable = true;
-    helix.enable = true;
     ripgrep.enable = true;
   };
 }
