@@ -2,6 +2,10 @@
 #
 # SPDX-License-Identifier: 0BSD
 
+[git.files]
+"dotfiles/git/.config/" = "~/.config/"
+"dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/.config/git/commit.gitconfig", type = "template" }
+
 [helix.files]
 "dotfiles/helix/.config/" = "~/.config/"
 
