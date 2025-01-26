@@ -2,16 +2,11 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
-  inputs,
   userName,
   pkgs,
   ...
 }:
 {
-  imports = [
-    inputs.self.homeModules.dotfiles
-  ];
-
   config = {
     home = {
       extraOutputsToInstall = [
@@ -28,15 +23,14 @@
     croissant = {
       dotfiles = {
         enable = true;
-        dotterArgs = [
-          "--local-config"
-          (pkgs.writeText "local.toml" ''
-            packages = []
-          '')
-        ];
+      };
+      programs = {
+        jujutsu.enable = true;
       };
     };
 
-    programs.home-manager.enable = true;
+    programs = {
+      home-manager.enable = true;
+    };
   };
 }

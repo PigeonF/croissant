@@ -6,14 +6,14 @@
   _file = ./default.nix;
 
   perSystem =
-    { pkgs, ... }:
+    { pkgs, system, ... }:
     {
       homeConfigurations = {
         pigeonf = croissant-lib.mkHomeConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs system;
             userName = "pigeonf";
           };
 

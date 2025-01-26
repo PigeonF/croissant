@@ -47,7 +47,7 @@ in
       };
       useJujutsu = mkOption {
         type = types.bool;
-        default = true;
+        default = config.croissant.programs.jujutsu.enable;
         description = ''
           Whether to use `jj` to clone the repository.
         '';
@@ -61,7 +61,10 @@ in
         dotfiles =
           let
             clone =
-              if cfg.useJujutsu then "${lib.getExe pkgs.jujutsu} git clone" else "${lib.getExe pkgs.git} clone";
+              if cfg.useJujutsu then
+                "${lib.getExe config.croissant.programs.jujutsu.package} git clone"
+              else
+                "${lib.getExe pkgs.git} clone";
           in
           lib.hm.dag.entryAfter [ "installPackages" ] ''
             if [ ! -d ${lib.escapeShellArg cfg.destination} ]; then

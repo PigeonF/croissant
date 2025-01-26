@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
+#
+#:schema https://raw.githubusercontent.com/jj-vcs/jj/main/cli/src/config-schema.json
 
 [user]
 # Set with `jj config set --repo user.email "fnoegip@gmail.com"
@@ -15,37 +17,20 @@ fsmonitor = "watchman"
 {{/if}}
 
 [ui]
-default-command = "log"
+default-command = ["log", "-n", "10"]
 # TODO(PigeonF): Figure out something cross platform.
 diff-editor = ":builtin"
 # merge-editor = "vscodium"
 paginate = "never"
 
 [git]
-push-bookmark-prefix = "PigeonF/push-"
+sign-on-push = true
+push-bookmark-prefix = "push-"
 private-commits = "description(glob:\"private:*\")"
 
 [signing]
 backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+2wAQrbFDe18oFY2Mv6qsUcYWJZPAcsV+Xr4ZHzncL"
-sign-all = false
-
-[merge-tools.diffedit3-ssh]
-program = "diffedit3"
-edit-args = [
-  "$left",
-  "$right",
-  "$output",
-  "--port",
-  "17376-17380",
-  "--no-browser",
-]
-
-[merge-tools.vscodium]
-program = "codium"
-merge-args = ["--wait", "--merge", "$left", "$right", "$base", "$output"]
-merge-tool-edits-conflict-markers = true
-diff-invocation-mode = "file-by-file"
 
 [aliases]
 d = ["diff"]
@@ -53,13 +38,18 @@ ds = ["diff", "--stat"]
 g = ["git"]
 l = ["log", "-T", "builtin_log_compact"]
 ll = ["log", "-T", "builtin_log_detailed"]
+ls = ["log", "-r", "mutable()::@"]
 s = ["status"]
+sq = ["squash"]
+sqk = ["squash", "--keep-empty"]
 sign = [
   "describe",
   "--no-edit",
   "--reset-author",
-  "--config-toml",
-  "signing.sign-all = true",
+  "--config",
+  "signing.sign-all=true",
+  "--config",
+  "signing.backend=ssh",
 ]
 
 [templates]

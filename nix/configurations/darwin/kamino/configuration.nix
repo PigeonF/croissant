@@ -16,6 +16,10 @@
   ];
 
   config = {
+    networking = {
+      computerName = "kamino";
+    };
+
     system = {
       stateVersion = 5;
     };
