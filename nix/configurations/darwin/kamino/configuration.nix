@@ -16,6 +16,11 @@
   ];
 
   config = {
+    homebrew = {
+      enable = true;
+      casks = [ "docker" ];
+    };
+
     networking = {
       computerName = "kamino";
     };
