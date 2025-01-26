@@ -9,6 +9,7 @@
 }:
 {
   imports = [
+    "${croissantPresetsPath}/nix.nix"
     "${croissantPresetsPath}/sysadmin.nix"
   ];
 
