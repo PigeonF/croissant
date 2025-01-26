@@ -44,6 +44,10 @@ in
             ;
         };
 
+        shellAliases = {
+          "c" = "cargo";
+        };
+
         sessionPath = [ "$CARGO_HOME/bin" ];
 
         sessionVariables = {
