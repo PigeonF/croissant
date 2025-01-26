@@ -18,7 +18,10 @@
   config = {
     homebrew = {
       enable = true;
-      casks = [ "docker" ];
+      casks = [
+        "1password"
+        "docker"
+      ];
     };
 
     networking = {
