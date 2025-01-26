@@ -22,14 +22,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      packages = config.croissant.shell.extraPackages;
-    };
     programs = {
       bash = {
         enable = true;
         historyFile = "${config.xdg.dataHome}/bash/bash_history";
-        shellAliases = config.croissant.shell.aliases;
       };
     };
   };

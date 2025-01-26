@@ -22,9 +22,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      packages = config.croissant.shell.extraPackages;
-    };
     programs = {
       zsh = {
         enable = true;
@@ -37,7 +34,6 @@ in
           bindkey "^[[1;5C" forward-word
           bindkey "^[[1;5D" backward-word
         '';
-        shellAliases = config.croissant.shell.aliases;
       };
     };
   };
