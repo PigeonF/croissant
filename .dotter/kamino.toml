@@ -4,4 +4,4 @@
 
 includes = [".dotter/darwin.toml"]
 
-packages = ["jj"]
+packages = ["helix", "jj"]
