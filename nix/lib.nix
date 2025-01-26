@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: 0BSD
 {
   extraNixOsModules ? [ ],
+  extraHomeModules ? [ ],
   home-manager-lib,
   lib,
   nix-darwin-lib,
@@ -34,10 +35,12 @@ let
       args@{
         croissantPresetsPath ? ./modules/home/presets,
         extraSpecialArgs ? { },
+        modules ? [ ],
         ...
       }:
       home-manager-lib.homeManagerConfiguration (
         {
+          modules = extraHomeModules ++ args.modules;
           extraSpecialArgs = {
             inherit croissantPresetsPath;
           } // args.extraSpecialArgs;
@@ -45,6 +48,7 @@ let
         // builtins.removeAttrs args [
           "croissantPresetsPath"
           "extraSpecialArgs"
+          "modules"
         ]
       );
     mkNixOsConfiguration =

@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[jj.files]
+"dotfiles/jj/.config/" = "~/Library/Application Support/"
+"dotfiles/jj/.config/jj/config.toml.hbs" = { target = "~/Library/Application Support/jj/config.toml", type = "template" }

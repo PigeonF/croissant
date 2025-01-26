@@ -40,6 +40,11 @@
     impermanence = {
       url = "github:nix-community/impermanence?ref=master";
     };
+    jujutsu = {
+      url = "github:jj-vcs/jj?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     lix-modules = {
       url = "git+https://git.lix.systems/lix-project/nixos-module?ref=2.92.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -78,6 +83,7 @@
       };
       homeModules = {
         dotfiles = ./nix/modules/home/dotfiles.nix;
+        programs-jujutsu = ./nix/modules/home/programs/jujutsu.nix;
       };
       nixosModules = {
         disk = ./nix/modules/nixos/disk;
@@ -86,6 +92,7 @@
         microvms = ./nix/modules/nixos/microvms.nix;
       };
       lib = import ./nix/lib.nix {
+        extraHomeModules = builtins.attrValues homeModules;
         extraNixOsModules = builtins.attrValues (
           builtins.removeAttrs nixosModules [
             "microvm-host"
