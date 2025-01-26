@@ -109,6 +109,7 @@ Host raxus raxus.serenno.incus
 
 Install nix using the [lix-installer](https://lix.systems/install/#on-any-other-linuxmacos-system).
 Install the XCode tools using `sudo xcode-select --install`.
+Install [Homebrew](https://brew.sh/) using the official installation instructions.
 
 Set up passwordless sudo for `wheel`.
 
