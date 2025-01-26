@@ -85,6 +85,7 @@
         dotfiles = ./nix/modules/home/dotfiles.nix;
         programs-atuin = ./nix/modules/home/programs/atuin.nix;
         programs-bash = ./nix/modules/home/programs/bash.nix;
+        programs-ghq = ./nix/modules/home/programs/ghq.nix;
         programs-git = ./nix/modules/home/programs/git.nix;
         programs-helix = ./nix/modules/home/programs/helix.nix;
         programs-jujutsu = ./nix/modules/home/programs/jujutsu.nix;

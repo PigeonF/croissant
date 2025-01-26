@@ -34,6 +34,7 @@
       programs = {
         atuin.enable = true;
         bash.enable = true;
+        ghq.enable = true;
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
