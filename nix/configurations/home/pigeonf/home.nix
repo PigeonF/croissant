@@ -34,6 +34,7 @@
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        starship.enable = true;
         zsh.enable = true;
       };
     };

@@ -12,3 +12,6 @@
 [jj.files]
 "dotfiles/jj/.config/" = "~/Library/Application Support/"
 "dotfiles/jj/.config/jj/config.toml.hbs" = { target = "~/Library/Application Support/jj/config.toml", type = "template" }
+
+[starship.files]
+"dotfiles/starship/.config/" = "~/.config/"
