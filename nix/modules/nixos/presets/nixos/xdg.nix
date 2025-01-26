@@ -15,11 +15,11 @@
       ];
 
       sessionVariables = {
-        XDG_BIN_HOME = lib.mkDefault "$HOME/.local/bin";
-        XDG_CACHE_HOME = lib.mkDefault "$HOME/.cache";
-        XDG_CONFIG_HOME = lib.mkDefault "$HOME/.config";
-        XDG_DATA_HOME = lib.mkDefault "$HOME/.local/share";
-        XDG_STATE_HOME = lib.mkDefault "$HOME/.local/state";
+        XDG_BIN_HOME = "$HOME/.local/bin";
+        XDG_CACHE_HOME = "$HOME/.cache";
+        XDG_CONFIG_HOME = "$HOME/.config";
+        XDG_DATA_HOME = "$HOME/.local/share";
+        XDG_STATE_HOME = "$HOME/.local/state";
       };
 
       # NOTE(PigeonF): Set this in extraInit so that the sessionVariables are available.

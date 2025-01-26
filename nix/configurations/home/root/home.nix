@@ -11,6 +11,7 @@
   imports = [
     "${croissantPresetsPath}/nix.nix"
     "${croissantPresetsPath}/sysadmin.nix"
+    "${croissantPresetsPath}/xdg.nix"
   ];
 
   config = {

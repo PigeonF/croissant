@@ -8,7 +8,10 @@
   ...
 }:
 {
-  imports = [ "${croissantPresetsPath}/nix.nix" ];
+  imports = [
+    "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/xdg.nix"
+  ];
 
   config = {
     home = {
