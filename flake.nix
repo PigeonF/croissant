@@ -92,7 +92,6 @@
         programs-starship = ./nix/modules/home/programs/starship.nix;
         programs-zellij = ./nix/modules/home/programs/zellij.nix;
         programs-zsh = ./nix/modules/home/programs/zsh.nix;
-        shell = ./nix/modules/home/shell.nix;
       };
       nixosModules = {
         disk = ./nix/modules/nixos/disk;

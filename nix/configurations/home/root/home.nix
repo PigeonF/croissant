@@ -10,6 +10,7 @@
 {
   imports = [
     "${croissantPresetsPath}/nix.nix"
+    "${croissantPresetsPath}/shell.nix"
     "${croissantPresetsPath}/sysadmin.nix"
     "${croissantPresetsPath}/xdg.nix"
   ];
