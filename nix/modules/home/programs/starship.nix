@@ -24,7 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       starship = {
-        enable = lib.mkDefault true;
+        enable = true;
       };
     };
   };

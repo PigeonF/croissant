@@ -36,7 +36,7 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       jujutsu = {
-        enable = lib.mkDefault true;
+        enable = true;
         package = lib.mkDefault cfg.package;
       };
 

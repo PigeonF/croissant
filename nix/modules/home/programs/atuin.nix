@@ -24,7 +24,7 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       atuin = {
-        enable = lib.mkDefault true;
+        enable = true;
         flags = [ "--disable-up-arrow" ];
         settings = {
           history_filter = [
