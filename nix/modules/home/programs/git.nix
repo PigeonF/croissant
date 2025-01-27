@@ -25,7 +25,15 @@ in
 
   config = lib.mkIf cfg.enable {
     # Cannot use program.git because it unconditionally writes ~/.config/git/config.
-    home.packages = [ cfg.package ];
+    home.packages = builtins.attrValues {
+      inherit (cfg) package;
+      inherit (pkgs)
+        delta
+        git-branchless
+        gitlab-ci-local
+        meld
+        ;
+    };
 
     programs = {
       zsh.shellAliases = {
