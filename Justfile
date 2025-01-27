@@ -13,6 +13,20 @@ HOSTKEY := "ssh_host_ed25519_key"
 list:
     @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
 
+# Build the current nixos and home-manager configuration.
+[group('build')]
+build: build-nixos build-home-manager
+
+# Build the current nixos configuration.
+[group('build')]
+build-nixos *ARGS="--flake .":
+    {{ if os() == "macos" { "darwin" } else { "nixos"  } }}-rebuild build --verbose --print-build-logs --keep-going {{ ARGS }}
+
+# Build the current home-manager configuration.
+[group('build')]
+build-home-manager *ARGS="--flake .":
+    home-manager build --verbose --print-build-logs --keep-going {{ ARGS }}
+
 # Install the dotfiles using [dotter](https://github.com/SuperCuber/dotter).
 [group('deploy')]
 dotfiles *ARGS:
@@ -39,6 +53,20 @@ prepare-microvm-ssh-host-key host microvm:
 prepare-ssh-host-key host:
     just --justfile {{ quote(source_file()) }} generate-ssh-host-key {{ quote(host) }}
     just --justfile {{ quote(source_file()) }} update-ssh-host-key {{ quote(host) }}
+
+# Switch the current nixos and home-manager configuration.
+[group('deploy')]
+switch: switch-nixos switch-home-manager
+
+# Switch the current nixos configuration.
+[group('deploy')]
+switch-nixos *ARGS="--flake .":
+    {{ if os() == "macos" { "darwin" } else { "nixos"  } }}-rebuild switch --verbose {{ ARGS }}
+
+# Switch the current home-manager configuration.
+[group('deploy')]
+switch-home-manager *ARGS="--flake .":
+    home-manager switch --verbose {{ ARGS }}
 
 # Generate a ssh host key for the `host` initrd.
 [group('generate')]
