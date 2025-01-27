@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: 0BSD
 {
+  inputs,
   lib,
   pkgs,
   ...
@@ -14,6 +15,20 @@
       channel.enable = lib.mkDefault false;
 
       package = pkgs.nixVersions.stable;
+
+      registry = {
+        nixpkgs-stable = {
+          exact = true;
+          from = {
+            type = "indirect";
+            id = "nixpkgs-stable";
+          };
+          to = {
+            type = "path";
+            path = inputs.nixpkgs-stable;
+          };
+        };
+      };
 
       settings = {
         auto-allocate-uids = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (lib.mkDefault true);
