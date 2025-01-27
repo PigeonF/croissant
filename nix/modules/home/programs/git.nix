@@ -24,15 +24,19 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Cannot use program.git because it unconditionally writes ~/.config/git/config.
     home.packages = builtins.attrValues {
+      # Cannot use program.git because it unconditionally writes ~/.config/git/config.
       inherit (cfg) package;
+      # Tools that are part of the git config
       inherit (pkgs)
         delta
         git-branchless
         gitlab-ci-local
         meld
         ;
+
+      # General purpose tools
+      inherit (pkgs) gh glab;
     };
 
     programs = {
