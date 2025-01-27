@@ -19,7 +19,6 @@
 
 [jj.files]
 "dotfiles/jj/.config/" = "~/AppData/Roaming/"
-"dotfiles/jj/.config/jj/config.toml.hbs" = { target = "~/AppData/Roaming/jj/config.toml", type = "template" }
 
 [powershell.files]
 "dotfiles/powershell/" = "~/Documents/WindowsPowerShell/"

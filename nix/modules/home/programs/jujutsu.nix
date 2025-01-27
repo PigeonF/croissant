@@ -5,6 +5,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   system,
   ...
 }:
@@ -34,6 +35,9 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home = {
+      packages = builtins.attrValues { inherit (pkgs) watchman; };
+    };
     programs = {
       jujutsu = {
         enable = true;
