@@ -12,9 +12,7 @@
 name = "Jonas Fierlings"
 
 [core]
-{{#if (eq dotter.os "windows") }}
 fsmonitor = "watchman"
-{{/if}}
 
 [ui]
 default-command = ["log", "-n", "10"]
