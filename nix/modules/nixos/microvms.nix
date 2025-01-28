@@ -36,6 +36,11 @@ in
             ipv6 = "fec0:0a7f::7f";
             mac = "02:00:00:00:00:7f";
           };
+          mustafar = {
+            ipv4 = "10.127.0.129";
+            ipv6 = "fec0:0a7f::81";
+            mac = "02:00:00:00:00:81";
+          };
         };
         internal = true;
         readOnly = true;

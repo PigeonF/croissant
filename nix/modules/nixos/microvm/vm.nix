@@ -9,9 +9,18 @@
 let
   inherit (config.croissant) microvms;
   microvm-lib = import ./lib.nix { };
+  cfg = config.croissant.microvm;
 in
 {
   _file = ./vm.nix;
+
+  options.croissant = {
+    microvm = {
+      defaultShares = lib.mkEnableOption "enable default shares" // {
+        default = true;
+      };
+    };
+  };
 
   config =
     let
@@ -27,7 +36,7 @@ in
             inherit (microvms.vms.${hostName}) mac;
           }
         ];
-        shares = [
+        shares = lib.mkIf cfg.defaultShares [
           {
             source = "/nix/store";
             mountPoint = "/nix/.ro-store";

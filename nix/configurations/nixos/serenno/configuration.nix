@@ -71,6 +71,11 @@
       vms = {
         raxus = {
           flake = inputs.self;
+          updateFlake = "git+https://github.com/PigeonF/croissant#nixosConfigurations.raxus";
+        };
+        mustafar = {
+          flake = inputs.self;
+          updateFlake = "git+https://github.com/PigeonF/croissant#nixosConfigurations.mustafar";
         };
       };
     };

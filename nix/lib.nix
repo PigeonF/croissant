@@ -33,6 +33,8 @@ let
       );
     mkHomeConfiguration =
       args@{
+        system,
+        inputs,
         croissantPresetsPath ? ./modules/home/presets,
         extraSpecialArgs ? { },
         modules ? [ ],
@@ -42,13 +44,20 @@ let
         {
           modules = extraHomeModules ++ args.modules;
           extraSpecialArgs = {
-            inherit croissant-lib croissantPresetsPath;
+            inherit
+              croissant-lib
+              croissantPresetsPath
+              system
+              inputs
+              ;
           } // args.extraSpecialArgs;
         }
         // builtins.removeAttrs args [
           "croissantPresetsPath"
           "extraSpecialArgs"
+          "inputs"
           "modules"
+          "system"
         ]
       );
     mkNixOsConfiguration =

@@ -130,6 +130,7 @@
           ./nix/configurations/darwin/kamino
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
+          ./nix/configurations/microvm/mustafar
           ./nix/configurations/microvm/raxus
           ./nix/configurations/nixos/serenno
           treefmt-nix.flakeModule

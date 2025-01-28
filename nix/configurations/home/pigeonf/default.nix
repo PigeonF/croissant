@@ -10,10 +10,9 @@
     {
       homeConfigurations = {
         pigeonf = croissant-lib.mkHomeConfiguration {
-          inherit pkgs;
+          inherit inputs pkgs system;
 
           extraSpecialArgs = {
-            inherit inputs system;
             userName = "pigeonf";
           };
 
