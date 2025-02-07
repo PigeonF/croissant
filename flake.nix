@@ -41,11 +41,6 @@
     impermanence = {
       url = "github:nix-community/impermanence?ref=master";
     };
-    jujutsu = {
-      url = "github:jj-vcs/jj?ref=main";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
-    };
     lix-modules = {
       url = "git+https://git.lix.systems/lix-project/nixos-module?ref=2.92.0";
       inputs.nixpkgs.follows = "nixpkgs";

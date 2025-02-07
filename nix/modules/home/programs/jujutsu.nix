@@ -3,10 +3,8 @@
 # SPDX-License-Identifier: 0BSD
 {
   config,
-  inputs,
   lib,
   pkgs,
-  system,
   ...
 }:
 let
@@ -26,9 +24,8 @@ in
       enable = mkEnableOption "set up jujutsu";
       package = mkOption {
         type = types.package;
-        default = inputs.jujutsu.packages.${system}.jujutsu;
-        defaultText = literalExpression "inputs.jujutsu.packages.\${system}.jujutsu";
-        example = literalExpression "pkgs.jujutsu";
+        default = pkgs.jujutsu;
+        example = literalExpression "inputs.jujutsu.packages.\${system}.jujutsu";
         description = "The package to use for jujutsu.";
       };
     };
@@ -37,15 +34,15 @@ in
   config = lib.mkIf cfg.enable {
     home = {
       packages = builtins.attrValues { inherit (pkgs) watchman; };
+
+      shellAliases = {
+        jjj = "jj --ignore-working-copy";
+      };
     };
     programs = {
       jujutsu = {
         enable = true;
         package = lib.mkDefault cfg.package;
-      };
-
-      zsh.shellAliases = {
-        jjj = "jj --ignore-working-copy";
       };
     };
   };
