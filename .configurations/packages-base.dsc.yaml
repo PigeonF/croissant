@@ -131,8 +131,6 @@ properties:
           DefaultRegApp: true
         ShortcutGuide:
           Enabled: false
-        VideoConference:
-          Enabled: false
         Workspaces:
           Enabled: false
         GeneralSettings:
