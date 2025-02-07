@@ -10,6 +10,9 @@
     The Windows-Bootstrap.ps1 script bootstraps the windows environment by
 
     - Ensuring that `winget` is available.
+    - Installing winget packages.
+    - Ensuring that `choco` is available.
+    - Installing chocolatey packages.
 
     .PARAMETER Help
     Print help.
