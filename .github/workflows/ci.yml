@@ -20,7 +20,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: nixbuild/nix-quick-install-action@v29
+      - uses: nixbuild/nix-quick-install-action@v30
       - uses: nix-community/cache-nix-action@v5
         with:
           primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
