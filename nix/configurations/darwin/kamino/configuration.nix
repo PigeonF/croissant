@@ -20,7 +20,10 @@
       enable = true;
       casks = [
         "1password"
+        "alacritty"
         "docker"
+        "font-recursive-mono-nerd-font"
+        "font-victor-mono-nerd-font"
       ];
     };
 
@@ -59,6 +62,11 @@
 
     system = {
       stateVersion = 5;
+
+      keyboard = {
+        enableKeyMapping = true;
+        remapCapsLockToControl = true;
+      };
     };
   };
 }
