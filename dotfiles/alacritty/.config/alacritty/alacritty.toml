@@ -17,6 +17,7 @@ import = [
 padding = { x = 16, y = 9 }
 dynamic_padding = true
 resize_increments = true
+option_as_alt = "OnlyLeft"
 
 [scrolling]
 

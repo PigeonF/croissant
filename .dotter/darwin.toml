@@ -2,6 +2,9 @@
 #
 # SPDX-License-Identifier: 0BSD
 
+[alacritty.files]
+"dotfiles/alacritty/.config/" = "~/.config/"
+
 [git.files]
 "dotfiles/git/.config/" = "~/.config/"
 "dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/.config/git/commit.gitconfig", type = "template" }
