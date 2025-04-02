@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: nixbuild/nix-quick-install-action@v30
-      - uses: nix-community/cache-nix-action@v5
+      - uses: nix-community/cache-nix-action@v6
         with:
           primary-key: build-${{ runner.os }}-${{ hashFiles('flake.nix', 'flake.lock') }}
           purge: true
