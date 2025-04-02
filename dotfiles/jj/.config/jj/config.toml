@@ -40,15 +40,6 @@ ls = ["log", "-r", "mutable()::@"]
 s = ["status"]
 sq = ["squash"]
 sqk = ["squash", "--keep-empty"]
-sign = [
-  "describe",
-  "--no-edit",
-  "--reset-author",
-  "--config",
-  "signing.sign-all=true",
-  "--config",
-  "signing.backend=ssh",
-]
 
 [templates]
 log = "builtin_log_comfortable"
