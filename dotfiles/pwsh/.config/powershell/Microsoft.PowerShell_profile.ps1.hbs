@@ -46,9 +46,9 @@ if (($RipgrepCompletions | Measure-Object).Count -ge 1) {
 }
 {{/if}}
 
-{{#if (is_executable "starship")}}
+{{!-- {{#if (is_executable "starship")}}
 Invoke-Expression (& starship init powershell --print-full-init | Out-String)
-{{/if}}
+{{/if}} --}}
 
 {{#if (is_executable "zoxide")}}
 Invoke-Expression (& zoxide init powershell | Out-String)

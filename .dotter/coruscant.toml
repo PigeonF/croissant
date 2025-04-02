@@ -7,12 +7,13 @@ includes = [".dotter/windows.toml"]
 packages = [
   "alacritty",
   "bin",
-  "git",
-  "helix",
   "jj",
   "powershell",
   "pwsh",
   "spicetify",
-  "starship",
   "topgrade",
 ]
+
+[files]
+"dotfiles/pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
+"dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
