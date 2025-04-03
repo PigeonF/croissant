@@ -42,7 +42,7 @@
       url = "github:nix-community/impermanence?ref=master";
     };
     lix-modules = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=2.92.0";
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=2.92.0-3";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -122,6 +122,7 @@
         systems = import systems;
 
         imports = [
+          ./hosts/ganymede
           ./nix/configurations/darwin/kamino
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
@@ -174,20 +175,16 @@
               };
               provisioning = pkgs.mkShellNoCC {
                 name = "provisioning";
-                inputsFrom = [ self'.devShells.secrets ];
-                packages = [
-                  pkgs.just
-                  pkgs.nixos-anywhere
-                  pkgs.openssh
-                  pkgs.yq-go
-                ];
-              };
-              secrets = pkgs.mkShellNoCC {
-                name = "secrets";
                 packages = [
                   pkgs.age
-                  pkgs.ssh-to-age
+                  pkgs.just
+                  pkgs.mkpasswd
+                  pkgs.nixos-anywhere
+                  pkgs.openssh
+                  pkgs.pwgen
                   pkgs.sops
+                  pkgs.ssh-to-age
+                  pkgs.yq-go
                 ];
               };
               treefmt = config.treefmt.build.devShell;
