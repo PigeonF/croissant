@@ -7,6 +7,7 @@
 
   settings = {
     excludes = [
+      ".jj/*"
       "LICENSES/*"
     ];
     on-unmatched = "debug";
