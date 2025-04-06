@@ -68,7 +68,10 @@ in
             cargo-hack
             cargo-nextest
             cargo-show-asm
+            lldb
+            marksman
             rustup
+            yaml-language-server
             ;
         };
 

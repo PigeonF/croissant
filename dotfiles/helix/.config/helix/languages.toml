@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: 0BSD
 
 [[language]]
+name = "nix"
+formatter = { command = "nixfmt" }
+
+[[language]]
 name = "jjdescription"
 scope = "jj.description"
 file-types = [{ glob = "*.jjdescription" }]
