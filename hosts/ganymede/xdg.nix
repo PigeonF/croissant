@@ -39,8 +39,11 @@
               replaceHome = builtins.replaceStrings [ "$HOME" ] [ "%h" ];
               replaceEnvVars =
                 builtins.replaceStrings
-                  [ "$XDG_DATA_HOME" ]
-                  [ (replaceHome config.environment.sessionVariables.XDG_DATA_HOME) ];
+                  [ "$XDG_DATA_HOME" "$XDG_STATE_HOME" ]
+                  [
+                    (replaceHome config.environment.sessionVariables.XDG_DATA_HOME)
+                    (replaceHome config.environment.sessionVariables.XDG_STATE_HOME)
+                  ];
               histFile = replaceEnvVars config.environment.variables.HISTFILE;
               xdgBinHome = replaceHome config.environment.sessionVariables.XDG_BIN_HOME;
               xdgCacheHome = replaceHome config.environment.sessionVariables.XDG_CACHE_HOME;

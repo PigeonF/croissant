@@ -56,5 +56,6 @@ root@ganymede # systemd-cryptenroll /dev/nvme0n1p2 --tpm2-device=auto --wipe-slo
 
 - **Secure Boot**: Once [lanzaboote] is either upstreamed into nixpkgs, or the support for remote signing is merged it might be interesting to enable secure boot on the laptop.
 - **Remote Unlock**: The hard disk should be unlockable remotely. In theory this should work (the initrd has a SSH server enabled), but in practice connection attempts time out (some issue with the networking setup in the initrd?)
+- **Impermanence**: Currently the whole `/home/pigeonf` folder is stored in `/persist`. The reason is that symlinks created by home-manager cannot be restored as individual files.
 
 [lanzaboote]: https://github.com/nix-community/lanzaboote

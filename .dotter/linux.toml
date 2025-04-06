@@ -1,0 +1,19 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+
+[git.files]
+"dotfiles/git/.config/" = "~/.config/"
+"dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/.config/git/commit.gitconfig", type = "template" }
+
+[helix.files]
+"dotfiles/helix/.config/" = "~/.config/"
+
+[jj.files]
+"dotfiles/jj/.config/" = "~/.config/"
+
+[starship.files]
+"dotfiles/starship/.config/" = "~/.config/"
+
+[zellij.files]
+"dotfiles/zellij/.config" = "~/.config/"
