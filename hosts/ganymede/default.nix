@@ -52,6 +52,7 @@ in
           inputs.nixos-facter-modules.nixosModules.facter
           inputs.sops-nix.nixosModules.sops
           ./disks.nix
+          ./graphics.nix
           ./networking.nix
           ./nix.nix
           ./system.nix
