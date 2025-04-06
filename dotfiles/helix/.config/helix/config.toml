@@ -5,9 +5,10 @@
 theme = "catppuccin_macchiato"
 
 [editor]
-line-number = "relative"
 cursorline = true
+line-number = "relative"
 rulers = [100, 120]
+true-color = true
 
 [editor.cursor-shape]
 insert = "bar"
