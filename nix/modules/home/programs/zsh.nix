@@ -22,6 +22,24 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home = {
+      activation = {
+        sourceZshFiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          if [ ! -s "$HOME/.zshenv" ]; then
+            run echo 'source "$HOME"/${
+              lib.escapeShellArg config.home.file.".zshenv".target
+            }' > "$HOME/.zshenv"
+          fi
+        '';
+      };
+
+      file = {
+        ".zshenv" = {
+          target = ".config/zsh/zshenv";
+        };
+      };
+    };
+
     programs = {
       zsh = {
         enable = true;
