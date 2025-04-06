@@ -12,7 +12,6 @@
     environment = {
       persistence = {
         "/persist" = {
-          directories = [ "/home/pigeonf" ];
           users =
             let
               commonDirectories = [
@@ -28,25 +27,22 @@
               ];
             in
             {
-              # XXX(PigeonF): Impermanence cannot restore the symlinks in `files`, which is why we have to store the full parent directory.
-              #               I dont' think this can be solved in `impermanence` unless one introduces a special "restore the contents of this file as symlink path" type.
-              #               The easiest way to solve this is probably to have bash and zsh respect the xdg spec, so that we only have to care about the `.config/` folder.
-              # pigeonf = {
-              #   directories =
-              #     commonDirectories
-              #     ++ xdgDirectories
-              #     ++ [
-              #       ".vscodium-server"
-              #       "code"
-              #       "downloads"
-              #     ];
-              #   files = [
-              #     ".bash_profile"
-              #     ".bashrc"
-              #     ".profile"
-              #     ".zshenv"
-              #   ];
-              # };
+              pigeonf = {
+                directories =
+                  commonDirectories
+                  ++ xdgDirectories
+                  ++ [
+                    ".vscodium-server"
+                    "code"
+                    "downloads"
+                  ];
+                files = [
+                  ".bash_profile"
+                  ".bashrc"
+                  ".profile"
+                  ".zshenv"
+                ];
+              };
               root = {
                 home = "/root";
                 directories = commonDirectories ++ xdgDirectories;
@@ -62,9 +58,9 @@
               ];
             in
             {
-              # pigeonf = {
-              #   directories = xdgDirectories;
-              # };
+              pigeonf = {
+                directories = xdgDirectories;
+              };
               root = {
                 home = "/root";
                 directories = xdgDirectories;
