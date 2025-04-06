@@ -57,6 +57,7 @@ in
           ./nix.nix
           ./system.nix
           ./users.nix
+          ./virtualization.nix
           ./xdg.nix
         ];
       };

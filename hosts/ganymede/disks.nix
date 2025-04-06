@@ -162,9 +162,7 @@ _: {
         "/persist" = {
           hideMounts = true;
           directories = [
-            "/var/lib/machines"
             "/var/lib/nixos"
-            "/var/lib/portables"
             "/var/lib/private"
             "/var/lib/systemd"
           ];
@@ -172,6 +170,10 @@ _: {
 
         "/cache" = {
           hideMounts = true;
+          directories = [
+            "/var/lib/machines"
+            "/var/lib/portables"
+          ];
         };
       };
     };
