@@ -19,16 +19,25 @@ in
     hostname = "callisto";
     profilesOrder = [
       "system"
+      "root"
       "pigeonf"
     ];
 
     profiles = {
       system = {
         user = "root";
+        sshUser = "pigeonf";
         path = deployLib.activate.darwin self.darwinConfigurations.callisto;
+      };
+      root = {
+        user = "root";
+        sudo = "sudo --login -u";
+        sshUser = "pigeonf";
+        path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
       pigeonf = {
         user = "pigeonf";
+        sshUser = "pigeonf";
         path =
           deployLib.activate.home-manager
             inputs.self.legacyPackages.${system}.homeConfigurations.pigeonf;

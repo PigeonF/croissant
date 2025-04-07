@@ -8,6 +8,7 @@
   settings = {
     excludes = [
       ".jj/*"
+      "*.gitignored.*"
       "LICENSES/*"
     ];
     on-unmatched = "debug";

@@ -19,6 +19,7 @@ in
     hostname = "ganymede";
     profilesOrder = [
       "system"
+      "root"
       "pigeonf"
     ];
 
@@ -27,6 +28,11 @@ in
         user = "root";
         sshUser = "root";
         path = deployLib.activate.nixos self.nixosConfigurations.ganymede;
+      };
+      root = {
+        user = "root";
+        sshUser = "root";
+        path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
       pigeonf = {
         user = "pigeonf";

@@ -17,6 +17,7 @@ _: {
           };
         };
         root = {
+          shell = "/bin/zsh";
           openssh = {
             authorizedKeys = {
               keys = [

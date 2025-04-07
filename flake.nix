@@ -156,9 +156,12 @@
             checks = {
               reuse =
                 let
-                  files = pkgs.nix-gitignore.gitignoreSourcePure [ ".jj/" ".dotter/cache.toml" ".dotter/cache/" ] (
-                    pkgs.lib.cleanSource ./.
-                  );
+                  files = pkgs.nix-gitignore.gitignoreSourcePure [
+                    ".jj/"
+                    ".dotter/cache.toml"
+                    ".dotter/cache/"
+                    "*.gitignored.*"
+                  ] (pkgs.lib.cleanSource ./.);
                 in
                 pkgs.runCommandLocal "reuse" { } ''
                   ${pkgs.lib.getExe pkgs.reuse} --root ${files} lint | tee $out

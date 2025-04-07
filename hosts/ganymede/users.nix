@@ -46,6 +46,12 @@
               root = {
                 home = "/root";
                 directories = commonDirectories ++ xdgDirectories;
+                files = [
+                  ".bash_profile"
+                  ".bashrc"
+                  ".profile"
+                  ".zshenv"
+                ];
               };
             };
         };
