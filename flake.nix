@@ -156,7 +156,7 @@
             checks = {
               reuse =
                 let
-                  files = pkgs.nix-gitignore.gitignoreSourcePure [ ".jj/" ".dotter/cache.toml" ] (
+                  files = pkgs.nix-gitignore.gitignoreSourcePure [ ".jj/" ".dotter/cache.toml" ".dotter/cache/" ] (
                     pkgs.lib.cleanSource ./.
                   );
                 in

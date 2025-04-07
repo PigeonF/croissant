@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: 0BSD
 
-includes = [".dotter/windows.toml"]
+includes = [".dotter/include/windows.toml"]
 
 packages = [
   "alacritty",
@@ -11,9 +11,11 @@ packages = [
   "powershell",
   "pwsh",
   "spicetify",
+  "ssh",
   "topgrade",
 ]
 
+# Documents folder is moved to S:, and is not in ~/
 [files]
 "dotfiles/pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
 "dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
