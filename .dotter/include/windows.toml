@@ -13,6 +13,7 @@
 [git.files]
 "dotfiles/git/.config/" = "~/AppData/Roaming/"
 "dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/AppData/Roaming/git/commit.gitconfig", type = "template" }
+"dotfiles/git/.config/git/windows.gitconfig.hbs" = { target = "~/AppData/Roaming/git/windows.gitconfig", type = "template" }
 
 [helix.files]
 "dotfiles/helix/.config/" = "~/AppData/Roaming/"

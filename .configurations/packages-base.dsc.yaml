@@ -31,6 +31,13 @@ properties:
         source: winget
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Install Git.MinGit
+        allowPrerelease: true
+      settings:
+        id: Git.MinGit
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Install Microsoft.PowerShell
         allowPrerelease: true
       settings:
