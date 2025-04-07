@@ -26,6 +26,7 @@ in
       activation = {
         sourceZshFiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [ ! -s "$HOME/.zshenv" ]; then
+            run rm -f "$HOME/.zshenv"
             run echo 'source "$HOME"/${
               lib.escapeShellArg config.home.file.".zshenv".target
             }' > "$HOME/.zshenv"

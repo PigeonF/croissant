@@ -6,6 +6,8 @@
 
 set unstable
 
+[doc('MacBook used for macOS development')]
+mod callisto
 [doc('Laptop used for Linux development')]
 mod ganymede
 

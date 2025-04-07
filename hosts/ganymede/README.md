@@ -14,7 +14,7 @@ The laptop is used as a development environment for programming.
 
 ## Hardware
 
-![System hardware determined by the `hwloc` package](images/topology.svg "Generated using `lstopo topology.svg`")
+![System hardware determined by the `hwloc` package](images/topology.svg "Generated using `just hosts::ganymede::topology`")
 
 ## Services
 

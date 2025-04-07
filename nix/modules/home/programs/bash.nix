@@ -26,16 +26,19 @@ in
       activation = {
         sourceBashFiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           if [ ! -s "$HOME/.bash_profile" ]; then
+            run rm -f "$HOME/.bash_profile"
             run echo 'source "$HOME"/${
               lib.escapeShellArg config.home.file.".bash_profile".target
             }' > "$HOME/.bash_profile"
           fi
           if [ ! -s "$HOME/.profile" ]; then
+            run rm -f "$HOME/.profile"
             run echo 'source "$HOME"/${
               lib.escapeShellArg config.home.file.".profile".target
             }' > "$HOME/.profile"
           fi
           if [ ! -s "$HOME/.bashrc" ]; then
+            run rm -f "$HOME/.bashrc"
             run echo 'source "$HOME"/${
               lib.escapeShellArg config.home.file.".bashrc".target
             }' > "$HOME/.bashrc"

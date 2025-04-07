@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+#
+# Requires [just](https://just.systems).
+
+set unstable
+
+import "../../scripts/maintenance.just"
+
+HOST := "callisto"
+
+# Recipe that is executed when no recipe is given on the commandline.
+[private]
+list:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+[group('deploy')]
+[unix]
+[working-directory("../..")]
+[doc('Remotely update the callisto configuration.')]
+update *ARGS:
+    nix run github:serokell/deploy-rs -- {{ quote(".#" + HOST) }} --remote-build {{ ARGS }}

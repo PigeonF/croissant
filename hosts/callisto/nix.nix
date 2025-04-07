@@ -10,19 +10,35 @@
   _file = ./nix.nix;
 
   config = {
-    boot = {
-      binfmt = {
-        emulatedSystems = [
-          "aarch64-linux"
-          "wasm32-wasi"
-          "wasm64-wasi"
-        ];
+    launchd = {
+      daemons = {
+        linux-builder = {
+          serviceConfig = {
+            StandardOutPath = "/var/log/darwin-builder.log";
+            StandardErrorPath = "/var/log/darwin-builder.log";
+          };
+        };
       };
     };
 
     nix = {
       channel = {
         enable = false;
+      };
+      linux-builder = {
+        enable = true;
+        ephemeral = true;
+        maxJobs = 4;
+
+        config = {
+          virtualisation = {
+            darwin-builder = {
+              diskSize = 4 * 20 * 1024;
+              memorySize = 4 * 1024;
+            };
+            cores = 4;
+          };
+        };
       };
       package = pkgs.nixVersions.stable;
       registry = {
@@ -39,18 +55,16 @@
         };
       };
       settings = {
-        auto-allocate-uids = true;
         extra-experimental-features = [
           "flakes"
           "nix-command"
           "no-url-literals"
-          "auto-allocate-uids"
-          "cgroups"
         ];
         sandbox = true;
-        system-features = [ "uid-range" ];
-        trusted-users = [ "@wheel" ];
-        use-cgroups = true;
+        trusted-users = [
+          "@admin"
+          "@wheel"
+        ];
         use-xdg-base-directories = true;
       };
     };
