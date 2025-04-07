@@ -84,17 +84,6 @@
     users = {
       mutableUsers = false;
       users = {
-        root = {
-          hashedPasswordFile = config.sops.secrets."root/password".path;
-          openssh = {
-            authorizedKeys = {
-              keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZWVYrGZVFnvwpJLBWSD/y3HnTU++eJez5Ip2WvQeNe"
-              ];
-            };
-          };
-        };
-
         pigeonf = {
           isNormalUser = true;
           hashedPasswordFile = config.sops.secrets."pigeonf/password".path;
@@ -105,7 +94,18 @@
           openssh = {
             authorizedKeys = {
               keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICSGbm3QEVQFhYqJM29rQ6WibpQr613KgxoYTr/QvztV"
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBJfXIy5QQ2OyapsCr5OJsuDcV4tNUVwG2PtyKEh1W5e"
+              ];
+            };
+          };
+        };
+
+        root = {
+          hashedPasswordFile = config.sops.secrets."root/password".path;
+          openssh = {
+            authorizedKeys = {
+              keys = [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOZWVYrGZVFnvwpJLBWSD/y3HnTU++eJez5Ip2WvQeNe"
               ];
             };
           };

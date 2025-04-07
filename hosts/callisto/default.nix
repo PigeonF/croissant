@@ -25,12 +25,10 @@ in
     profiles = {
       system = {
         user = "root";
-        sshUser = "pigeonf";
         path = deployLib.activate.darwin self.darwinConfigurations.callisto;
       };
       pigeonf = {
         user = "pigeonf";
-        sshUser = "pigeonf";
         path =
           deployLib.activate.home-manager
             inputs.self.legacyPackages.${system}.homeConfigurations.pigeonf;

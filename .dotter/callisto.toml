@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: 0BSD
 
-includes = [".dotter/darwin.toml"]
+includes = [".dotter/include/darwin.toml"]
 
-packages = ["alacritty", "git", "helix", "jj", "starship", "zellij"]
+packages = ["alacritty", "git", "helix", "jj", "ssh", "starship", "zellij"]

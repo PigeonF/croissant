@@ -33,8 +33,14 @@
 "dotfiles/spicetify/.config/spicetify/config-xpui.ini.hbs" = { target = "~/AppData/Roaming/spicetify/config-xpui.ini", type = "template" }
 "dotfiles/spicetify/.config/spicetify/Themes/" = { target = "~/AppData/Roaming/spicetify/Themes/", type = "symbolic" }
 
+[ssh.files]
+
+
 [starship.files]
 "dotfiles/starship/.config/" = "~/AppData/Roaming/"
 
 [topgrade.files]
 "dotfiles/topgrade/.config/" = "~/AppData/Roaming/"
+
+[zellij.files]
+"dotfiles/zellij/.config" = ""

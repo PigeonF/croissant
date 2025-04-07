@@ -2,6 +2,6 @@
 #
 # SPDX-License-Identifier: 0BSD
 
-includes = [".dotter/linux.toml"]
+includes = [".dotter/include/nixos.toml"]
 
-packages = ["git", "helix", "jj", "starship", "zellij"]
+packages = ["alacritty", "git", "helix", "jj", "ssh", "starship", "zellij"]
