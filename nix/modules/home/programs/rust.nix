@@ -74,13 +74,6 @@ in
               just
               # Debugging
               lldb
-              # Edititing common files
-              marksman
-              taplo
-              yaml-language-server
-              ;
-            inherit (pkgs.nodePackages_latest)
-              vscode-json-languageserver
               ;
           }
           // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {

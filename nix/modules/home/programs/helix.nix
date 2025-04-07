@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -22,6 +23,23 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home = {
+      packages = builtins.attrValues {
+        inherit (pkgs)
+          marksman
+          nil
+          nixfmt-rfc-style
+          taplo
+          tinymist
+          typescript-language-server
+          vscode-langservers-extracted
+          yaml-language-server
+          ;
+        inherit (pkgs.nodePackages_latest)
+          vscode-json-languageserver
+          ;
+      };
+    };
     programs = {
       helix = {
         enable = true;
