@@ -28,9 +28,13 @@
     };
 
     croissant = {
-      git.enable = true;
-      helix.enable = true;
-      starship.enable = true;
+      programs = {
+        bash.enable = true;
+        git.enable = true;
+        helix.enable = true;
+        starship.enable = true;
+        zsh.enable = true;
+      };
     };
 
     programs = {
