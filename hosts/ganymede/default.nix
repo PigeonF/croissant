@@ -42,7 +42,6 @@ in
     nixosConfigurations = {
       ganymede = croissant-lib.mkNixOsConfiguration {
         inherit system;
-
         specialArgs = { inherit inputs; };
         modules = [
           inputs.disko.nixosModules.disko

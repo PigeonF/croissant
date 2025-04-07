@@ -58,31 +58,35 @@ in
     })
     (lib.mkIf cfg.enable {
       home = {
-        packages = builtins.attrValues {
-          inherit (pkgs)
-            cargo-audit
-            cargo-binstall
-            cargo-bloat
-            cargo-deny
-            cargo-fuzz
-            cargo-hack
-            cargo-nextest
-            cargo-show-asm
-            rustup
-            # Command runner(s)
-            just
-            # Debugging
-            lldb
-            rr
-            # Edititing common files
-            marksman
-            taplo
-            yaml-language-server
-            ;
-          inherit (pkgs.nodePackages_latest)
-            vscode-json-languageserver
-            ;
-        };
+        packages = builtins.attrValues (
+          {
+            inherit (pkgs)
+              cargo-audit
+              cargo-binstall
+              cargo-bloat
+              cargo-deny
+              cargo-fuzz
+              cargo-hack
+              cargo-nextest
+              cargo-show-asm
+              rustup
+              # Command runner(s)
+              just
+              # Debugging
+              lldb
+              # Edititing common files
+              marksman
+              taplo
+              yaml-language-server
+              ;
+            inherit (pkgs.nodePackages_latest)
+              vscode-json-languageserver
+              ;
+          }
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+            inherit (pkgs) rr;
+          }
+        );
 
         shellAliases = {
           "c" = "cargo";

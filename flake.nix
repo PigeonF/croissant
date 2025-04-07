@@ -8,7 +8,7 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs?ref=release-24.11";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin?ref=master";
+      url = "github:nix-darwin/nix-darwin?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default?ref=main";
@@ -122,8 +122,8 @@
         systems = import systems;
 
         imports = [
+          ./hosts/callisto
           ./hosts/ganymede
-          ./nix/configurations/darwin/kamino
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
           ./nix/configurations/microvm/raxus
@@ -154,9 +154,15 @@
             treefmt = import ./treefmt.nix;
 
             checks = {
-              reuse = pkgs.runCommandLocal "reuse" { } ''
-                ${pkgs.lib.getExe pkgs.reuse} --root ${./.} lint | tee $out
-              '';
+              reuse =
+                let
+                  files = pkgs.nix-gitignore.gitignoreSourcePure [ ".jj/" ".dotter/cache.toml" ] (
+                    pkgs.lib.cleanSource ./.
+                  );
+                in
+                pkgs.runCommandLocal "reuse" { } ''
+                  ${pkgs.lib.getExe pkgs.reuse} --root ${files} lint | tee $out
+                '';
             };
 
             devShells = {
