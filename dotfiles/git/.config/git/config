@@ -9,6 +9,7 @@
   path = log.gitconfig
   path = meld.gitconfig
   path = user.gitconfig
+  path = windows.gitconfig
 
 [alias]
   a = add

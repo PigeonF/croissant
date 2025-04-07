@@ -14,6 +14,7 @@ default_target_type = "symbolic"
 [git.files]
 "dotfiles/git/.config/" = "~/.config/"
 "dotfiles/git/.config/git/commit.gitconfig.hbs" = { target = "~/.config/git/commit.gitconfig", type = "template" }
+"dotfiles/git/.config/git/windows.gitconfig.hbs" = { target = "~/.config/git/windows.gitconfig", type = "template" }
 
 [helix.files]
 "dotfiles/helix/.config/" = "~/.config/"
