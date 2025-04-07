@@ -68,10 +68,19 @@ in
             cargo-hack
             cargo-nextest
             cargo-show-asm
-            lldb
-            marksman
             rustup
+            # Command runner(s)
+            just
+            # Debugging
+            lldb
+            rr
+            # Edititing common files
+            marksman
+            taplo
             yaml-language-server
+            ;
+          inherit (pkgs.nodePackages_latest)
+            vscode-json-languageserver
             ;
         };
 
