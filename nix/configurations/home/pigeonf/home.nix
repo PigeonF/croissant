@@ -56,6 +56,7 @@
         git.enable = true;
         helix.enable = true;
         jujutsu.enable = true;
+        nushell.enable = true;
         rust.enable = true;
         starship.enable = true;
         vscodium.enable = true;

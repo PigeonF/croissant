@@ -85,6 +85,7 @@
         programs-git = ./nix/modules/home/programs/git.nix;
         programs-helix = ./nix/modules/home/programs/helix.nix;
         programs-jujutsu = ./nix/modules/home/programs/jujutsu.nix;
+        programs-nushell = ./nix/modules/home/programs/nushell.nix;
         programs-rust = ./nix/modules/home/programs/rust.nix;
         programs-starship = ./nix/modules/home/programs/starship.nix;
         programs-vscodium = ./nix/modules/home/programs/vscodium.nix;
