@@ -90,9 +90,18 @@
 
       extraLocaleSettings = {
         LC_COLLATE = "C";
+        # Uses yyyy-mm-dd
         LC_TIME = "en_DK.UTF-8";
         LC_MONETARY = "de_DE.UTF-8";
         LC_MEASUREMENT = "de_DE.UTF-8";
+      };
+    };
+
+    nixpkgs = {
+      config = {
+        # This is a user-centric config, not a server config, so the configuration makes use of some
+        # unfree programs such as 1password.
+        allowUnfree = true;
       };
     };
 

@@ -21,6 +21,9 @@
 [jj.files]
 "dotfiles/jj/.config/" = "~/AppData/Roaming/"
 
+[niri.files]
+"dotfiles/niri/.config" = ""
+
 [powershell.files]
 "dotfiles/powershell/" = "~/Documents/WindowsPowerShell/"
 "dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = { target = "~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1", type = "template" }
