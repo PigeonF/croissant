@@ -73,6 +73,13 @@ properties:
         source: winget
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Install sxyazi.yazi
+        allowPrerelease: true
+      settings:
+        id: sxyazi.yazi
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Install VSCodium.VSCodium
         allowPrerelease: true
       settings:

@@ -50,6 +50,18 @@ if (($RipgrepCompletions | Measure-Object).Count -ge 1) {
 Invoke-Expression (& starship init powershell --print-full-init | Out-String)
 {{/if}} --}}
 
+{{#if (is_executable "yazi")}}
+function yy {
+    $tmp = New-TemporaryFile
+    yazi @args --cwd-file $tmp
+    $cwd = Get-Content -Path $tmp
+    if (-Not ([string]::IsNullOrWhitespace($cwd) -or ($cwd -eq (Get-Location)))) {
+        Set-Location -Path $cwd
+    }
+    Remove-Item -Path $tmp
+}
+{{/if}}
+
 {{#if (is_executable "zoxide")}}
 Invoke-Expression (& zoxide init powershell | Out-String)
 $ZoxideCompletions = '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\zoxide\tools\completions\_zoxide.ps1'

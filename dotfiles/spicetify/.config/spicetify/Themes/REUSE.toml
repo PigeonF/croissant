@@ -4,5 +4,5 @@ version = 1
 # https://github.com/catppuccin/spicetify
 path = ["catppuccin/**/*"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2021 Catppuccin"
+SPDX-FileCopyrightText = "2022-present Catppuccin Org <https://github.com/catppuccin>"
 SPDX-License-Identifier = "MIT"
