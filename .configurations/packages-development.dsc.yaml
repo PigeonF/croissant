@@ -66,6 +66,13 @@ properties:
       id: Microsoft.VisualStudio.2022.Community
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Install Nushell.Nushell
+        allowPrerelease: true
+      settings:
+        id: Nushell.Nushell
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Install SuperCuber.dotter
         allowPrerelease: true
       settings:
