@@ -5,19 +5,21 @@
 # Requires [just](https://just.systems).
 
 set unstable
+set windows-shell := ["pwsh", "-C"]
 
-import "../../scripts/maintenance.just"
-import "../../scripts/provisioning.just"
-
-ROOT := ".." / ".."
-PROVISIONING_DIR := ".provisioning"
-SSH_HOSTKEY := "etc" / "ssh" / "ssh_host_ed25519_key"
+CALL := if os_family() == "windows"  { "& " } else { "" }
 HOST := "ganymede"
+PROVISIONING_DIR := ".provisioning"
+ROOT := ".." / ".."
+SSH_HOSTKEY := "etc" / "ssh" / "ssh_host_ed25519_key"
 
 # Recipe that is executed when no recipe is given on the commandline.
 [private]
 list:
-    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+    @{{ CALL }}{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+import "../../scripts/maintenance.just"
+import "../../scripts/provisioning.just"
 
 [group('install')]
 [script]
