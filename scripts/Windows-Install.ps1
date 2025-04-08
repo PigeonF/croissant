@@ -115,8 +115,7 @@ function Invoke-Bootstrap {
                 $RepositoryRoot = $Dirs[0].FullName
             }
 
-            $ScriptsDir = Join-Path $RepositoryRoot "scripts"
-            $BootstrapScript = Join-Path $ScriptsDir "Windows-Bootstrap.ps1"
+            $BootstrapScript = Join-Path $RepositoryRoot "hosts" "europa" "Windows-Bootstrap.ps1"
             if ($PSCmdlet.ShouldProcess($BootstrapScript, "Execute")) {
                 Write-Output "Executing $BootstrapScript"
                 & $BootstrapScript -Verbose:($PSBoundParameters["Verbose"] -eq $true) -Debug:($PSBoundParameters["Debug"] -eq $true)

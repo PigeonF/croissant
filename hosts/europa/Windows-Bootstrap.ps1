@@ -165,7 +165,7 @@ If (-not (($MyInvocation.InvocationName -eq ".") -or ($MyInvocation.InvocationNa
         if ($Help) {
             Get-Help $PSCommandPath
         } else {
-            $RepositoryRoot = Split-Path -Parent $PSScriptRoot
+            $RepositoryRoot = $PSScriptRoot | Split-Path -Parent | Split-Path -Parent
             Bootstrap -RepositoryRoot $RepositoryRoot
         }
     } catch {

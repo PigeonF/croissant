@@ -9,18 +9,23 @@ set windows-shell := ["pwsh", "-C"]
 
 CALL := if os_family() == "windows"  { "& " } else { "" }
 
-[doc('Recipes for interacting with the various hosts defined in this repository.')]
-mod hosts
-
 # Recipe that is executed when no recipe is given on the commandline.
 [private]
 list:
     @{{ CALL }}{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list --list-submodules
 
-# Install the dotfiles using [dotter](https://github.com/SuperCuber/dotter).
-[group('deploy')]
-dotfiles *ARGS:
-    dotter -v {{ ARGS }}
+import "../../scripts/maintenance.just"
 
-foo:
-    echo {{ which("lstopo.exe") }}
+[group('install')]
+[windows]
+[working-directory("../..")]
+[doc('Bootstrap the europa configuration.')]
+bootstrap *ARGS:
+    & hosts/europa/Windows-Bootstrap.ps1 {{ ARGS }}
+
+[group('deploy')]
+[windows]
+[working-directory("../..")]
+[doc('Update the windows dotfiles.')]
+update *ARGS:
+    dotter -v {{ ARGS }}
