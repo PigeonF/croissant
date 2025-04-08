@@ -34,7 +34,12 @@
                   ++ [
                     ".vscodium-server"
                     "code"
-                    "downloads"
+                    "Downloads"
+                    "Pictures"
+                    "Videos"
+                    "Documents"
+                    "Music"
+                    "Desktop"
                   ];
                 files = [
                   ".bash_profile"

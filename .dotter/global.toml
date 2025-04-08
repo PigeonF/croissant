@@ -22,6 +22,9 @@ default_target_type = "symbolic"
 [jj.files]
 "dotfiles/jj/.config/" = "~/.config/"
 
+[niri.files]
+"dotfiles/niri/.config" = "~/.config"
+
 [powershell.files]
 "dotfiles/powershell/" = ""
 

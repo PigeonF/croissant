@@ -28,6 +28,7 @@
       variables = {
         HISTFILE = "$XDG_STATE_HOME/bash/history";
         LESSHISTFILE = "$XDG_STATE_HOME/less/history";
+        XCOMPOSECACHE = "$XDG_CACHE_HOME/X11/xcompose";
       };
     };
 
@@ -37,14 +38,6 @@
           rules =
             let
               replaceHome = builtins.replaceStrings [ "$HOME" ] [ "%h" ];
-              replaceEnvVars =
-                builtins.replaceStrings
-                  [ "$XDG_DATA_HOME" "$XDG_STATE_HOME" ]
-                  [
-                    (replaceHome config.environment.sessionVariables.XDG_DATA_HOME)
-                    (replaceHome config.environment.sessionVariables.XDG_STATE_HOME)
-                  ];
-              histFile = replaceEnvVars config.environment.variables.HISTFILE;
               xdgBinHome = replaceHome config.environment.sessionVariables.XDG_BIN_HOME;
               xdgCacheHome = replaceHome config.environment.sessionVariables.XDG_CACHE_HOME;
               xdgConfigHome = replaceHome config.environment.sessionVariables.XDG_CONFIG_HOME;
@@ -52,7 +45,6 @@
               xdgStateHome = replaceHome config.environment.sessionVariables.XDG_STATE_HOME;
             in
             [
-              "f ${histFile} - - - -"
               "d ${xdgCacheHome} - - - -"
               "d ${xdgConfigHome} - - - -"
               "d ${xdgDataHome} - - - -"

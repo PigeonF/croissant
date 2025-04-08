@@ -4,4 +4,13 @@
 
 includes = [".dotter/include/nixos.toml"]
 
-packages = ["alacritty", "git", "helix", "jj", "ssh", "starship", "zellij"]
+packages = [
+    "alacritty",
+    "git",
+    "helix",
+    "jj",
+    "niri",
+    "ssh",
+    "starship",
+    "zellij",
+]

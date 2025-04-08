@@ -7,12 +7,34 @@
 
   config = {
     environment = {
+      sessionVariables = {
+        NIXOS_OZONE_WL = "1";
+      };
       systemPackages = [
         pkgs.alacritty
+        pkgs.fuzzel
         pkgs.ghostty
+        pkgs.wl-clipboard
+        pkgs.swaylock
+        pkgs.xsel
+        pkgs.xwayland-satellite
+      ];
+    };
+    fonts = {
+      # TODO(PigeonF): Move to alacritty home manager module
+      packages = [
+        pkgs.nerd-fonts.recursive-mono
+        pkgs.nerd-fonts.victor-mono
       ];
     };
     programs = {
+      _1password = {
+        enable = true;
+      };
+      _1password-gui = {
+        enable = true;
+        polkitPolicyOwners = [ "pigeonf" ];
+      };
       firefox = {
         enable = true;
       };
