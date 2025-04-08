@@ -15,6 +15,7 @@ packages = [
   "spicetify",
   "ssh",
   "topgrade",
+  "vscodium",
 ]
 
 # Documents folder is moved to S:, and is not in ~/

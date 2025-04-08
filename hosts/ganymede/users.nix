@@ -32,14 +32,13 @@
                   commonDirectories
                   ++ xdgDirectories
                   ++ [
-                    ".vscodium-server"
                     "code"
+                    "Desktop"
+                    "Documents"
                     "Downloads"
+                    "Music"
                     "Pictures"
                     "Videos"
-                    "Documents"
-                    "Music"
-                    "Desktop"
                   ];
                 files = [
                   ".bash_profile"
@@ -70,7 +69,12 @@
             in
             {
               pigeonf = {
-                directories = xdgDirectories;
+                directories = xdgDirectories ++ [
+                  ".mozilla"
+                  ".pki"
+                  ".vscode-oss"
+                  ".vscodium-server"
+                ];
               };
               root = {
                 home = "/root";

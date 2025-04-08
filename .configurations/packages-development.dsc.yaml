@@ -71,6 +71,13 @@ properties:
       settings:
         id: SuperCuber.dotter
         source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
+        description: Install VSCodium.VSCodium
+        allowPrerelease: true
+      settings:
+        id: VSCodium.VSCodium
+        source: winget
     - resource: Microsoft.VisualStudio.DSC/VSComponents
       directives:
         description: Install Microsoft.VisualStudio.2022.Community Workloads

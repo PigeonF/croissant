@@ -14,8 +14,9 @@
         pkgs.alacritty
         pkgs.fuzzel
         pkgs.ghostty
-        pkgs.wl-clipboard
+        pkgs.nautilus
         pkgs.swaylock
+        pkgs.wl-clipboard
         pkgs.xsel
         pkgs.xwayland-satellite
       ];
@@ -55,6 +56,13 @@
             clock = "%c";
           };
         };
+      };
+    };
+    xdg = {
+      portal = {
+        enable = true;
+        xdgOpenUsePortal = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       };
     };
   };

@@ -29,4 +29,7 @@
 
 [topgrade.files]
 
+[vscodium.files]
+"dotfiles/VSCodium/.config" = "~/Library/Application Support/"
+
 [zellij.files]

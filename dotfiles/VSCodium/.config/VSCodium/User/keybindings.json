@@ -1,0 +1,10 @@
+// SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+//
+// SPDX-License-Identifier: 0BSD
+[
+  {
+    "key": "ctrl+k",
+    "command": "deleteAllRight",
+    "when": "terminalFocus"
+  }
+]

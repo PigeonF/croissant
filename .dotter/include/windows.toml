@@ -39,12 +39,14 @@
 
 [ssh.files]
 
-
 [starship.files]
 "dotfiles/starship/.config/" = "~/AppData/Roaming/"
 
 [topgrade.files]
 "dotfiles/topgrade/.config/" = "~/AppData/Roaming/"
+
+[vscodium.files]
+"dotfiles/VSCodium/.config" = "~/AppData/Roaming/"
 
 [zellij.files]
 "dotfiles/zellij/.config" = ""
