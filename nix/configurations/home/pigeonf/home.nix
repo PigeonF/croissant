@@ -59,6 +59,7 @@
         rust.enable = true;
         starship.enable = true;
         vscodium.enable = true;
+        yazi.enable = true;
         zellij.enable = true;
         zsh.enable = true;
       };

@@ -1,3 +1,4 @@
+
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
@@ -26,7 +27,6 @@
 
 [powershell.files]
 "dotfiles/powershell/" = "~/Documents/WindowsPowerShell/"
-"dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = { target = "~/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1", type = "template" }
 
 [pwsh.files]
 "dotfiles/pwsh/.config/powershell/" = "~/Documents/PowerShell/"
@@ -47,6 +47,10 @@
 
 [vscodium.files]
 "dotfiles/VSCodium/.config" = "~/AppData/Roaming/"
+
+[yazi.files]
+"dotfiles/yazi/.config/yazi" = "~/AppData/Roaming/yazi/config/"
+"dotfiles/yazi/.config/yazi/theme.toml.hbs" = { target = "~/AppData/Roaming/yazi/config/theme.toml", type = "template" }
 
 [zellij.files]
 "dotfiles/zellij/.config" = ""

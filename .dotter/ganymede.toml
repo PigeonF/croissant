@@ -13,5 +13,6 @@ packages = [
   "ssh",
   "starship",
   "vscodium",
+  "yazi",
   "zellij",
 ]

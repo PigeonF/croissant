@@ -44,7 +44,11 @@ default_target_type = "symbolic"
 "dotfiles/topgrade/.config/" = "~/.config/"
 
 [vscodium.files]
-"dotfiles/VSCodium/.config" = "~/.config"
+"dotfiles/VSCodium/.config" = "~/.config/"
+
+[yazi.files]
+"dotfiles/yazi/.config" = "~/.config/"
+"dotfiles/yazi/.config/yazi/theme.toml.hbs" = { target = "~/.config/yazi/theme.toml", type = "template" }
 
 [zellij.files]
 "dotfiles/zellij/.config" = "~/.config/"

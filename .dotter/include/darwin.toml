@@ -32,4 +32,6 @@
 [vscodium.files]
 "dotfiles/VSCodium/.config" = "~/Library/Application Support/"
 
+[yazi.files]
+
 [zellij.files]

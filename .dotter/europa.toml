@@ -16,9 +16,9 @@ packages = [
   "ssh",
   "topgrade",
   "vscodium",
+  "yazi",
 ]
 
 # Documents folder is moved to S:, and is not in ~/
 [files]
 "dotfiles/pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"
-"dotfiles/powershell/Microsoft.PowerShell_profile.ps1.hbs" = "S:/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
