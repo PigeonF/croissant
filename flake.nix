@@ -87,6 +87,7 @@
         programs-jujutsu = ./nix/modules/home/programs/jujutsu.nix;
         programs-rust = ./nix/modules/home/programs/rust.nix;
         programs-starship = ./nix/modules/home/programs/starship.nix;
+        programs-vscodium = ./nix/modules/home/programs/vscodium.nix;
         programs-zellij = ./nix/modules/home/programs/zellij.nix;
         programs-zsh = ./nix/modules/home/programs/zsh.nix;
       };

@@ -12,6 +12,8 @@
 
 [jj.files]
 
+[niri.files]
+
 [powershell.files]
 "dotfiles/powershell" = ""
 
@@ -24,5 +26,7 @@
 [starship.files]
 
 [topgrade.files]
+
+[vscodium.files]
 
 [zellij.files]

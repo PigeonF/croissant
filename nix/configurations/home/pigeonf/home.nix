@@ -4,7 +4,6 @@
 {
   config,
   croissantPresetsPath,
-  lib,
   pkgs,
   userName,
   ...
@@ -59,6 +58,7 @@
         jujutsu.enable = true;
         rust.enable = true;
         starship.enable = true;
+        vscodium.enable = true;
         zellij.enable = true;
         zsh.enable = true;
       };
