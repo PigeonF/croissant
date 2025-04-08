@@ -16,6 +16,14 @@
 
     system = {
       configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+
+      defaults = {
+        NSGlobalDomain = {
+          InitialKeyRepeat = 20;
+          KeyRepeat = 2;
+        };
+      };
+
       stateVersion = 5;
 
       keyboard = {
