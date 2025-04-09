@@ -70,6 +70,7 @@
             {
               pigeonf = {
                 directories = xdgDirectories ++ [
+                  ".docker"
                   ".mozilla"
                   ".pki"
                   ".vscode-oss"
