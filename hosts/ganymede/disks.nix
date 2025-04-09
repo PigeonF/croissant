@@ -162,6 +162,7 @@ _: {
         "/persist" = {
           hideMounts = true;
           directories = [
+            "/var/lib/nftables"
             "/var/lib/nixos"
             "/var/lib/private"
             "/var/lib/systemd"
