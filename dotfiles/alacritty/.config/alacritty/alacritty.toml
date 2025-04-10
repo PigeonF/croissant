@@ -12,6 +12,7 @@ import = [
 ]
 
 [env]
+TERM = "alacritty"
 
 [window]
 padding = { x = 16, y = 9 }
