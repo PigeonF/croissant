@@ -163,7 +163,7 @@
               DHCP = "yes";
             };
             linkConfig = {
-              Unmanaged = "yes";
+              # Unmanaged = "yes";
               RequiredForOnline = "no";
             };
           };
