@@ -10,35 +10,9 @@
   _file = ./nix.nix;
 
   config = {
-    launchd = {
-      daemons = {
-        linux-builder = {
-          serviceConfig = {
-            StandardOutPath = "/var/log/darwin-builder.log";
-            StandardErrorPath = "/var/log/darwin-builder.log";
-          };
-        };
-      };
-    };
-
     nix = {
       channel = {
         enable = false;
-      };
-      linux-builder = {
-        enable = true;
-        ephemeral = true;
-        maxJobs = 4;
-
-        config = {
-          virtualisation = {
-            darwin-builder = {
-              diskSize = 4 * 20 * 1024;
-              memorySize = 8 * 1024;
-            };
-            cores = 4;
-          };
-        };
       };
       package = pkgs.nixVersions.stable;
       registry = {
@@ -55,15 +29,18 @@
         };
       };
       settings = {
+        auto-allocate-uids = true;
         extra-experimental-features = [
           "flakes"
           "nix-command"
           "no-url-literals"
+          "auto-allocate-uids"
+          "cgroups"
         ];
         sandbox = true;
-        trusted-users = [
-          "@admin"
-        ];
+        system-features = [ "uid-range" ];
+        trusted-users = [ "@wheel" ];
+        use-cgroups = true;
         use-xdg-base-directories = true;
       };
     };

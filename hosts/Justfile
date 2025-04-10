@@ -15,6 +15,8 @@ mod callisto
 mod europa
 [doc('Laptop used for Linux development')]
 mod ganymede
+[doc('VM run on phoebe')]
+mod oberon
 [doc('Mac Mini used for development and hosting VMs')]
 mod phoebe
 

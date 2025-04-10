@@ -10,6 +10,7 @@ _keys:
   - &pigeonf "age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry"
   # Hosts
   - &ganymede "age13lj5pgrs6ukfuegvyfkt8d5sz22lha3zf3l82jxdav7vj7325vjqc36vku"
+  - &oberon "age1aylzkdanjlt5c5tajez7q43t7u3cjku47ltjtttv592a5m7v0gpsstdpqn"
   - &serenno "age1jwyj2ghcpef2mvhnyhfawevmx6afhy5e3h6jtvz7x0y3pwdvmuxqjpmhjv"
   - &serenno-raxus "age1yed03hnu6csk4e3jv78rvgcldft7h4dyc8uauswng4fkvtekrdtqwheks4"
 creation_rules:
@@ -18,6 +19,11 @@ creation_rules:
           - *pigeonf
           - *ganymede
     path_regex: ^hosts/ganymede/secrets\.yaml$
+  - key_groups:
+      - age:
+          - *pigeonf
+          - *oberon
+    path_regex: ^hosts/oberon/secrets\.yaml$
   - key_groups:
       - age:
           - *pigeonf

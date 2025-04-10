@@ -128,6 +128,7 @@
         imports = [
           ./hosts/callisto
           ./hosts/ganymede
+          ./hosts/oberon
           ./hosts/phoebe
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root

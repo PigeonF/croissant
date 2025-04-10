@@ -13,7 +13,6 @@ _: {
       enable = true;
       casks = [
         "crystalfetch"
-        "docker"
         "utm"
       ];
     };
