@@ -3,7 +3,6 @@
 # SPDX-License-Identifier: 0BSD
 {
   inputs,
-  self,
   croissant-lib,
   ...
 }:
@@ -11,6 +10,60 @@ let
   system = "aarch64-darwin";
   deploySystem = "aarch64-darwin";
   deployLib = inputs.deploy-rs.lib.${deploySystem};
+
+  callisto = croissant-lib.mkDarwinConfiguration {
+    inherit system;
+    specialArgs = {
+      inherit inputs;
+    };
+    modules = [
+      inputs.lix-modules.nixosModules.default
+      ./homebrew.nix
+      ./nix.nix
+      ./system.nix
+      ./users.nix
+      ./xdg.nix
+    ];
+  };
+
+  callisto-bootstrap = croissant-lib.mkDarwinConfiguration {
+    inherit system;
+    specialArgs = {
+      inherit inputs;
+    };
+    modules = [
+      inputs.lix-modules.nixosModules.default
+      ./system.nix
+      (_: {
+        config = {
+          launchd = {
+            daemons = {
+              linux-builder = {
+                serviceConfig = {
+                  StandardOutPath = "/var/log/darwin-builder.log";
+                  StandardErrorPath = "/var/log/darwin-builder.log";
+                };
+              };
+            };
+          };
+          nix = {
+            linux-builder = {
+              enable = true;
+            };
+            settings = {
+              extra-experimental-features = [
+                "flakes"
+                "nix-command"
+              ];
+              trusted-users = [
+                "@admin"
+              ];
+            };
+          };
+        };
+      })
+    ];
+  };
 in
 {
   _file = ./default.nix;
@@ -27,7 +80,7 @@ in
       system = {
         user = "root";
         sshUser = "pigeonf";
-        path = deployLib.activate.darwin self.darwinConfigurations.callisto;
+        path = deployLib.activate.darwin callisto;
       };
       root = {
         user = "root";
@@ -47,62 +100,14 @@ in
 
   flake = {
     darwinConfigurations = {
-      callisto = croissant-lib.mkDarwinConfiguration {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          inputs.lix-modules.nixosModules.default
-          ./homebrew.nix
-          ./nix.nix
-          ./system.nix
-          ./users.nix
-          ./xdg.nix
-        ];
-      };
-
-      callisto-bootstrap = croissant-lib.mkDarwinConfiguration {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          inputs.lix-modules.nixosModules.default
-          ./system.nix
-          (_: {
-            config = {
-              launchd = {
-                daemons = {
-                  linux-builder = {
-                    serviceConfig = {
-                      StandardOutPath = "/var/log/darwin-builder.log";
-                      StandardErrorPath = "/var/log/darwin-builder.log";
-                    };
-                  };
-                };
-              };
-              nix = {
-                linux-builder = {
-                  enable = true;
-                };
-                settings = {
-                  extra-experimental-features = [
-                    "flakes"
-                    "nix-command"
-                  ];
-                  trusted-users = [
-                    "@admin"
-                  ];
-                };
-              };
-            };
-          })
-        ];
-      };
+      inherit callisto callisto-bootstrap;
     };
   };
 
   perSystem = {
     packages = {
-      callisto = self.darwinConfigurations.callisto.config.system.build.toplevel;
-      callisto-bootstrap = self.darwinConfigurations.callisto-bootstrap.config.system.build.toplevel;
+      callisto = callisto.config.system.build.toplevel;
+      callisto-bootstrap = callisto-bootstrap.config.system.build.toplevel;
     };
   };
 }
