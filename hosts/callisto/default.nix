@@ -86,11 +86,13 @@ in
         user = "root";
         sudo = "sudo --login -u";
         sshUser = "pigeonf";
+        interactiveSudo = true;
         path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
       pigeonf = {
         user = "pigeonf";
         sshUser = "pigeonf";
+        interactiveSudo = true;
         path =
           deployLib.activate.home-manager
             inputs.self.legacyPackages.${system}.homeConfigurations.pigeonf;
