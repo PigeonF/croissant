@@ -42,7 +42,7 @@
       url = "github:nix-community/impermanence?ref=master";
     };
     lix-modules = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=2.92.0-3";
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.92.0-3";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -74,6 +74,7 @@
     }:
     let
       flakeModules = {
+        darwin-configurations = ./nix/modules/flake-parts/darwin-configurations.nix;
         deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
         home-modules = ./nix/modules/flake-parts/home-modules.nix;
       };
@@ -127,6 +128,7 @@
         imports = [
           ./hosts/callisto
           ./hosts/ganymede
+          ./hosts/phoebe
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
           ./nix/configurations/microvm/raxus
