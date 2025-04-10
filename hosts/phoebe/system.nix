@@ -3,12 +3,20 @@
 # SPDX-License-Identifier: 0BSD
 {
   inputs,
+  pkgs,
   ...
 }:
 {
   _file = ./system.nix;
 
   config = {
+    environment = {
+      systemPackages = [
+        pkgs.alacritty.terminfo
+        pkgs.wezterm.terminfo
+      ];
+    };
+
     networking = {
       hostName = "phoebe";
       computerName = "Phoebe Server";
