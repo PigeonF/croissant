@@ -75,7 +75,7 @@ let
       system:
       if system == "aarch64-darwin" then
         "aarch64-apple-darwin"
-      else if system == "aarch-linux" then
+      else if system == "aarch64-linux" then
         "aarch64-unknown-linux-gnu"
       else if system == "x86_64-darwin" then
         "x86_64-apple-darwin"
