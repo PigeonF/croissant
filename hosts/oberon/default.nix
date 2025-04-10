@@ -51,6 +51,7 @@ in
           ./disks.nix
           ./networking.nix
           ./nix.nix
+          ./services.nix
           ./system.nix
           ./users.nix
           ./virtualization.nix
