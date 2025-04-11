@@ -69,6 +69,9 @@
     };
 
     nixpkgs = {
+      config = {
+        allowBroken = true;
+      };
       overlays = [ inputs.self.overlays.default ];
     };
   };

@@ -16,6 +16,27 @@
   ];
 
   config = {
+    croissant = {
+      dotfiles = {
+        enable = true;
+      };
+      programs = {
+        atuin.enable = true;
+        bash.enable = true;
+        ghq.enable = true;
+        git.enable = true;
+        helix.enable = true;
+        jujutsu.enable = true;
+        nushell.enable = true;
+        rust.enable = true;
+        starship.enable = true;
+        vscodium.enable = true;
+        yazi.enable = true;
+        zellij.enable = true;
+        zsh.enable = true;
+      };
+    };
+
     home = {
       extraOutputsToInstall = [
         "devdoc"
@@ -45,24 +66,9 @@
       username = userName;
     };
 
-    croissant = {
-      dotfiles = {
-        enable = true;
-      };
-      programs = {
-        atuin.enable = true;
-        bash.enable = true;
-        ghq.enable = true;
-        git.enable = true;
-        helix.enable = true;
-        jujutsu.enable = true;
-        nushell.enable = true;
-        rust.enable = true;
-        starship.enable = true;
-        vscodium.enable = true;
-        yazi.enable = true;
-        zellij.enable = true;
-        zsh.enable = true;
+    nixpkgs = {
+      config = {
+        allowBroken = true;
       };
     };
 
