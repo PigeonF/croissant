@@ -28,13 +28,33 @@
       openssh = {
         enable = true;
       };
-      resolved.enable = true;
+      resolved = {
+        enable = true;
+      };
     };
 
     systemd = {
       network = {
         enable = true;
         networks = {
+          "05-container-bridge" = {
+            matchConfig = {
+              Type = "bridge";
+              Name = "docker*";
+            };
+            linkConfig = {
+              Unmanaged = "yes";
+            };
+          };
+          "05-container-veth" = {
+            matchConfig = {
+              Type = "ether";
+              Name = "veth*";
+            };
+            linkConfig = {
+              Unmanaged = "yes";
+            };
+          };
           "10-uplink" = {
             matchConfig = {
               Type = "ether";
