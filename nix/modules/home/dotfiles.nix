@@ -54,7 +54,7 @@ in
         dotfiles = lib.hm.dag.entryAfter [ "installPackages" ] ''
           if [ ! -d ${lib.escapeShellArg cfg.destination} ]; then
             run mkdir -p "$(dirname "${lib.escapeShellArg cfg.destination}")"
-            run ${lib.getExe pkgs.git} ${lib.escapeShellArg cfg.repo} ${lib.escapeShellArg cfg.destination}
+            run ${lib.getExe pkgs.git} clone ${lib.escapeShellArg cfg.repo} ${lib.escapeShellArg cfg.destination}
           else
             verboseEcho 'Dotfiles directory `' ${lib.escapeShellArg cfg.destination} '` exists already.'
           fi
