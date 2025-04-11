@@ -5,23 +5,21 @@ _: {
   _file = ./virtualization.nix;
 
   config = {
+    environment = {
+      etc = {
+        "resolv.conf" = {
+          mode = "direct-symlink";
+        };
+      };
+    };
+    networking = {
+      firewall = {
+        trustedInterfaces = [ "docker*" ];
+      };
+    };
     virtualisation = {
       docker = {
-        rootless = {
-          enable = true;
-          setSocketVariable = true;
-          daemon = {
-            settings = {
-              dns = [ "1.1.1.1" ];
-              default-address-pools = [
-                {
-                  "base" = "172.72.0.0/16";
-                  "size" = 24;
-                }
-              ];
-            };
-          };
-        };
+        enable = true;
       };
     };
   };

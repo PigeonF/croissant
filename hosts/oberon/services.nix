@@ -14,6 +14,9 @@
           enable = true;
         };
 
+        gracefulTermination = true;
+        gracefulTimeout = "1min 30s";
+
         settings = {
           concurrent = 8;
         };
