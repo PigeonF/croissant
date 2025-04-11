@@ -64,12 +64,23 @@ in
               cargo-audit
               cargo-binstall
               cargo-bloat
+              cargo-criterion
               cargo-deny
+              cargo-dist
+              cargo-flamegraph
               cargo-fuzz
               cargo-hack
+              cargo-insta
+              cargo-mutants
               cargo-nextest
               cargo-show-asm
+              cargo-xwin
+              cargo-zigbuild
+              release-plz
               rustup
+              # Documentation
+              mdbook
+              gnuplot
               # Command runner(s)
               just
               # Debugging
