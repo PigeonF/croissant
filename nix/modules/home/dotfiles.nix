@@ -45,40 +45,27 @@ in
           '')
         ];
       };
-      useJujutsu = mkOption {
-        type = types.bool;
-        default = config.croissant.programs.jujutsu.enable;
-        description = ''
-          Whether to use `jj` to clone the repository.
-        '';
-      };
     };
   };
 
   config = lib.mkIf cfg.enable {
     home = {
       activation = {
-        dotfiles =
-          let
-            clone =
-              if cfg.useJujutsu then
-                "${lib.getExe config.croissant.programs.jujutsu.package} git clone"
-              else
-                "${lib.getExe pkgs.git} clone";
-          in
-          lib.hm.dag.entryAfter [ "installPackages" ] ''
-            if [ ! -d ${lib.escapeShellArg cfg.destination} ]; then
-              run mkdir -p "$(dirname "${lib.escapeShellArg cfg.destination}")"
-              run ${clone} ${lib.escapeShellArg cfg.repo} ${lib.escapeShellArg cfg.destination}
-            else
-              verboseEcho 'Dotfiles directory `' ${lib.escapeShellArg cfg.destination} '` exists already.'
-            fi
+        dotfiles = lib.hm.dag.entryAfter [ "installPackages" ] ''
+          if [ ! -d ${lib.escapeShellArg cfg.destination} ]; then
+            run mkdir -p "$(dirname "${lib.escapeShellArg cfg.destination}")"
+            run ${lib.getExe pkgs.git} ${lib.escapeShellArg cfg.repo} ${lib.escapeShellArg cfg.destination}
+          else
+            verboseEcho 'Dotfiles directory `' ${lib.escapeShellArg cfg.destination} '` exists already.'
+          fi
 
-            (cd ${lib.escapeShellArg cfg.destination}; ${lib.getExe cfg.dotter} $VERBOSE_ARG ''${DRY_RUN+--dry-run} --noconfirm ${lib.escapeShellArgs cfg.dotterArgs})
-          '';
+          (cd ${lib.escapeShellArg cfg.destination}; ${lib.getExe cfg.dotter} $VERBOSE_ARG ''${DRY_RUN+--dry-run} --noconfirm ${lib.escapeShellArgs cfg.dotterArgs})
+        '';
       };
 
-      packages = [ cfg.dotter ];
+      packages = [
+        cfg.dotter
+      ];
     };
   };
 }
