@@ -67,5 +67,9 @@
         use-xdg-base-directories = true;
       };
     };
+
+    nixpkgs = {
+      overlays = [ inputs.self.overlays.default ];
+    };
   };
 }

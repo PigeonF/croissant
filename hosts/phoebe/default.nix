@@ -18,8 +18,10 @@ let
     };
     modules = [
       inputs.lix-modules.nixosModules.default
+      inputs.sops-nix.darwinModules.sops
       ./homebrew.nix
       ./nix.nix
+      ./services.nix
       ./system.nix
       ./users.nix
       ./xdg.nix

@@ -39,6 +39,10 @@
       computerName = "Phoebe Server";
     };
 
+    sops = {
+      defaultSopsFile = ./secrets.yaml;
+    };
+
     system = {
       configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
       stateVersion = 5;

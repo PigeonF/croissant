@@ -5,10 +5,11 @@
   description = "Yummy nix configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs?ref=release-24.11";
     nix-darwin = {
-      url = "github:nix-darwin/nix-darwin?ref=master";
+      # url = "github:nix-darwin/nix-darwin?ref=master";
+      url = "github:PigeonF/nix-darwin?ref=push-vlvowsnlollq";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     systems.url = "github:nix-systems/default?ref=main";
@@ -94,12 +95,6 @@
         programs-zellij = ./nix/modules/home/programs/zellij.nix;
         programs-zsh = ./nix/modules/home/programs/zsh.nix;
       };
-      nixosModules = {
-        disk = ./nix/modules/nixos/disk;
-        microvm-host = ./nix/modules/nixos/microvm/host.nix;
-        microvm-vm = ./nix/modules/nixos/microvm/vm.nix;
-        microvms = ./nix/modules/nixos/microvms.nix;
-      };
       lib = import ./nix/lib.nix {
         extraHomeModules = builtins.attrValues homeModules;
         extraNixOsModules = builtins.attrValues (
@@ -112,6 +107,13 @@
         home-manager-lib = inputs.home-manager.lib;
         nix-darwin-lib = inputs.nix-darwin.lib;
       };
+      nixosModules = {
+        disk = ./nix/modules/nixos/disk;
+        microvm-host = ./nix/modules/nixos/microvm/host.nix;
+        microvm-vm = ./nix/modules/nixos/microvm/vm.nix;
+        microvms = ./nix/modules/nixos/microvms.nix;
+      };
+      overlays = import ./nix/overlays inputs;
     in
     flake-parts.lib.mkFlake
       {
@@ -143,20 +145,26 @@
         flake = {
           inherit
             flakeModules
+            homeModules
             lib
             nixosModules
-            homeModules
+            overlays
             ;
         };
 
         perSystem =
           {
             self',
+            inputs',
             config,
             pkgs,
             ...
           }:
           {
+            _module.args.pkgs = inputs'.nixpkgs.legacyPackages.appendOverlays [
+              overlays.default
+            ];
+
             treefmt = import ./treefmt.nix;
 
             checks = {
@@ -203,6 +211,10 @@
                 ];
               };
               treefmt = config.treefmt.build.devShell;
+            };
+
+            packages = {
+              inherit (pkgs) gitlab-runner;
             };
           };
       });
