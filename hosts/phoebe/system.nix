@@ -14,6 +14,7 @@
       pathsToLink = [ "/share/terminfo" ];
       systemPackages = [
         pkgs.alacritty.terminfo
+        pkgs.podman
         pkgs.wezterm.terminfo
       ];
     };
