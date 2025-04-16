@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   _file = ./services.nix;
 
@@ -35,6 +35,14 @@
               "--env FF_NETWORK_PER_BUILD=1"
             ];
           };
+        };
+      };
+    };
+
+    systemd = {
+      services = {
+        gitlab-runner-clear-docker-cache = {
+          path = [ pkgs.bash ];
         };
       };
     };
