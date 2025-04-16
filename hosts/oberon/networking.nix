@@ -40,7 +40,7 @@
           "05-container-bridge" = {
             matchConfig = {
               Type = "bridge";
-              Name = "docker*";
+              Name = "docker* br-*";
             };
             linkConfig = {
               Unmanaged = "yes";
