@@ -40,6 +40,7 @@
       };
       settings = {
         auto-allocate-uids = true;
+        download-buffer-size = 512 * 1024 * 1024;
         extra-experimental-features = [
           "flakes"
           "nix-command"
