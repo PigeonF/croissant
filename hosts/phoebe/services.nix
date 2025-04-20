@@ -1,30 +1,60 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   _file = ./services.nix;
 
   config = {
+    environment = {
+      systemPackages = builtins.attrValues { inherit (pkgs) colima docker; };
+    };
+
     homebrew = {
       brews = [ "cirruslabs/cli/gitlab-tart-executor" ];
     };
 
     launchd = {
+      agents = {
+        colima = {
+          command = "${lib.getExe pkgs.colima} start --foreground";
+          serviceConfig = {
+            RunAtLoad = true;
+            KeepAlive = true;
+
+            StandardOutPath = "/Users/pigeonf/.local/state/colima/stdout.log";
+            StandardErrorPath = "/Users/pigeonf/.local/state/colima/stderr.log";
+
+            GroupName = "admin";
+            UserName = "pigeonf";
+            WorkingDirectory = "/Users/pigeonf/.local/state/colima";
+
+            EnvironmentVariables = {
+              PATH = "${pkgs.colima}/bin:${pkgs.docker}/bin:/usr/bin:/bin:/usr/sbin:/sbin";
+              XDG_CONFIG_HOME = "/Users/pigeonf/.config";
+            };
+          };
+        };
+      };
       daemons = {
         gitlab-runner = {
           environment = {
-            HOME = lib.mkForce "/Users/pigeonf/";
+            HOME = lib.mkForce "/Users/pigeonf/.local/state";
           };
           serviceConfig = {
-            StandardOutPath = "/Users/pigeonf/.gitlab-runner/stdout.log";
-            StandardErrorPath = "/Users/pigeonf/.gitlab-runner/stderr.log";
+            StandardOutPath = "/Users/pigeonf/.local/state/.gitlab-runner/stdout.log";
+            StandardErrorPath = "/Users/pigeonf/.local/state/.gitlab-runner/stderr.log";
 
             # NOTE(PigeonF): We have to run as the normal user for tart to work.
             # Since tart runs actual VMs, I am not too worried about the account having root access.
             GroupName = lib.mkForce "admin";
             UserName = lib.mkForce "pigeonf";
-            WorkingDirectory = lib.mkForce config.users.users.pigeonf.home;
+            WorkingDirectory = lib.mkForce "/Users/pigeonf/.local/state/.gitlab-runner";
           };
         };
       };
