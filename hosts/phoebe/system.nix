@@ -17,6 +17,14 @@
         pkgs.podman
         pkgs.wezterm.terminfo
       ];
+      variables = {
+        LANG = "en_US.UTF-8";
+        LC_COLLATE = "C";
+        LC_MEASUREMENT = "de_DE.UTF-8";
+        LC_MONETARY = "de_DE.UTF-8";
+        # en_DK is not installed on macOS by default, so just fall back to en_GB
+        LC_TIME = "en_GB.UTF-8";
+      };
     };
 
     launchd = {
