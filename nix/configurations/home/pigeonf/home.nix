@@ -23,6 +23,7 @@
       programs = {
         atuin.enable = true;
         bash.enable = true;
+        containers.enable = true;
         ghq.enable = true;
         git.enable = true;
         helix.enable = true;
