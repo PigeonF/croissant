@@ -76,6 +76,7 @@ in
               cargo-show-asm
               cargo-xwin
               cargo-zigbuild
+              git-cliff
               release-plz
               rustup
               # Documentation
