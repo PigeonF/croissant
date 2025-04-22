@@ -17,6 +17,8 @@ mod europa
 mod ganymede
 [doc('VM run on phoebe')]
 mod oberon
+[doc('VM run on phoebe')]
+mod puck
 [doc('Mac Mini used for development and hosting VMs')]
 mod phoebe
 

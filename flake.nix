@@ -133,6 +133,7 @@
           ./hosts/ganymede
           ./hosts/oberon
           ./hosts/phoebe
+          ./hosts/puck
           ./nix/configurations/home/pigeonf
           ./nix/configurations/home/root
           ./nix/configurations/microvm/raxus

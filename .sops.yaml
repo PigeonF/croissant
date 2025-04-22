@@ -12,6 +12,7 @@ _keys:
   - &ganymede "age13lj5pgrs6ukfuegvyfkt8d5sz22lha3zf3l82jxdav7vj7325vjqc36vku"
   - &oberon "age1mj66qlln42ndxk42egy48rs7rpfp498lnf6m6ljufjg6pwj7a36q22rrq3"
   - &phoebe "age1m7cux5pakgmvpy80s7ah4jl47ndhz2acek3h655q7e57laukuecq9ydgf6"
+  - &puck "age1cnrmypfyeapvhmya5guh5y2szn8g0lj7mfd8qp05spyjp3ureg9qzt3rud"
   - &serenno "age1jwyj2ghcpef2mvhnyhfawevmx6afhy5e3h6jtvz7x0y3pwdvmuxqjpmhjv"
   - &serenno-raxus "age1yed03hnu6csk4e3jv78rvgcldft7h4dyc8uauswng4fkvtekrdtqwheks4"
 creation_rules:
@@ -30,6 +31,11 @@ creation_rules:
           - *pigeonf
           - *phoebe
     path_regex: ^hosts/phoebe/secrets\.yaml$
+  - key_groups:
+      - age:
+          - *pigeonf
+          - *puck
+    path_regex: ^hosts/puck/secrets\.yaml$
   - key_groups:
       - age:
           - *pigeonf
