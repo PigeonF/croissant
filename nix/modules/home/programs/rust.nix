@@ -73,6 +73,7 @@ in
               cargo-insta
               cargo-mutants
               cargo-nextest
+              cargo-release
               cargo-show-asm
               cargo-xwin
               cargo-zigbuild
