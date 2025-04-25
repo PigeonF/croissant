@@ -74,10 +74,10 @@ in
               cargo-mutants
               cargo-nextest
               cargo-release
+              cargo-semver-checks
               cargo-show-asm
               cargo-xwin
               cargo-zigbuild
-              git-cliff
               release-plz
               rustup
               # Documentation
@@ -85,6 +85,9 @@ in
               gnuplot
               # Command runner(s)
               just
+              git-cliff
+              mdsh
+              sd
               # Debugging
               lldb
               ;
