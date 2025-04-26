@@ -63,6 +63,7 @@
     services = {
       gitlab-runner = {
         enable = true;
+        concurrent = 2;
         services = {
           tart = {
             authenticationTokenConfigFile = config.sops.templates."tart-authentication-token.env".path;
