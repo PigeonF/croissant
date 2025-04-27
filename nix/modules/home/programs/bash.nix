@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -57,6 +58,11 @@ in
           target = ".config/bash/bashrc";
         };
       };
+
+      packages = [
+        pkgs.moreutils
+        pkgs.jq
+      ];
     };
 
     programs = {
