@@ -19,6 +19,7 @@
 
         settings = {
           concurrent = 8;
+          check_interval = 15;
         };
 
         services = {
