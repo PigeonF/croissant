@@ -11,7 +11,7 @@
         enable = true;
 
         clear-docker-cache = {
-          enable = true;
+          enable = false;
         };
 
         gracefulTermination = true;
@@ -30,10 +30,12 @@
             executor = "docker";
             registrationFlags = [
               "--cache-dir /cache"
+              "--docker-host unix:///run/podman/podman.sock"
+              "--docker-network-mode podman"
               "--docker-volumes /builds"
               "--docker-volumes /cache"
-              "--output-limit 8192"
               "--env FF_NETWORK_PER_BUILD=1"
+              "--output-limit 8192"
             ];
           };
         };
