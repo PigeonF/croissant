@@ -29,6 +29,8 @@
             executor = "docker";
             registrationFlags = [
               "--cache-dir /cache"
+              "--docker-host unix:///run/podman/podman.sock"
+              "--docker-network-mode podman"
               "--docker-volumes /builds"
               "--docker-volumes /cache"
               "--output-limit 8192"
