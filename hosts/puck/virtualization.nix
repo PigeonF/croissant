@@ -1,7 +1,8 @@
 # SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
 #
 # SPDX-License-Identifier: 0BSD
-_: {
+{ pkgs, ... }:
+{
   _file = ./virtualization.nix;
 
   config = {
@@ -11,15 +12,36 @@ _: {
           mode = "direct-symlink";
         };
       };
+      systemPackages = [ pkgs.passt ];
     };
     networking = {
       firewall = {
-        trustedInterfaces = [ "docker*" ];
+        trustedInterfaces = [
+          "podman*"
+        ];
       };
     };
     virtualisation = {
       docker = {
+        enable = false;
+      };
+      oci-containers = {
+        backend = "podman";
+      };
+      podman = {
         enable = true;
+        autoPrune = {
+          enable = true;
+          flags = [ "--all" ];
+        };
+        defaultNetwork = {
+          settings = {
+            dns_enabled = true;
+          };
+        };
+        dockerSocket = {
+          enable = true;
+        };
       };
     };
   };
