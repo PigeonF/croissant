@@ -62,9 +62,11 @@ in
           {
             inherit (pkgs)
               cargo-audit
+              cargo-auditable
               cargo-binstall
               cargo-bloat
               cargo-criterion
+              cargo-cyclonedx
               cargo-deny
               cargo-dist
               cargo-flamegraph
@@ -81,13 +83,15 @@ in
               release-plz
               rustup
               # Documentation
-              mdbook
               gnuplot
+              mdbook
+              pandoc
               # Command runner(s)
               just
               git-cliff
               mdsh
               sd
+              shellcheck
               # Debugging
               lldb
               ;
