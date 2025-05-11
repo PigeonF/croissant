@@ -14,6 +14,7 @@
           enable = true;
         };
 
+        concurrent = 16;
         gracefulTermination = true;
         gracefulTimeout = "30s";
 

@@ -63,6 +63,7 @@
     services = {
       gitlab-runner = {
         enable = true;
+        concurrent = 32;
         services = {
           tart = {
             limit = 4;
