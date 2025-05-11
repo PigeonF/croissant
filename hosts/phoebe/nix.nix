@@ -60,7 +60,7 @@
           "nix-command"
           "no-url-literals"
         ];
-        sandbox = true;
+        sandbox = "relaxed";
         trusted-users = [
           "@admin"
         ];

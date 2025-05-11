@@ -11,7 +11,6 @@
 [helix.files]
 
 [jj.files]
-"dotfiles/jj/.config/" = "~/Library/Application Support/"
 
 [niri.files]
 "dotfiles/niri/.config" = ""

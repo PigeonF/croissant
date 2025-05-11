@@ -45,7 +45,12 @@ sqk = ["squash", "--keep-empty"]
 
 [templates]
 log = "builtin_log_comfortable"
-
+# if(!trailers.contains_key("Change-Id"), format_gerrit_change_id_trailer(self)),
+commit_trailers = '''
+concat(
+  format_signed_off_by_trailer(self),
+)
+'''
 draft_commit_description = '''
 concat(
   description,
