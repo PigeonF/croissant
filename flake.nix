@@ -43,7 +43,7 @@
       url = "github:nix-community/impermanence?ref=master";
     };
     lix-modules = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.92.0-3";
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.93.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
