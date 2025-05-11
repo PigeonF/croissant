@@ -35,6 +35,10 @@
       url = "github:nix-community/disko?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # https://nixpk.gs/pr-tracker.html?pr=405716
+    editorconfig-checker-upstream = {
+      url = "github:nixos/nixpkgs?ref=master";
+    };
     home-manager = {
       url = "github:nix-community/home-manager?ref=master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -42,6 +46,7 @@
     impermanence = {
       url = "github:nix-community/impermanence?ref=master";
     };
+    # https://nixpk.gs/pr-tracker.html?pr=405006
     jujutsu-upstream = {
       url = "github:jj-vcs/jj?ref=refs/tags/v0.29.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -222,7 +227,7 @@
             };
 
             packages = {
-              inherit (pkgs) gitlab-runner;
+              inherit (pkgs) editorconfig-checker gitlab-runner release-plz;
             };
           };
       });
