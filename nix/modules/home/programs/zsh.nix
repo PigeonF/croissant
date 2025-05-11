@@ -49,7 +49,7 @@ in
         history = {
           path = "${config.xdg.dataHome}/zsh/zsh_history";
         };
-        initExtraBeforeCompInit = ''
+        initContent = lib.mkOrder 550 ''
           # https://wiki.archlinux.org/title/Zsh#Key_bindings
           typeset -g -A key
 
