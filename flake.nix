@@ -227,7 +227,12 @@
             };
 
             packages = {
-              inherit (pkgs) editorconfig-checker gitlab-runner release-plz;
+              inherit (pkgs)
+                editorconfig-checker
+                gitlab-runner
+                release-plz
+                reuse
+                ;
             };
           };
       });

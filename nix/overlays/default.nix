@@ -28,6 +28,13 @@ let
         }
       );
     };
+    reuse = final: prev: {
+      reuse = prev.reuse.overrideAttrs (
+        _: previousAttrs: {
+          patches = [ ./reuse/jj.patch ];
+        }
+      );
+    };
   };
 in
 

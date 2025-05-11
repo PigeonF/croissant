@@ -91,6 +91,7 @@ in
               git-cliff
               just
               mdsh
+              reuse
               sd
               shellcheck
               # Debugging
