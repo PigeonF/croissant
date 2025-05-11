@@ -63,12 +63,12 @@
     services = {
       gitlab-runner = {
         enable = true;
-        concurrent = 2;
         services = {
           tart = {
             authenticationTokenConfigFile = config.sops.templates."tart-authentication-token.env".path;
             executor = "custom";
             registrationFlags = [
+              "--limit 4"
               "--custom-config-exec /opt/homebrew/bin/gitlab-tart-executor"
               "--custom-config-args config"
               "--custom-prepare-exec /opt/homebrew/bin/gitlab-tart-executor"
