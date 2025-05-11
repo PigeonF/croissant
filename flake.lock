@@ -159,6 +159,31 @@
         "type": "github"
       }
     },
+    "jujutsu-upstream": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay"
+      },
+      "locked": {
+        "lastModified": 1746637636,
+        "narHash": "sha256-jyhjKppwK+emwLEXtOJKU0f4mPdLzDrQabnHhpyUzmw=",
+        "owner": "jj-vcs",
+        "repo": "jj",
+        "rev": "94269d2e7228ff502b2116258e5ae6b3b07ec434",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jj-vcs",
+        "ref": "refs/tags/v0.29.0",
+        "repo": "jj",
+        "type": "github"
+      }
+    },
     "lix": {
       "flake": false,
       "locked": {
@@ -302,6 +327,7 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
+        "jujutsu-upstream": "jujutsu-upstream",
         "lix-modules": "lix-modules",
         "microvm": "microvm",
         "nix-darwin": "nix-darwin",
@@ -311,6 +337,27 @@
         "sops-nix": "sops-nix",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "jujutsu-upstream",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1744252416,
+        "narHash": "sha256-Vrs2GxaL0tLi9GCIUrutHgPSr+g7GYCetu7argsNrB4=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "2af83121f9d2c5281796e60e2b048906a84b9fac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sops-nix": {

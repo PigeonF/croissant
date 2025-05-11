@@ -42,6 +42,11 @@
     impermanence = {
       url = "github:nix-community/impermanence?ref=master";
     };
+    jujutsu-upstream = {
+      url = "github:jj-vcs/jj?ref=refs/tags/v0.29.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
     lix-modules = {
       url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.93.0";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -165,6 +170,7 @@
           {
             _module.args.pkgs = inputs'.nixpkgs.legacyPackages.appendOverlays [
               overlays.default
+              inputs.jujutsu-upstream.overlays.default
             ];
 
             treefmt = import ./treefmt.nix;
