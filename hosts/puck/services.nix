@@ -15,7 +15,7 @@
         };
 
         gracefulTermination = true;
-        gracefulTimeout = "1min 30s";
+        gracefulTimeout = "30s";
 
         services = {
           docker = {

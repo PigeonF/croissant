@@ -65,10 +65,10 @@
         enable = true;
         services = {
           tart = {
+            limit = 4;
             authenticationTokenConfigFile = config.sops.templates."tart-authentication-token.env".path;
             executor = "custom";
             registrationFlags = [
-              "--limit 4"
               "--custom-config-exec /opt/homebrew/bin/gitlab-tart-executor"
               "--custom-config-args config"
               "--custom-prepare-exec /opt/homebrew/bin/gitlab-tart-executor"
