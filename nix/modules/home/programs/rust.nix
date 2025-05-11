@@ -87,8 +87,9 @@ in
               mdbook
               pandoc
               # Command runner(s)
-              just
+              editorconfig-checker
               git-cliff
+              just
               mdsh
               sd
               shellcheck

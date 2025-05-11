@@ -48,6 +48,22 @@
         "type": "github"
       }
     },
+    "editorconfig-checker-upstream": {
+      "locked": {
+        "lastModified": 1747003416,
+        "narHash": "sha256-AT1E41SQNY19vQ9L+RDSGkall2fEjLptBc6DSLJ0U5E=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5d35e620053b041a4e04f09b21adf058408994c9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -322,6 +338,7 @@
       "inputs": {
         "deploy-rs": "deploy-rs",
         "disko": "disko",
+        "editorconfig-checker-upstream": "editorconfig-checker-upstream",
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
