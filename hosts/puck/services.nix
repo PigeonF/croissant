@@ -14,9 +14,12 @@
           enable = true;
         };
 
-        concurrent = 16;
         gracefulTermination = true;
         gracefulTimeout = "30s";
+
+        settings = {
+          concurrent = 16;
+        };
 
         services = {
           docker = {

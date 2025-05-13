@@ -14,11 +14,11 @@
           enable = false;
         };
 
-        concurrent = 32;
         gracefulTermination = true;
         gracefulTimeout = "30s";
 
         settings = {
+          concurrent = 32;
           check_interval = 15;
         };
 
@@ -35,8 +35,6 @@
               "--docker-network-mode podman"
               "--docker-volumes /builds"
               "--docker-volumes /cache"
-              "--env FF_NETWORK_PER_BUILD=1"
-              "--output-limit 8192"
             ];
           };
         };

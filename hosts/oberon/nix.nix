@@ -30,7 +30,7 @@
       };
       settings = {
         auto-allocate-uids = true;
-        download-buffer-size = 512 * 1024 * 1024;
+        # download-buffer-size = 512 * 1024 * 1024;
         extra-experimental-features = [
           "flakes"
           "nix-command"
@@ -43,6 +43,12 @@
         trusted-users = [ "@wheel" ];
         use-cgroups = true;
         use-xdg-base-directories = true;
+      };
+    };
+
+    nixpkgs = {
+      config = {
+        allowBroken = true;
       };
     };
   };
