@@ -80,7 +80,7 @@ in
               cargo-show-asm
               cargo-xwin
               cargo-zigbuild
-              release-plz
+              # release-plz
               rustup
               # Documentation
               gnuplot

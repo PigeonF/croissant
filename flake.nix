@@ -230,7 +230,7 @@
               inherit (pkgs)
                 editorconfig-checker
                 gitlab-runner
-                release-plz
+                # release-plz
                 reuse
                 ;
             };

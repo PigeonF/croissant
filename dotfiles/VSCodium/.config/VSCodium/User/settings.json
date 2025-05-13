@@ -19,10 +19,7 @@
   "editor.minimap.enabled": false,
   "editor.minimap.showSlider": "always",
   "editor.renderWhitespace": "trailing",
-  "editor.rulers": [
-    80,
-    100
-  ],
+  "editor.rulers": [80, 100],
   "editor.wordWrap": "on",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
@@ -127,9 +124,7 @@
   "git.enabled": true,
   "markdown.preview.fontSize": 18,
   "markdown.preview.fontFamily": "Inter",
-  "terminal.integrated.commandsToSkipShell": [
-    "-workbench.action.quickOpen"
-  ],
+  "terminal.integrated.commandsToSkipShell": ["-workbench.action.quickOpen"],
   "terminal.integrated.fontFamily": "VictorMono Nerd Font Mono",
   "terminal.integrated.fontSize": 18,
   "workbench.iconTheme": "catppuccin-macchiato",
@@ -138,18 +133,14 @@
   "window.menuBarVisibility": "hidden",
   "window.title": "${dirty}$${rootPath}",
   "workbench.sideBar.location": "right",
-  "yaml.customTags": [
-    "!reference sequence"
-  ],
+  "yaml.customTags": ["!reference sequence"],
   "redhat.telemetry.enabled": false,
   "xml.format.maxLineWidth": 0,
   "nix.formatterPath": "nixfmt",
   "nix.serverSettings": {
     "nil": {
       "formatting": {
-        "command": [
-          "nixfmt"
-        ]
+        "command": ["nixfmt"]
       }
     }
   },
