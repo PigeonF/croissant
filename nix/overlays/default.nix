@@ -28,9 +28,9 @@ let
         }
       );
     };
-    reuse = final: prev: {
+    reuse = _final: prev: {
       reuse = prev.reuse.overrideAttrs (
-        _: previousAttrs: {
+        _: _previousAttrs: {
           patches = [ ./reuse/jj.patch ];
         }
       );

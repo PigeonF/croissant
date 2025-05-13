@@ -45,11 +45,5 @@
         use-xdg-base-directories = true;
       };
     };
-
-    nixpkgs = {
-      config = {
-        allowBroken = true;
-      };
-    };
   };
 }
