@@ -27,6 +27,7 @@ push-bookmark-prefix = "push-"
 private-commits = "description(glob:\"private:*\")"
 
 [signing]
+behavior = "drop"
 backend = "ssh"
 key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID+2wAQrbFDe18oFY2Mv6qsUcYWJZPAcsV+Xr4ZHzncL"
 
