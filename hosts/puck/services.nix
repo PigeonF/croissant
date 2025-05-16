@@ -18,12 +18,12 @@
         gracefulTimeout = "30s";
 
         settings = {
-          concurrent = 16;
+          concurrent = 8;
         };
 
         services = {
           docker = {
-            limit = 8;
+            limit = 4;
             authenticationTokenConfigFile = config.sops.templates."docker-authentication-token.env".path;
             description = "Self-hosted runner for docker executors";
             dockerImage = "docker.io/library/busybox";
