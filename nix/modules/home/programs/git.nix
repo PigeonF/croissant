@@ -32,6 +32,7 @@ in
         delta
         git-branchless
         gitlab-ci-local
+        gnupg
         meld
         ;
 
