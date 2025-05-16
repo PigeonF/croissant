@@ -7,6 +7,13 @@ let
   inherit (nixpkgs) lib;
 
   overlays = {
+    cargo-semver-checks = _final: prev: {
+      cargo-semver-checks = prev.cargo-semver-checks.overrideAttrs (
+        _: _previousAttrs: {
+          patches = [ ./cargo-semver-checks/jj-integration.patch ];
+        }
+      );
+    };
     editorconfig-checker = final: _: {
       inherit (editorconfig-checker-upstream.legacyPackages.${final.system}) editorconfig-checker;
     };
