@@ -11,6 +11,14 @@
         "resolv.conf" = {
           mode = "direct-symlink";
         };
+
+        "containers/registries.conf.d/mirror-gcr.conf" = {
+          source = pkgs.writeText "mirror-gcr.conf" ''
+            [[registry]]
+            location = "mirror.gcr.io"
+            prefix = "docker.io"
+          '';
+        };
       };
       systemPackages = [ pkgs.passt ];
     };
@@ -22,6 +30,9 @@
       };
     };
     virtualisation = {
+      containers = {
+        enable = true;
+      };
       docker = {
         enable = false;
       };

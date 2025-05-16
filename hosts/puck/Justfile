@@ -43,6 +43,7 @@ install *ARGS: prepare-install
 [group('deploy')]
 [unix]
 [working-directory("../..")]
+[positional-arguments]
 [doc('Remotely update the puck configuration.')]
-update *ARGS:
-    nix run github:serokell/deploy-rs -- {{ quote(".#" + HOST) }} {{ ARGS }}
+update *ARGS="--remote-build":
+    nix run github:serokell/deploy-rs -- {{ quote(".#" + HOST) }} "${@}"
