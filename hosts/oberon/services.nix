@@ -35,6 +35,7 @@
               "--docker-network-mode podman"
               "--docker-volumes /builds"
               "--docker-volumes /cache"
+              "--docker-volumes /var/lib/containers"
             ];
           };
         };
