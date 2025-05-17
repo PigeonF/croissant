@@ -67,6 +67,17 @@
             };
           };
         };
+        links = {
+          "enp0s1" = {
+            matchConfig = {
+              Name = "enp0s1";
+            };
+            linkConfig = {
+              TCPSegmentationOffload = false;
+              GenericSegmentationOffload = false;
+            };
+          };
+        };
       };
     };
   };
