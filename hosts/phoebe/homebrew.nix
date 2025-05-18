@@ -12,8 +12,7 @@ _: {
     homebrew = {
       enable = true;
       casks = [
-        "crystalfetch"
-        "utm"
+        "vmware-fusion"
       ];
     };
   };

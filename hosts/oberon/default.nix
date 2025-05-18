@@ -19,7 +19,7 @@ in
     hostname = "oberon";
     profilesOrder = [
       "system"
-      "pigeonf"
+      "root"
     ];
 
     profiles = {
@@ -28,12 +28,10 @@ in
         sshUser = "root";
         path = deployLib.activate.nixos self.nixosConfigurations.oberon;
       };
-      pigeonf = {
-        user = "pigeonf";
-        sshUser = "pigeonf";
-        path =
-          deployLib.activate.home-manager
-            inputs.self.legacyPackages.${system}.homeConfigurations.pigeonf;
+      root = {
+        user = "root";
+        sshUser = "root";
+        path = deployLib.activate.home-manager inputs.self.legacyPackages.${system}.homeConfigurations.root;
       };
     };
   };

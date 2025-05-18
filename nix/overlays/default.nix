@@ -10,6 +10,7 @@ let
     cargo-semver-checks = _final: prev: {
       cargo-semver-checks = prev.cargo-semver-checks.overrideAttrs (
         _: _previousAttrs: {
+          RUST_BACKTRACE = 1;
           patches = [ ./cargo-semver-checks/jj-integration.patch ];
         }
       );
