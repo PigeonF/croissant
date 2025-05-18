@@ -59,9 +59,9 @@
             matchConfig = {
               Type = "ether";
             };
-            networkConfig = {
-              DHCP = "yes";
-            };
+            address = [ "192.168.64.65/24" ];
+            gateway = [ "192.168.64.1" ];
+            dns = [ "192.168.64.1" ];
             linkConfig = {
               RequiredForOnline = "routable";
             };
