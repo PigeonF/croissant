@@ -25,6 +25,12 @@ SPDX-FileCopyrightText = "2025 Jonas Fierlings <fnoegip@gmail.com>"
 SPDX-License-Identifier = "0BSD"
 
 [[annotations]]
+path = ["nix/overlays/**/*.patch"]
+precedence = "override"
+SPDX-FileCopyrightText = "2025 Jonas Fierlings <fnoegip@gmail.com>"
+SPDX-License-Identifier = "0BSD"
+
+[[annotations]]
 path = ["dotfiles/ssh/.ssh/keys.d/*.pub"]
 precedence = "override"
 SPDX-FileCopyrightText = "2025 Jonas Fierlings <fnoegip@gmail.com>"
