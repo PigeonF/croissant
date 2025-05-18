@@ -29,9 +29,11 @@
 
     croissant = {
       programs = {
+        atuin.enable = true;
         bash.enable = true;
         git.enable = true;
         helix.enable = true;
+        jujutsu.enable = true;
         starship.enable = true;
         zsh.enable = true;
       };

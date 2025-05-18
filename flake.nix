@@ -184,9 +184,11 @@
               reuse =
                 let
                   files = pkgs.nix-gitignore.gitignoreSourcePure [
-                    ".jj/"
                     ".dotter/cache.toml"
                     ".dotter/cache/"
+                    ".git/"
+                    ".jj/"
+                    ".provisioning/"
                     "*.gitignored.*"
                   ] (pkgs.lib.cleanSource ./.);
                 in

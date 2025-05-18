@@ -14,31 +14,12 @@
         "root/password" = {
           neededForUsers = true;
         };
-        "pigeonf/password" = {
-          neededForUsers = true;
-        };
       };
     };
 
     users = {
       mutableUsers = false;
       users = {
-        pigeonf = {
-          isNormalUser = true;
-          hashedPasswordFile = config.sops.secrets."pigeonf/password".path;
-          extraGroups = [
-            "docker"
-            "wheel"
-          ];
-          openssh = {
-            authorizedKeys = {
-              keys = [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYJE84WTAqpMwxRS1jbA/ZK+KpCxgf/sO4zNWyw4D/N"
-              ];
-            };
-          };
-        };
-
         root = {
           hashedPasswordFile = config.sops.secrets."root/password".path;
           openssh = {

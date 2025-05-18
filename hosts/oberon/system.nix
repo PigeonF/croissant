@@ -13,6 +13,9 @@
 
   config = {
     boot = {
+      binfmt = {
+        emulatedSystems = [ "x86_64-linux" ];
+      };
       initrd = {
         availableKernelModules = [
           "virtio_pci"
