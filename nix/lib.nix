@@ -31,6 +31,19 @@ let
           "specialArgs"
         ]
       );
+    mkDarwinSystem =
+      args@{
+        specialArgs ? { },
+        ...
+      }:
+      nix-darwin-lib.darwinSystem (
+        {
+          specialArgs = { } // args.specialArgs;
+        }
+        // builtins.removeAttrs args [
+          "specialArgs"
+        ]
+      );
     mkHomeConfiguration =
       args@{
         croissantPresetsPath ? ./modules/home/presets,
@@ -43,6 +56,25 @@ let
           modules = extraHomeModules ++ args.modules;
           extraSpecialArgs = {
             inherit croissant-lib croissantPresetsPath;
+          } // args.extraSpecialArgs;
+        }
+        // builtins.removeAttrs args [
+          "croissantPresetsPath"
+          "extraSpecialArgs"
+          "modules"
+        ]
+      );
+    mkHomeManagerConfiguration =
+      args@{
+        extraSpecialArgs ? { },
+        modules ? [ ],
+        ...
+      }:
+      home-manager-lib.homeManagerConfiguration (
+        {
+          modules = extraHomeModules ++ args.modules;
+          extraSpecialArgs = {
+            inherit croissant-lib;
           } // args.extraSpecialArgs;
         }
         // builtins.removeAttrs args [
@@ -71,18 +103,6 @@ let
           "specialArgs"
         ]
       );
-    systemToRustPlatform =
-      system:
-      if system == "aarch64-darwin" then
-        "aarch64-apple-darwin"
-      else if system == "aarch64-linux" then
-        "aarch64-unknown-linux-gnu"
-      else if system == "x86_64-darwin" then
-        "x86_64-apple-darwin"
-      else if system == "x86_64-linux" then
-        "x86_64-unknown-linux-gnu"
-      else
-        abort "Cannot convert ${system} to rust platform";
   };
 in
 croissant-lib

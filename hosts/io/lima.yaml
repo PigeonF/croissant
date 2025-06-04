@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+---
+vmType: vz
+images:
+  - location: "./result/nixos.qcow2"
+cpus: 4
+memory: 6GiB
+disk: 50GB
+ssh:
+  loadDotSSHPubKeys: true
+containerd:
+  user: false
+user:
+  name: lima
+rosetta:
+  enabled: true
