@@ -1,0 +1,12 @@
+# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+#
+# SPDX-License-Identifier: 0BSD
+#
+# Requires [just](https://just.systems).
+
+set unstable
+set windows-shell := ["pwsh", "-C"]
+
+provision:
+    nix build '.#ioImage'
+    limactl start --tty=false --name io lima.yaml

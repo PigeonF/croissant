@@ -5,52 +5,37 @@
   description = "Yummy nix configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs?ref=release-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=refs/heads/release-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=refs/heads/nixpkgs-unstable";
     nix-darwin = {
-      # url = "github:nix-darwin/nix-darwin?ref=master";
-      url = "github:PigeonF/nix-darwin?ref=push-vlvowsnlollq";
+      # url = "github:nix-darwin/nix-darwin?ref=nix-darwin-25.05";
+      url = "github:PigeonF/nix-darwin?ref=refs/heads/push-vlvowsnlollq";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    systems.url = "github:nix-systems/default?ref=main";
-    flake-compat = {
-      url = "github:edolstra/flake-compat?ref=master";
-      flake = false;
-    };
+    systems.url = "github:nix-systems/default?ref=refs/heads/main";
     flake-parts = {
-      url = "github:hercules-ci/flake-parts?ref=main";
+      url = "github:hercules-ci/flake-parts?ref=refs/heads/main";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
     flake-utils = {
-      url = "github:numtide/flake-utils?ref=main";
+      url = "github:numtide/flake-utils?ref=refs/heads/main";
       inputs.systems.follows = "systems";
     };
     deploy-rs = {
-      url = "github:serokell/deploy-rs?ref=master";
+      url = "github:serokell/deploy-rs?ref=refs/heads/master";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
       inputs.utils.follows = "flake-utils";
     };
     disko = {
-      url = "github:nix-community/disko?ref=master";
+      url = "github:nix-community/disko?ref=refs/heads/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # https://nixpk.gs/pr-tracker.html?pr=405716
-    editorconfig-checker-upstream = {
-      url = "github:nixos/nixpkgs?ref=master";
-    };
     home-manager = {
-      url = "github:nix-community/home-manager?ref=master";
+      url = "github:nix-community/home-manager?ref=refs/heads/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
-      url = "github:nix-community/impermanence?ref=master";
-    };
-    # https://nixpk.gs/pr-tracker.html?pr=405006
-    jujutsu-upstream = {
-      url = "github:jj-vcs/jj?ref=refs/tags/v0.29.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      url = "github:nix-community/impermanence?ref=refs/heads/master";
     };
     lix-modules = {
       url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.93.0";
@@ -58,26 +43,45 @@
       inputs.flake-utils.follows = "flake-utils";
     };
     microvm = {
-      url = "github:astro/microvm.nix?ref=main";
+      url = "github:astro/microvm.nix?ref=refs/heads/main";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+    nix-rosetta-builder = {
+      url = "github:cpick/nix-rosetta-builder?ref=refs/heads/main";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixos-generators.follows = "nixos-generators";
+    };
     nixos-facter-modules = {
-      url = "github:numtide/nixos-facter-modules?ref=main";
+      url = "github:numtide/nixos-facter-modules?ref=refs/heads/main";
+    };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators?ref=refs/heads/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-lima = {
+      url = "github:nixos-lima/nixos-lima?ref=refs/heads/master";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixos-generators.follows = "nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix?ref=master";
+      url = "github:Mic92/sops-nix?ref=refs/heads/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
-      url = "github:numtide/treefmt-nix?ref=main";
+      url = "github:numtide/treefmt-nix?ref=refs/heads/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
     inputs@{
+      # self,
+      deploy-rs,
       flake-parts,
+      home-manager,
+      nix-darwin,
       nixpkgs,
       systems,
       treefmt-nix,
@@ -85,52 +89,22 @@
     }:
     let
       flakeModules = {
-        darwin-configurations = ./nix/modules/flake-parts/darwin-configurations.nix;
-        deploy-rs = ./nix/modules/flake-parts/deploy-rs.nix;
-        home-modules = ./nix/modules/flake-parts/home-modules.nix;
+        default = {
+          imports = [
+            ./home-manager/flake-module.nix
+            ./hosts/flake-module.nix
+            ./nix-darwin/flake-module.nix
+          ];
+        };
       };
-      homeModules = {
-        dotfiles = ./nix/modules/home/dotfiles.nix;
-        programs-atuin = ./nix/modules/home/programs/atuin.nix;
-        programs-bash = ./nix/modules/home/programs/bash.nix;
-        programs-containers = ./nix/modules/home/programs/containers.nix;
-        programs-ghq = ./nix/modules/home/programs/ghq.nix;
-        programs-git = ./nix/modules/home/programs/git.nix;
-        programs-helix = ./nix/modules/home/programs/helix.nix;
-        programs-jujutsu = ./nix/modules/home/programs/jujutsu.nix;
-        programs-nushell = ./nix/modules/home/programs/nushell.nix;
-        programs-rust = ./nix/modules/home/programs/rust.nix;
-        programs-starship = ./nix/modules/home/programs/starship.nix;
-        programs-vscodium = ./nix/modules/home/programs/vscodium.nix;
-        programs-yazi = ./nix/modules/home/programs/yazi.nix;
-        programs-zellij = ./nix/modules/home/programs/zellij.nix;
-        programs-zsh = ./nix/modules/home/programs/zsh.nix;
-      };
-      lib = import ./nix/lib.nix {
-        extraHomeModules = builtins.attrValues homeModules;
-        extraNixOsModules = builtins.attrValues (
-          builtins.removeAttrs nixosModules [
-            "microvm-host"
-            "microvm-vm"
-          ]
-        );
-        inherit (nixpkgs) lib;
-        home-manager-lib = inputs.home-manager.lib;
-        nix-darwin-lib = inputs.nix-darwin.lib;
-      };
-      nixosModules = {
-        disk = ./nix/modules/nixos/disk;
-        microvm-host = ./nix/modules/nixos/microvm/host.nix;
-        microvm-vm = ./nix/modules/nixos/microvm/vm.nix;
-        microvms = ./nix/modules/nixos/microvms.nix;
-      };
-      overlays = import ./nix/overlays inputs;
     in
     flake-parts.lib.mkFlake
       {
         inherit inputs;
         specialArgs = {
-          croissant-lib = lib;
+          deploy-rs-lib = deploy-rs.lib;
+          home-manager-lib = home-manager.lib;
+          nix-darwin-lib = nix-darwin.lib;
         };
       }
       (_: {
@@ -139,28 +113,17 @@
         systems = import systems;
 
         imports = [
-          ./hosts/callisto
-          ./hosts/ganymede
-          ./hosts/oberon
-          ./hosts/phoebe
-          ./hosts/puck
-          ./nix/configurations/home/pigeonf
-          ./nix/configurations/home/root
-          ./nix/configurations/microvm/raxus
-          ./nix/configurations/nixos/serenno
+          ./home-manager
+          ./hosts
+          ./nix-darwin
+          # ./nixos
+          flake-parts.flakeModules.flakeModules
           treefmt-nix.flakeModule
-        ] ++ builtins.attrValues flakeModules;
-
-        # https://github.com/serokell/deploy-rs/issues/216
-        deploy-rs.flakeCheck = false;
+        ];
 
         flake = {
           inherit
             flakeModules
-            homeModules
-            lib
-            nixosModules
-            overlays
             ;
         };
 
@@ -174,8 +137,17 @@
           }:
           {
             _module.args.pkgs = inputs'.nixpkgs.legacyPackages.appendOverlays [
-              overlays.default
-              inputs.jujutsu-upstream.overlays.default
+              (_: _: {
+                unstablePackages = inputs'.nixpkgs-unstable.legacyPackages;
+              })
+              (final: _: {
+                patchedPackages = {
+                  reuse = final.callPackage ./nixpkgs/reuse { };
+                };
+              })
+              (_: _: {
+                upstreamPackages = { };
+              })
             ];
 
             treefmt = import ./treefmt.nix;
@@ -184,12 +156,17 @@
               reuse =
                 let
                   files = pkgs.nix-gitignore.gitignoreSourcePure [
+                    ".cache/"
+                    ".direnv/"
                     ".dotter/cache.toml"
                     ".dotter/cache/"
+                    ".dotter/local.toml"
                     ".git/"
                     ".jj/"
                     ".provisioning/"
                     "*.gitignored.*"
+                    "result-*"
+                    "result"
                   ] (pkgs.lib.cleanSource ./.);
                 in
                 pkgs.runCommandLocal "reuse" { } ''
@@ -226,15 +203,6 @@
                 ];
               };
               treefmt = config.treefmt.build.devShell;
-            };
-
-            packages = {
-              inherit (pkgs)
-                editorconfig-checker
-                gitlab-runner
-                # release-plz
-                reuse
-                ;
             };
           };
       });
