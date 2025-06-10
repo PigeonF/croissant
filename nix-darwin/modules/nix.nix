@@ -65,7 +65,7 @@ in
             "nix-command"
             "no-url-literals"
           ];
-          sandbox = true;
+          sandbox = "relaxed"; # true; # https://github.com/NixOS/nix/issues/12698
           trusted-users = [
             "@admin"
             "@wheel"
