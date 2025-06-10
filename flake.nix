@@ -77,7 +77,6 @@
 
   outputs =
     inputs@{
-      # self,
       deploy-rs,
       flake-parts,
       home-manager,
@@ -88,6 +87,10 @@
       ...
     }:
     let
+      nix-darwin-lib = nix-darwin.lib;
+      lib = import ./nix-darwin/lib.nix {
+        inherit inputs nix-darwin-lib;
+      };
       flakeModules = {
         default = {
           imports = [
@@ -104,7 +107,8 @@
         specialArgs = {
           deploy-rs-lib = deploy-rs.lib;
           home-manager-lib = home-manager.lib;
-          nix-darwin-lib = nix-darwin.lib;
+          inherit nix-darwin-lib;
+          croissant-lib = lib;
         };
       }
       (_: {
@@ -124,6 +128,7 @@
         flake = {
           inherit
             flakeModules
+            lib
             ;
         };
 

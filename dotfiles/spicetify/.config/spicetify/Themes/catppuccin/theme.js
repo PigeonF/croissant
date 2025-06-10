@@ -77,55 +77,64 @@
                     },
                     "Catppuccin",
                 ),
-                Spicetify.React.createElement("div", { className: "x-settings-row" }, [
-                    Spicetify.React.createElement(
-                        "div",
-                        { className: "x-settings-firstColumn" },
-                        [
-                            Spicetify.React.createElement(
-                                "label",
-                                {
-                                    htmlFor: "desktop.settings.selectLanguage",
-                                    className:
-                                        "TextElement-bodySmall-textSubdued-text encore-text-body-small",
-                                    "data-encore-id": "type",
-                                },
-                                "Choose an accent color",
-                            ),
-                        ],
-                    ),
-                    Spicetify.React.createElement(
-                        "div",
-                        { className: "x-settings-secondColumn" },
-                        [
-                            Spicetify.React.createElement("span", null, [
+                Spicetify.React.createElement(
+                    "div",
+                    { className: "x-settings-row" },
+                    [
+                        Spicetify.React.createElement(
+                            "div",
+                            { className: "x-settings-firstColumn" },
+                            [
                                 Spicetify.React.createElement(
-                                    "select",
+                                    "label",
                                     {
-                                        className: "main-dropDown-dropDown",
-                                        id: "desktop.settings.selectLanguage",
-                                        dir: "auto",
-                                        value: selectedValue,
-                                        onChange: (event) => {
-                                            setSelectedValue(event.target.value);
-                                        },
+                                        htmlFor:
+                                            "desktop.settings.selectLanguage",
+                                        className:
+                                            "TextElement-bodySmall-textSubdued-text encore-text-body-small",
+                                        "data-encore-id": "type",
                                     },
-                                    accents.map((option) => {
-                                        return Spicetify.React.createElement(
-                                            "option",
-                                            {
-                                                key: option,
-                                                value: option,
-                                                selected: option === selectedValue,
-                                            },
-                                            option,
-                                        );
-                                    }),
+                                    "Choose an accent color",
                                 ),
-                            ]),
-                        ],
-                    ),
-                ]),
+                            ],
+                        ),
+                        Spicetify.React.createElement(
+                            "div",
+                            { className: "x-settings-secondColumn" },
+                            [
+                                Spicetify.React.createElement("span", null, [
+                                    Spicetify.React.createElement(
+                                        "select",
+                                        {
+                                            className: "main-dropDown-dropDown",
+                                            id: "desktop.settings.selectLanguage",
+                                            dir: "auto",
+                                            value: selectedValue,
+                                            onChange: (event) => {
+                                                setSelectedValue(
+                                                    event.target.value,
+                                                );
+                                            },
+                                        },
+                                        accents.map((option) => {
+                                            return Spicetify.React.createElement(
+                                                "option",
+                                                {
+                                                    key: option,
+                                                    value: option,
+                                                    selected:
+                                                        option ===
+                                                        selectedValue,
+                                                },
+                                                option,
+                                            );
+                                        }),
+                                    ),
+                                ]),
+                            ],
+                        ),
+                    ],
+                ),
             ],
         );
     });
@@ -147,7 +156,10 @@
                     Spicetify.React.createElement(Section),
                     sectionContainer,
                 );
-                header.parentNode.insertBefore(sectionContainer, header.nextSibling);
+                header.parentNode.insertBefore(
+                    sectionContainer,
+                    header.nextSibling,
+                );
             }
         }, 1);
     }

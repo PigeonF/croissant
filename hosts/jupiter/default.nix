@@ -1,33 +1,29 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
+  croissant-lib,
   deploy-rs-lib,
   home-manager-lib,
   inputs,
-  nix-darwin-lib,
-  withSystem,
+  self,
   ...
 }:
 let
-  jupiter = nix-darwin-lib.darwinSystem {
-    system = "aarch64-darwin";
-
-    specialArgs = {
-      inherit inputs;
-    };
-
-    modules = [
-      ./jupiter.nix
-    ];
-  };
+  hostPlatform = "aarch64-darwin";
 in
 {
   _file = ./default.nix;
 
   flake = {
     darwinConfigurations = {
-      inherit jupiter;
+      jupiter = croissant-lib.mkDarwinSystem {
+        modules = [
+          ./jupiter.nix
+          {
+            nixpkgs = {
+              inherit hostPlatform;
+            };
+          }
+        ];
+      };
     };
   };
 
@@ -60,37 +56,38 @@ in
       };
 
       packages = {
-        jupiter = jupiter.config.system.build.toplevel;
+        jupiter = self.darwinConfigurations.jupiter.config.system.build.toplevel;
       };
     };
 
-  deploy-rs.nodes.jupiter = withSystem jupiter.config.nixpkgs.system (
-    { config, ... }:
-    {
-      hostname = "192.168.7.2";
-      profilesOrder = [
-        "system"
-        "root"
-        "pigeonf"
-      ];
-      profiles =
-        let
-          deploy-lib = deploy-rs-lib."aarch64-darwin";
-        in
-        {
-          system = {
-            sshUser = "root";
-            path = deploy-lib.activate.darwin jupiter;
-          };
-          root = {
-            sshUser = "root";
-            path = deploy-lib.activate.home-manager config.homeConfigurations."jupiter.root";
-          };
-          pigeonf = {
-            sshUser = "pigeonf";
-            path = deploy-lib.activate.home-manager config.homeConfigurations."jupiter.pigeonf";
-          };
+  deploy-rs.nodes.jupiter = {
+    hostname = "192.168.7.2";
+    profilesOrder = [
+      "system"
+      "root"
+      "pigeonf"
+    ];
+    profiles =
+      let
+        deploy-lib = deploy-rs-lib.${hostPlatform};
+      in
+      {
+        system = {
+          sshUser = "root";
+          path = deploy-lib.activate.darwin self.darwinConfigurations.jupiter;
         };
-    }
-  );
+        root = {
+          sshUser = "root";
+          path =
+            deploy-lib.activate.home-manager
+              self.legacyPackages.${hostPlatform}.homeConfigurations."jupiter.root";
+        };
+        pigeonf = {
+          sshUser = "pigeonf";
+          path =
+            deploy-lib.activate.home-manager
+              self.legacyPackages.${hostPlatform}.homeConfigurations."jupiter.pigeonf";
+        };
+      };
+  };
 }

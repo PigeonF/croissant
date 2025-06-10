@@ -1,13 +1,11 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
+# Enable gitlab runner macOS VMs via gitlab-tart-executor.
 #
-# SPDX-License-Identifier: 0BSD
-{
-  config,
-  lib,
-  ...
-}:
+# Requires the sops-nix module.
+{ config, lib, ... }:
 let
   inherit (lib)
+    mkEnableOption
+    mkIf
     mkOption
     types
     ;
@@ -18,13 +16,16 @@ in
 
   options = {
     croissant.services.gitlab-tart-executor = {
+      enable = mkEnableOption "the gitlab-tart-executor for the gitlab-runner";
+
       sops-secret = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
         description = ''
           The secret to use for the tart GitLab runner authentication token.
         '';
         default = "gitlab-runner/tart/authentication-token";
       };
+
       user = mkOption {
         type = types.str;
         description = ''
@@ -37,7 +38,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     assertions = [
       {
         assertion = builtins.hasAttr cfg.user config.users.users;
@@ -46,6 +47,10 @@ in
       {
         assertion = config.services.gitlab-runner.enable;
         message = ''`services.gitlab-runner.enable` has to be activated for gitlab-tart-executor to work'';
+      }
+      {
+        assertion = config ? sops;
+        message = ''`croissant.services.gitlab-tart-executor` requires the `sops-nix.darwinModules.sops` module'';
       }
     ];
 
@@ -86,22 +91,26 @@ in
     services = {
       gitlab-runner = {
         services = {
-          tart = {
-            limit = 2;
-            authenticationTokenConfigFile =
-              config.sops.templates."services/gitlab-tart-executor/authentication-token.env".path;
-            executor = "custom";
-            registrationFlags = [
-              "--custom-config-exec /opt/homebrew/bin/gitlab-tart-executor"
-              "--custom-config-args config"
-              "--custom-prepare-exec /opt/homebrew/bin/gitlab-tart-executor"
-              "--custom-prepare-args prepare"
-              "--custom-run-exec /opt/homebrew/bin/gitlab-tart-executor"
-              "--custom-run-args run"
-              "--custom-cleanup-exec /opt/homebrew/bin/gitlab-tart-executor"
-              "--custom-cleanup-args cleanup"
-            ];
-          };
+          tart =
+            let
+              homebrewPrefix = config.homebrew.brewPrefix;
+            in
+            {
+              limit = 2;
+              authenticationTokenConfigFile =
+                config.sops.templates."services/gitlab-tart-executor/authentication-token.env".path;
+              executor = "custom";
+              registrationFlags = [
+                "--custom-config-exec ${homebrewPrefix}/gitlab-tart-executor"
+                "--custom-config-args config"
+                "--custom-prepare-exec ${homebrewPrefix}/gitlab-tart-executor"
+                "--custom-prepare-args prepare"
+                "--custom-run-exec ${homebrewPrefix}/gitlab-tart-executor"
+                "--custom-run-args run"
+                "--custom-cleanup-exec ${homebrewPrefix}/gitlab-tart-executor"
+                "--custom-cleanup-args cleanup"
+              ];
+            };
         };
       };
     };

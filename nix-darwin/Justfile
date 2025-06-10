@@ -1,0 +1,17 @@
+# Requires [just](https://just.systems).
+
+set ignore-comments := true
+set unstable := true
+set windows-shell := ["busybox", "sh", "-eu", "-c"]
+
+[private]
+default:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+[doc("""
+    Build all nix-darwin configurations
+""")]
+[group("test")]
+test:
+    # TODO: https://github.com/nix-darwin/nix-darwin/issues/203
+    nix run "nix-darwin/master#darwin-rebuild" -- build --flake "..#linux-builder"

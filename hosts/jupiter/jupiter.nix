@@ -1,7 +1,5 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
+  croissantModulesPath,
   inputs,
   ...
 }:
@@ -9,8 +7,7 @@
   _file = ./jupiter.nix;
 
   imports = [
-    inputs.lix-modules.nixosModules.default
-    inputs.self.darwinModules.jupiter
+    (croissantModulesPath + "/profiles/jupiter.nix")
   ];
 
   config = {
