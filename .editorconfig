@@ -10,22 +10,37 @@ root = true
 [*]
 charset = utf-8
 end_of_line = lf
-indent_size = 2
+indent_size = 4
 indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.kdl]
-indent_size = 4
+[.configurations/.vsconfig]
+indent_size = 2
 
-[*.ps1]
-indent_size = 4
+[*.{json,lock}]
+indent_size = 2
 
-[*.ps1.hbs]
-indent_size = 4
+[*.nix]
+indent_size = 2;
 
-[{Justfile,*.just}]
-indent_size = 4
+[*.tmTheme]
+indent_size = 2
+
+[*.y{,a}ml]
+indent_size = 2
+
+# [*.kdl]
+# indent_size = 4
+
+# [*.ps1]
+# indent_size = 4
+
+# [*.ps1.hbs]
+# indent_size = 4
+
+# [{Justfile,*.just}]
+# indent_size = 4
 
 [LICENSES/*.txt]
 indent_size = unset

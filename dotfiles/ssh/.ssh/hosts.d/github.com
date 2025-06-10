@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: 0BSD
 
 Host github github.com
-  HostName github.com
-  IdentityFile ~/.ssh/keys.d/pigeonf@github.com.pub
+    HostName github.com
+    IdentityFile ~/.ssh/keys.d/pigeonf@github.com.pub

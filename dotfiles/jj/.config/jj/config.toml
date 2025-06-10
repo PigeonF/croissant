@@ -55,40 +55,40 @@ log = "builtin_log_comfortable"
 # '''
 draft_commit_description = '''
 concat(
-  description,
-  "\n",
-  surround(
-    "JJ: HEAD detached at ", "\n",
-    concat(commit_id, "\n"),
-  ),
-  surround(
-    "JJ: This commit contains the following changes:\n", "\n",
-    indent("JJ:     ", diff.summary()),
-  ),
-  surround(
-    "JJ: ------------------------ >8 ------------------------\n",
-    "",
-    indent("JJ: ", diff.git()),
-  )
+    description,
+    "\n",
+    surround(
+        "JJ: HEAD detached at ", "\n",
+        concat(commit_id, "\n"),
+    ),
+    surround(
+        "JJ: This commit contains the following changes:\n", "\n",
+        indent("JJ:     ", diff.summary()),
+    ),
+    surround(
+        "JJ: ------------------------ >8 ------------------------\n",
+        "",
+        indent("JJ: ", diff.git()),
+    )
 )
 '''
 
 [template-aliases]
 starship = '''
 separate(" ",
-  change_id.shortest(6),
-  bookmarks.map(|x| if(
-    x.name().substr(0, 20).starts_with(x.name()),
-    x.name().substr(0, 20),
-    x.name().substr(0, 19) ++ "…")
-  ).join(" "),
-  if(
-    description.first_line().substr(0, 24).starts_with(description.first_line()),
-    description.first_line().substr(0, 24),
-    description.first_line().substr(0, 23) ++ "…"
-  ),
-  if(conflict, "conflict"),
-  if(divergent, "divergent"),
-  if(hidden, "hidden"),
+    change_id.shortest(6),
+    bookmarks.map(|x| if(
+        x.name().substr(0, 20).starts_with(x.name()),
+        x.name().substr(0, 20),
+        x.name().substr(0, 19) ++ "…")
+    ).join(" "),
+    if(
+        description.first_line().substr(0, 24).starts_with(description.first_line()),
+        description.first_line().substr(0, 24),
+        description.first_line().substr(0, 23) ++ "…"
+    ),
+    if(conflict, "conflict"),
+    if(divergent, "divergent"),
+    if(hidden, "hidden"),
 )
 '''

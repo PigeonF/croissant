@@ -3,84 +3,84 @@
 # SPDX-License-Identifier: 0BSD
 
 [include]
-  path = branchless.gitconfig
-  path = commit.gitconfig
-  path = delta.gitconfig
-  path = log.gitconfig
-  path = meld.gitconfig
-  path = user.gitconfig
-  path = windows.gitconfig
+    path = branchless.gitconfig
+    path = commit.gitconfig
+    path = delta.gitconfig
+    path = log.gitconfig
+    path = meld.gitconfig
+    path = user.gitconfig
+    path = windows.gitconfig
 
 [alias]
-  a = add
-  ap = add -p
-  rep = restore -p
-  aliases = config --get-regexp ^alias.
-  bd = branch -d
-  bD = branch -D
-  branches = branch -vv
-  c = commit
-  ca = commit --amend
-  can = commit --amend --no-edit
-  cc = "!f() { git commit -e -F \"$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG\" $@; }; f"
-  cf = commit --fixup
-  cl = clone --recurse-submodules
-  cm = commit -m
-  d = diff --color
-  ds = diff --color --cached
-  fixup-signatures = rebase --exec 'git commit --amend --no-edit -n -S --allow-empty' -i
-  ignore = update-index --skip-worktree
-  cleanup = clean -dix -e "*.gitignored.*" -e ".jj"
-  purge = clean -dx -e "*.gitignored.*" -e ".jj"
-  root = rev-parse --show-toplevel
-  s = status -s
-  undo = reset --soft HEAD~1
-  unignore = update-index --no-skip-worktree
+    a = add
+    ap = add -p
+    rep = restore -p
+    aliases = config --get-regexp ^alias.
+    bd = branch -d
+    bD = branch -D
+    branches = branch -vv
+    c = commit
+    ca = commit --amend
+    can = commit --amend --no-edit
+    cc = "!f() { git commit -e -F \"$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG\" $@; }; f"
+    cf = commit --fixup
+    cl = clone --recurse-submodules
+    cm = commit -m
+    d = diff --color
+    ds = diff --color --cached
+    fixup-signatures = rebase --exec 'git commit --amend --no-edit -n -S --allow-empty' -i
+    ignore = update-index --skip-worktree
+    cleanup = clean -dix -e "*.gitignored.*" -e ".jj"
+    purge = clean -dx -e "*.gitignored.*" -e ".jj"
+    root = rev-parse --show-toplevel
+    s = status -s
+    undo = reset --soft HEAD~1
+    unignore = update-index --no-skip-worktree
 
 [core]
-  autocrlf = false
-  abbrev = 16
-  symlinks = true
-  compression = 9
-  packedGitLimit = 512m
-  packedGitWindowSize = 512m
+    autocrlf = false
+    abbrev = 16
+    symlinks = true
+    compression = 9
+    packedGitLimit = 512m
+    packedGitWindowSize = 512m
 
 [pack]
-  deltaCacheSize = 2047m
-  packSizeLimit = 2047m
-  windowMemory = 2047m
+    deltaCacheSize = 2047m
+    packSizeLimit = 2047m
+    windowMemory = 2047m
 
 [filter "lfs"]
-  clean = git-lfs clean -- %f
-  smudge = git-lfs smudge -- %f
-  process = git-lfs filter-process
-  required = true
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
 
 [init]
-  defaultBranch = main
+    defaultBranch = main
 
 [merge]
-  conflictstyle = diff3
-  ff = no
+    conflictstyle = diff3
+    ff = no
 
 [pull]
-  ff = only
-  rebase = true
+    ff = only
+    rebase = true
 
 [push]
-  default = current
+    default = current
 
 [rebase]
-  autosquash = true
-  missingCommitsCheck = error
+    autosquash = true
+    missingCommitsCheck = error
 
 [status]
-  short = true
-  branch = true
+    short = true
+    branch = true
 
 [submodule]
-  recurse = true
+    recurse = true
 
 [versionsort]
-  suffix = -init
-  suffix = -rc
+    suffix = -init
+    suffix = -rc
