@@ -5,18 +5,18 @@
 includes = [".dotter/include/windows.toml"]
 
 packages = [
-  "alacritty",
-  "bin",
-  "git",
-  "helix",
-  "jj",
-  "powershell",
-  "pwsh",
-  "spicetify",
-  "ssh",
-  "topgrade",
-  "vscodium",
-  "yazi",
+    "alacritty",
+    "bin",
+    "git",
+    "helix",
+    "jj",
+    "powershell",
+    "pwsh",
+    "spicetify",
+    "ssh",
+    "topgrade",
+    "vscodium",
+    "yazi",
 ]
 
 # Documents folder is moved to S:, and is not in ~/

@@ -3,5 +3,5 @@
 # SPDX-License-Identifier: 0BSD
 
 [merge]
-  tool = meld
-  guitool = meld
+    tool = meld
+    guitool = meld

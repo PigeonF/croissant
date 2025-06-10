@@ -6,9 +6,9 @@
 
 [general]
 import = [
-  "themes/catppuccin-macchiato.toml",
-  "terminal.toml",
-  "keybindings.toml",
+    "themes/catppuccin-macchiato.toml",
+    "terminal.toml",
+    "keybindings.toml",
 ]
 
 [env]

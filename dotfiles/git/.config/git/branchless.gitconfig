@@ -3,21 +3,21 @@
 # SPDX-License-Identifier: 0BSD
 
 [branchless "core"]
-  mainBranch = "main"
+    mainBranch = "main"
 
 [branchless "revsets.alias"]
-  branched = difference(descendants(exactly(children($1), 1)), only(HEAD, $1))
+    branched = difference(descendants(exactly(children($1), 1)), only(HEAD, $1))
 
 [branchless "test"]
-  strategy = worktree
-  jobs = 0
+    strategy = worktree
+    jobs = 0
 
 [branchless "test.alias"]
-  # !Only works with worktrees!
-  # We not only have to map the worktree itself, but also the 'commondir',
-  # which is hopefully more or less stable across git branchless versions.
-  gcl = "gitlab-ci-local --concurrency=1 --volume \"$(git rev-parse --path-format=absolute --git-common-dir):$(git rev-parse --path-format=absolute --git-common-dir):ro\""
-  gclp = "gitlab-ci-local --privileged --concurrency=1 --volume \"$(git rev-parse --path-format=absolute --git-common-dir):$(git rev-parse --path-format=absolute --git-common-dir):ro\""
+    # !Only works with worktrees!
+    # We not only have to map the worktree itself, but also the 'commondir',
+    # which is hopefully more or less stable across git branchless versions.
+    gcl = "gitlab-ci-local --concurrency=1 --volume \"$(git rev-parse --path-format=absolute --git-common-dir):$(git rev-parse --path-format=absolute --git-common-dir):ro\""
+    gclp = "gitlab-ci-local --privileged --concurrency=1 --volume \"$(git rev-parse --path-format=absolute --git-common-dir):$(git rev-parse --path-format=absolute --git-common-dir):ro\""
 
 [branchless "next"]
-  interactive = true
+    interactive = true

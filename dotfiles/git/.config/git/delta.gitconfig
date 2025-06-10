@@ -3,19 +3,19 @@
 # SPDX-License-Identifier: 0BSD
 
 [core]
-  pager = delta
+    pager = delta
 
 [delta]
-  dark = true
-  navigate = true
-  line-numbers = true
-  hyperlinks = true
-  features = decorations
+    dark = true
+    navigate = true
+    line-numbers = true
+    hyperlinks = true
+    features = decorations
 
 [delta "decorations"]
-  commit-style = raw
-  file-style = omit
-  hunk-header-style = file line-number syntax
+    commit-style = raw
+    file-style = omit
+    hunk-header-style = file line-number syntax
 
 [interactive]
-  diffFilter = delta --color-only
+    diffFilter = delta --color-only
