@@ -1,29 +1,32 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-{ inputs, pkgs, ... }:
-let
-  userName = "root";
-in
+{
+  croissantModulesPath,
+  inputs,
+  pkgs,
+  ...
+}:
 {
   _file = ./root.nix;
 
   imports = [
-    inputs.self.homeManagerModules.root
-    inputs.self.homeManagerModules.programs.bash
+    inputs.self.homeModules.default
+    (croissantModulesPath + "/profiles/users/root.nix")
   ];
 
   config = {
     croissant = {
       programs = {
-        bash.configure = true;
+        bash.enable = true;
       };
     };
 
-    home = {
-      stateVersion = "25.05";
-      username = userName;
-      homeDirectory = if pkgs.stdenv.hostPlatform.isDarwin then "/var/root" else "/root";
-    };
+    home =
+      let
+        username = "root";
+      in
+      {
+        stateVersion = "25.05";
+        inherit username;
+        homeDirectory = if pkgs.stdenv.hostPlatform.isDarwin then "/var/${username}" else "/${username}";
+      };
   };
 }

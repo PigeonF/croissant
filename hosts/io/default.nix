@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: 0BSD
 {
   deploy-rs-lib,
-  home-manager-lib,
+  croissant-lib,
   inputs,
   withSystem,
   lib,
@@ -32,14 +32,10 @@ in
   };
 
   perSystem =
-    { pkgs, system, ... }:
+    { pkgs, ... }:
     let
-      root = home-manager-lib.homeManagerConfiguration {
+      root = croissant-lib.mkHomeManagerConfiguration {
         inherit pkgs;
-
-        extraSpecialArgs = {
-          inherit inputs system;
-        };
 
         modules = [ ./root.nix ];
       };

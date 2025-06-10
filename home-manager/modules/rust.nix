@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
   config,
   lib,
@@ -30,10 +27,10 @@ in
 {
   _file = ./rust.nix;
 
-  imports = [ ./programs/cargo.nix ];
-
   options.croissant = {
     rust = {
+      enable = mkEnableOption "set up rust development";
+
       extraPackages = mkOption {
         default = [
           pkgs.cargo-audit
@@ -69,15 +66,15 @@ in
       };
 
       fastLinker = mkEnableOption "use a faster linker by default" // {
-        default = true;
+        default = pkgs.stdenv.hostPlatform.isLinux;
       };
     };
   };
 
   config = lib.mkMerge [
-    {
+    (lib.mkIf cfg.enable {
       croissant.programs.cargo = {
-        configure = true;
+        enable = true;
         settings = {
           alias = {
             t = "nextest run";
@@ -91,8 +88,8 @@ in
           RUSTUP_HOME = "$XDG_DATA_HOME/rustup";
         };
       };
-    }
-    (lib.mkIf (cfg.fastLinker && pkgs.stdenv.hostPlatform.isLinux) {
+    })
+    (lib.mkIf (cfg.enable && cfg.fastLinker) {
       croissant = {
         programs = {
           cargo = {
