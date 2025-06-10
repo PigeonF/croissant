@@ -88,13 +88,18 @@
     }:
     let
       nix-darwin-lib = nix-darwin.lib;
-      lib = import ./nix-darwin/lib.nix {
-        inherit inputs nix-darwin-lib;
-      };
+      home-manager-lib = home-manager.lib;
+      lib =
+        { }
+        // import ./home-manager/lib.nix {
+          inherit inputs home-manager-lib;
+        }
+        // import ./nix-darwin/lib.nix {
+          inherit inputs nix-darwin-lib;
+        };
       flakeModules = {
         default = {
           imports = [
-            ./home-manager/flake-module.nix
             ./hosts/flake-module.nix
             ./nix-darwin/flake-module.nix
           ];
@@ -106,8 +111,7 @@
         inherit inputs;
         specialArgs = {
           deploy-rs-lib = deploy-rs.lib;
-          home-manager-lib = home-manager.lib;
-          inherit nix-darwin-lib;
+          inherit home-manager-lib nix-darwin-lib;
           croissant-lib = lib;
         };
       }
@@ -122,6 +126,7 @@
           ./nix-darwin
           # ./nixos
           flake-parts.flakeModules.flakeModules
+          home-manager.flakeModules.home-manager
           treefmt-nix.flakeModule
         ];
 
@@ -184,13 +189,9 @@
                 name = "croissant";
                 inputsFrom = builtins.attrValues (builtins.removeAttrs self'.devShells [ "default" ]);
 
-                packages = [ pkgs.git ];
-              };
-              home-manager = pkgs.mkShellNoCC {
-                name = "home-manager";
                 packages = [
-                  pkgs.home-manager
-                  pkgs.nh
+                  pkgs.git
+                  pkgs.jujutsu
                 ];
               };
               provisioning = pkgs.mkShellNoCC {

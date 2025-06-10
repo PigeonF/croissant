@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
   config,
   lib,
@@ -27,7 +24,7 @@ in
       dotter = lib.mkPackageOption pkgs "dotter" { };
       destination = mkOption {
         type = types.either types.str types.path;
-        default = "${config.home.homeDirectory}/code/croissant";
+        default = "${config.home.homeDirectory}/git/github.com/PigeonF/croissant";
         description = ''
           Directory to clone the dotfiles to.
         '';

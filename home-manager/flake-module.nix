@@ -1,9 +1,7 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
+# flake-parts module for combining multiple home-manager configurations and modules.
 {
-  lib,
   flake-parts-lib,
+  lib,
   ...
 }:
 let
@@ -14,19 +12,22 @@ let
   inherit (flake-parts-lib) mkPerSystemOption;
 in
 {
+  _file = ./flake-module.nix;
+
   options = {
     perSystem = mkPerSystemOption (
       { config, ... }:
       {
-        _file = ./flake-module.nix;
         options = {
           homeConfigurations = mkOption {
             type = types.lazyAttrsOf types.raw;
             default = { };
             description = ''
-              home-manager modules.
+              Instantiated Home Manager configurations.
 
-              You may use this for reusable pieces of configuration, users, etc.
+              `homeConfigurations` is for specific installations. If you want to expose
+              reusable configurations, add them to `flake.homeModules` in the form of modules,
+              so that you can reference them in this or another flake's `homeConfigurations`.
             '';
           };
         };

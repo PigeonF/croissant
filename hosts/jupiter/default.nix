@@ -1,9 +1,7 @@
 {
-  croissant-lib,
-  deploy-rs-lib,
-  home-manager-lib,
-  inputs,
   self,
+  deploy-rs-lib,
+  croissant-lib,
   ...
 }:
 let
@@ -28,23 +26,15 @@ in
   };
 
   perSystem =
-    { pkgs, system, ... }:
+    { pkgs, ... }:
     let
-      pigeonf = home-manager-lib.homeManagerConfiguration {
+      pigeonf = croissant-lib.mkHomeManagerConfiguration {
         inherit pkgs;
-
-        extraSpecialArgs = {
-          inherit inputs system;
-        };
 
         modules = [ ./pigeonf.nix ];
       };
-      root = home-manager-lib.homeManagerConfiguration {
+      root = croissant-lib.mkHomeManagerConfiguration {
         inherit pkgs;
-
-        extraSpecialArgs = {
-          inherit inputs system;
-        };
 
         modules = [ ./root.nix ];
       };

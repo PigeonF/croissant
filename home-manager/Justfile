@@ -1,0 +1,17 @@
+# Requires [just](https://just.systems).
+
+set ignore-comments := true
+set unstable := true
+set windows-shell := ["busybox", "sh", "-eu", "-c"]
+
+[private]
+default:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+[doc("""
+    Build all home-manager configurations
+""")]
+[group("test")]
+test:
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "..#pigeonf"
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "..#root"

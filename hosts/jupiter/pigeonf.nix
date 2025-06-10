@@ -1,34 +1,35 @@
-{ inputs, ... }:
+{ croissantModulesPath, inputs, ... }:
 {
   _file = ./pigeonf.nix;
 
   imports = [
-    inputs.self.homeManagerModules.containers
-    inputs.self.homeManagerModules.dotfiles
-    inputs.self.homeManagerModules.pigeonf
-    inputs.self.homeManagerModules.programs._1password
-    inputs.self.homeManagerModules.programs.nushell
-    inputs.self.homeManagerModules.programs.vscodium
-    inputs.self.homeManagerModules.programs.zsh
-    inputs.self.homeManagerModules.rust
-    inputs.self.homeManagerModules.sysadmin
+    inputs.self.homeModules.default
+    (croissantModulesPath + "/profiles/containers.nix")
+    (croissantModulesPath + "/profiles/sysadmin.nix")
+    (croissantModulesPath + "/profiles/users/pigeonf.nix")
   ];
 
   config = {
     croissant = {
       dotfiles.enable = true;
+      rust.enable = true;
 
       programs = {
-        _1password.configure = true;
-        vscodium.configure = true;
-        zsh.configure = true;
+        _1password.enable = true;
+        nushell.enable = true;
+        vscodium.enable = true;
+        zsh.enable = true;
       };
     };
 
-    home = {
-      stateVersion = "25.05";
-      username = "pigeonf";
-      homeDirectory = "/Users/pigeonf";
-    };
+    home =
+      let
+        username = "pigeonf";
+      in
+      {
+        stateVersion = "25.05";
+        inherit username;
+        homeDirectory = "/Users/${username}";
+      };
   };
 }

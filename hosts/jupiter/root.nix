@@ -1,23 +1,27 @@
-{ inputs, ... }:
+{ croissantModulesPath, inputs, ... }:
 {
   _file = ./root.nix;
 
   imports = [
-    inputs.self.homeManagerModules.root
-    inputs.self.homeManagerModules.programs.zsh
+    inputs.self.homeModules.default
+    (croissantModulesPath + "/profiles/users/root.nix")
   ];
 
   config = {
     croissant = {
       programs = {
-        zsh.configure = true;
+        zsh.enable = true;
       };
     };
 
-    home = {
-      stateVersion = "25.05";
-      username = "root";
-      homeDirectory = "/var/root";
-    };
+    home =
+      let
+        username = "root";
+      in
+      {
+        stateVersion = "25.05";
+        inherit username;
+        homeDirectory = "/var/${username}";
+      };
   };
 }
