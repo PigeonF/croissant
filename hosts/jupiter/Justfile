@@ -1,0 +1,49 @@
+# Requires [just](https://just.systems).
+
+set ignore-comments := true
+set unstable := true
+set windows-shell := ["busybox", "sh", "-eu", "-c"]
+
+[private]
+default:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+[doc("""
+    Setup a freshly installed macOS system with the jupiter configuration.
+""")]
+[group("bootstrap")]
+setup:
+    nix --version || curl -sSf -L https://install.lix.systems/lix | sh -s -- install
+    # Cannot enable the nix-rosetta-builder without having an active linux builder.
+    # https://github.com/cpick/nix-rosetta-builder/issues/7
+    nix store delete "$(nix eval --raw '../..#packages.aarch64-linux.linux-builder-test.outPath')"
+    nix build --no-link "../..#packages.aarch64-linux.linux-builder-test" 2>/dev/null || sudo nix run "nix-darwin/master#darwin-rebuild" -- switch --flake "../..#linux-builder"
+    AGE_KEY=$(cat /etc/ssh/ssh_host_ed25519_key.pub | nix run "nixpkgs#ssh-to-age") \
+        nix run "nixpkgs#yq-go" -- -i '(.keys.hosts.jupiter) = strenv(AGE_KEY)' ../../.sops.yaml
+    nix run "nixpkgs#sops" -- updatekeys secrets/jupiter.yaml
+    sudo nix run "nix-darwin/master#darwin-rebuild" -- switch --flake "../..#jupiter"
+    sudo nix run "nixpkgs#sd" -- "/run/current-system/sw/bin/zsh\n" "" /etc/shells
+    echo "/run/current-system/sw/bin/zsh" | sudo tee -a /etc/shells
+    sudo chsh -s /run/current-system/sw/bin/zsh root
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} update
+
+[doc("""
+    Test the jupiter configuration.
+""")]
+[group("test")]
+test:
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "../..#jupiter.pigeonf"
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "../..#jupiter.root"
+    # TODO: https://github.com/nix-darwin/nix-darwin/issues/203
+    nix run "nix-darwin/master#darwin-rebuild" -- build --flake "../..#jupiter"
+    cd ../../ && nix run "nixpkgs#dotter" -- deploy --dry-run -l .dotter/jupiter.toml
+
+[doc("""
+    Update the system and user configurations.
+""")]
+[group("deploy")]
+update:
+    home-manager switch --flake "../..#jupiter.pigeonf"
+    sudo -i -H home-manager switch --flake "$(pwd)/../..#jupiter.root"
+    sudo darwin-rebuild switch --flake "../..#jupiter"
+    cd ../../ && nix run "nixpkgs#dotter" -- deploy

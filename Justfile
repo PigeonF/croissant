@@ -1,26 +1,38 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-#
 # Requires [just](https://just.systems).
 
-set unstable
-set windows-shell := ["pwsh", "-C"]
+set ignore-comments := true
+set unstable := true
+set windows-shell := ["busybox", "sh", "-eu", "-c"]
 
-CALL := if os_family() == "windows"  { "& " } else { "" }
+[doc("""
+    Recipes for the nix-darwin setup.
+""")]
+mod nix-darwin "nix-darwin/Justfile"
 
-[doc('Recipes for interacting with the various hosts defined in this repository.')]
-mod hosts
+[doc("""
+    Configuration for the mac mini.
+""")]
+mod jupiter "hosts/jupiter/Justfile"
 
-# Recipe that is executed when no recipe is given on the commandline.
 [private]
-list:
-    @{{ CALL }}{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list --list-submodules
+default:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
 
-# Install the dotfiles using [dotter](https://github.com/SuperCuber/dotter).
-[group('deploy')]
+[doc("""
+    Run the tests
+""")]
+[group("test")]
+test:
+    {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} nix-darwin::test
+    {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} jupiter::test
+
+[doc("""
+    Install the dotfiles using dotter.
+
+    Requires
+
+    -   [`dotter`](https://github.com/SuperCuber/dotter)
+""")]
+[group("deploy")]
 dotfiles *ARGS:
     dotter -v {{ ARGS }}
-
-foo:
-    echo {{ which("lstopo.exe") }}

@@ -7,6 +7,7 @@
 
   settings = {
     excludes = [
+      ".dotter/cache/*"
       ".jj/*"
       "*.gitignored.*"
       "LICENSES/*"

@@ -1,14 +1,13 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
+# flake-parts module for combining multiple nix-darwin configurations and modules.
 {
-  lib,
   flake-parts-lib,
+  lib,
   moduleLocation,
   ...
 }:
 let
   inherit (lib)
+    literalExpression
     mapAttrs
     mkOption
     types
@@ -26,7 +25,22 @@ in
         type = types.lazyAttrsOf types.raw;
         default = { };
         description = ''
-          nix-darwin configurations.
+          Insantiated nix-darwin configurations. Used by `darwin-rebuild`.
+
+          `darwinConfigurations` is for specific machines. To expose reusable configurations, add
+          them to [`darwinModules`](#opt-flake.darwinModules) in the form of modules.
+        '';
+        example = literalExpression ''
+          {
+            my-machine = inputs.nix-darwin.lib.darwinSystem {
+              system = "aarch64-darwin";
+
+              modules = [
+                ./my-machine/nix-darwin-configuration.nix
+                config.darwinModules.my-module
+              ];
+            };
+          }
         '';
       };
 
