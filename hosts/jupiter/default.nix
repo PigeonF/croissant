@@ -18,6 +18,7 @@ in
           {
             nixpkgs = {
               inherit hostPlatform;
+              overlays = [ self.overlays.default ];
             };
           }
         ];

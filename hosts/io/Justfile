@@ -1,12 +1,38 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-#
 # Requires [just](https://just.systems).
 
-set unstable
-set windows-shell := ["pwsh", "-C"]
+set ignore-comments := true
+set unstable := true
+set windows-shell := ["busybox", "sh", "-eu", "-c"]
 
-provision:
-    nix build '.#ioImage'
-    limactl start --tty=false --name io lima.yaml
+[private]
+default:
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} --list
+
+[doc("""
+    Setup a lima VM with the io configuration.
+""")]
+[group("bootstrap")]
+setup:
+    nix build '../../#"io.image"'
+    limactl list io >/dev/null || limactl start --tty=false --name io lima.yaml
+    AGE_KEY=$(ssh lima-io cat /etc/ssh/ssh_host_ed25519_key.pub | nix run "nixpkgs#ssh-to-age") \
+        nix run "nixpkgs#yq-go" -- -i '(.keys.hosts.io) = strenv(AGE_KEY)' ../../.sops.yaml
+    nix run "nixpkgs#sops" -- updatekeys secrets/io.yaml
+    @{{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} update
+
+[doc("""
+    Test the io configuration
+""")]
+[group("test")]
+test:
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "../..#io.lima"
+    nix run "nixpkgs#home-manager" -- build --no-out-link --flake "../..#io.root"
+    nix run "nixpkgs#nixos-rebuild-ng" -- build --no-build-output --flake "../../#io"
+    nix build --no-link '../../#"io.image"'
+
+[doc("""
+    Update the system and user configurations.
+""")]
+[group("deploy")]
+update:
+    nix run "nixpkgs#deploy-rs" -- "../..#io"

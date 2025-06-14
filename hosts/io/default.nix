@@ -1,33 +1,28 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
+  self,
   deploy-rs-lib,
   croissant-lib,
-  inputs,
-  withSystem,
-  lib,
   ...
 }:
 let
-  io = lib.nixosSystem {
-    system = "aarch64-linux";
-
-    specialArgs = {
-      inherit inputs;
-    };
-
-    modules = [
-      ./io.nix
-    ];
-  };
+  hostPlatform = "aarch64-linux";
 in
 {
   _file = ./default.nix;
 
   flake = {
     nixosConfigurations = {
-      inherit io;
+      io = croissant-lib.mkNixOsSystem {
+        modules = [
+          ./io.nix
+          {
+            nixpkgs = {
+              inherit hostPlatform;
+              overlays = [ self.overlays.default ];
+            };
+          }
+        ];
+      };
     };
   };
 
@@ -39,40 +34,59 @@ in
 
         modules = [ ./root.nix ];
       };
+      lima = croissant-lib.mkHomeManagerConfiguration {
+        inherit pkgs;
+
+        modules = [ ./lima.nix ];
+      };
     in
     {
       homeConfigurations = {
         "io.root" = root;
+        "io.lima" = lima;
       };
 
       packages = {
-        io = io.config.system.build.toplevel;
-        ioImage = io.config.formats.qcow-efi;
+        io = self.nixosConfigurations.io.config.system.build.toplevel;
+        "io.image" = self.nixosConfigurations.io.config.formats.qcow-efi;
       };
     };
 
-  deploy-rs.nodes.io = withSystem io.config.nixpkgs.system (
-    { config, ... }:
-    {
-      hostname = "io.fritz.box";
-      profilesOrder = [
-        "system"
-        "root"
-      ];
-      profiles =
-        let
-          deploy-lib = deploy-rs-lib."aarch64-darwin";
-        in
-        {
-          system = {
-            sshUser = "root";
-            path = deploy-lib.activate.nixos io;
-          };
-          root = {
-            sshUser = "root";
-            path = deploy-lib.activate.home-manager config.homeConfigurations."io.root";
-          };
+  deploy-rs.nodes.io = {
+    hostname = "lima-io";
+    sshOpts = [
+      "-F"
+      # TODO(PigeonF): Open issue at deploy-rs tracker about expanding ~/ ?
+      "/Users/pigeonf/.lima/io/ssh.config"
+    ];
+    profilesOrder = [
+      "system"
+      "root"
+      "lima"
+    ];
+    profiles =
+      let
+        deploy-lib = deploy-rs-lib.${hostPlatform};
+      in
+      {
+        system = {
+          sshUser = "lima";
+          user = "root";
+          path = deploy-lib.activate.nixos self.nixosConfigurations.io;
         };
-    }
-  );
+        root = {
+          sshUser = "lima";
+          user = "root";
+          path =
+            deploy-lib.activate.home-manager
+              self.legacyPackages.${hostPlatform}.homeConfigurations."io.root";
+        };
+        lima = {
+          sshUser = "lima";
+          path =
+            deploy-lib.activate.home-manager
+              self.legacyPackages.${hostPlatform}.homeConfigurations."io.lima";
+        };
+      };
+  };
 }

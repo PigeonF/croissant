@@ -15,6 +15,11 @@ mod home-manager "home-manager/Justfile"
 mod nix-darwin "nix-darwin/Justfile"
 
 [doc("""
+    Configuration for the io vm.
+""")]
+mod io "hosts/io/Justfile"
+
+[doc("""
     Configuration for the mac mini.
 """)]
 mod jupiter "hosts/jupiter/Justfile"
@@ -30,6 +35,7 @@ default:
 test:
     {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} home-manager::test
     {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} nix-darwin::test
+    {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} io::test
     {{ quote(just_executable()) }} --justfile {{ quote(source_file()) }} jupiter::test
 
 [doc("""
