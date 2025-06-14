@@ -1,6 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 {
   pkgs,
   ...
@@ -13,7 +10,7 @@
       channel = {
         enable = false;
       };
-      package = pkgs.nixVersions.stable;
+      package = pkgs.nix;
       settings = {
         auto-allocate-uids = true;
         extra-experimental-features = [

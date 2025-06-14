@@ -1,13 +1,21 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
 _: {
   _file = ./default.nix;
 
   flake = {
-    nixosModules = {
-      io = ./configurations/io;
-      nix = ./modules/nix.nix;
-    };
+    nixosModules =
+      let
+        modules = {
+          base = ./modules/base.nix;
+          lima = ./modules/lima.nix;
+          nix = ./modules/nix.nix;
+          ssh = ./modules/ssh.nix;
+        };
+      in
+      modules
+      // {
+        default = _: {
+          imports = builtins.attrValues modules;
+        };
+      };
   };
 }

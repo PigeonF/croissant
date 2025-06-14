@@ -4,7 +4,7 @@
   ...
 }:
 {
-  _file = ./root.nix;
+  _file = ./lima.nix;
 
   imports = [
     inputs.self.homeModules.default
@@ -20,8 +20,8 @@
 
     home = {
       stateVersion = "25.05";
-      username = "root";
-      homeDirectory = "/root";
+      username = "lima";
+      homeDirectory = "/home/lima.linux";
     };
   };
 }

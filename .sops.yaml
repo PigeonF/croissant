@@ -1,51 +1,23 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-#
 # Configuration file for [sops](https://github.com/getsops/sops).
 ---
 # Keys are generated using [ssh-to-age](https://github.com/Mic92/ssh-to-age).
-_keys:
-  # Administrators
-  - &pigeonf "age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry"
-  # Hosts
-  - &ganymede "age13lj5pgrs6ukfuegvyfkt8d5sz22lha3zf3l82jxdav7vj7325vjqc36vku"
-  - &oberon "age14hqz8c2m7vkh7ugafg52xeqwplfh44gh73cqww6ktf6rjx9709cqkpn8ez"
-  - &phoebe "age1m7cux5pakgmvpy80s7ah4jl47ndhz2acek3h655q7e57laukuecq9ydgf6"
-  - &puck "age1x5c89k447de85263k529relk48zgsw25w3x9cwwjezy2zxunmegsr4x75g"
-  - &serenno "age1jwyj2ghcpef2mvhnyhfawevmx6afhy5e3h6jtvz7x0y3pwdvmuxqjpmhjv"
-  - &serenno-raxus "age1yed03hnu6csk4e3jv78rvgcldft7h4dyc8uauswng4fkvtekrdtqwheks4"
+keys:
+  users:
+    pigeonf: &pigeonf "age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry"
+  hosts:
+    io: &io "age1z4wk7uf2tz4900zh0qltsqy979485vclke4zma40np0cdenj7e7qf56rdq"
+    jupiter: &jupiter "age1m7cux5pakgmvpy80s7ah4jl47ndhz2acek3h655q7e57laukuecq9ydgf6"
 creation_rules:
   - key_groups:
       - age:
           - *pigeonf
-          - *ganymede
-    path_regex: ^hosts/ganymede/secrets\.yaml$
+          - *io
+    path_regex: ^hosts/io/secrets/io\.yaml$
   - key_groups:
       - age:
           - *pigeonf
-          - *oberon
-    path_regex: ^hosts/oberon/secrets\.yaml$
-  - key_groups:
-      - age:
-          - *pigeonf
-          - *phoebe
-    path_regex: ^hosts/phoebe/secrets\.yaml$
-  - key_groups:
-      - age:
-          - *pigeonf
-          - *puck
-    path_regex: ^hosts/puck/secrets\.yaml$
-  - key_groups:
-      - age:
-          - *pigeonf
-          - *serenno
-    path_regex: ^nix/configurations/nixos/serenno/secrets\.yaml$
-  - key_groups:
-      - age:
-          - *pigeonf
-          - *serenno-raxus
-    path_regex: ^nix/configurations/microvm/raxus/secrets\.yaml$
+          - *jupiter
+    path_regex: ^hosts/jupiter/secrets/jupiter\.yaml$
 stores:
   yaml:
     indent: 2

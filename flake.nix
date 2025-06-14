@@ -38,7 +38,7 @@
       url = "github:nix-community/impermanence?ref=refs/heads/master";
     };
     lix-modules = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.93.0";
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/heads/release-2.93";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
@@ -82,6 +82,7 @@
       home-manager,
       nix-darwin,
       nixpkgs,
+      self,
       systems,
       treefmt-nix,
       ...
@@ -89,6 +90,7 @@
     let
       nix-darwin-lib = nix-darwin.lib;
       home-manager-lib = home-manager.lib;
+      nixpkgs-lib = nixpkgs.lib;
       lib =
         { }
         // import ./home-manager/lib.nix {
@@ -96,6 +98,9 @@
         }
         // import ./nix-darwin/lib.nix {
           inherit inputs nix-darwin-lib;
+        }
+        // import ./nixos/lib.nix {
+          inherit inputs nixpkgs-lib;
         };
       flakeModules = {
         default = {
@@ -124,7 +129,8 @@
           ./home-manager
           ./hosts
           ./nix-darwin
-          # ./nixos
+          ./nixpkgs
+          ./nixos
           flake-parts.flakeModules.flakeModules
           home-manager.flakeModules.home-manager
           treefmt-nix.flakeModule
@@ -147,17 +153,7 @@
           }:
           {
             _module.args.pkgs = inputs'.nixpkgs.legacyPackages.appendOverlays [
-              (_: _: {
-                unstablePackages = inputs'.nixpkgs-unstable.legacyPackages;
-              })
-              (final: _: {
-                patchedPackages = {
-                  reuse = final.callPackage ./nixpkgs/reuse { };
-                };
-              })
-              (_: _: {
-                upstreamPackages = { };
-              })
+              self.overlays.default
             ];
 
             treefmt = import ./treefmt.nix;
@@ -165,19 +161,7 @@
             checks = {
               reuse =
                 let
-                  files = pkgs.nix-gitignore.gitignoreSourcePure [
-                    ".cache/"
-                    ".direnv/"
-                    ".dotter/cache.toml"
-                    ".dotter/cache/"
-                    ".dotter/local.toml"
-                    ".git/"
-                    ".jj/"
-                    ".provisioning/"
-                    "*.gitignored.*"
-                    "result-*"
-                    "result"
-                  ] (pkgs.lib.cleanSource ./.);
+                  files = pkgs.nix-gitignore.gitignoreSourcePure [ ] (pkgs.lib.cleanSource ./.);
                 in
                 pkgs.runCommandLocal "reuse" { } ''
                   ${pkgs.lib.getExe pkgs.reuse} --root ${files} lint | tee $out
@@ -192,20 +176,6 @@
                 packages = [
                   pkgs.git
                   pkgs.jujutsu
-                ];
-              };
-              provisioning = pkgs.mkShellNoCC {
-                name = "provisioning";
-                packages = [
-                  pkgs.age
-                  pkgs.just
-                  pkgs.mkpasswd
-                  pkgs.nixos-anywhere
-                  pkgs.openssh
-                  pkgs.pwgen
-                  pkgs.sops
-                  pkgs.ssh-to-age
-                  pkgs.yq-go
                 ];
               };
               treefmt = config.treefmt.build.devShell;
