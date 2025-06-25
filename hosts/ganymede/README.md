@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-
-SPDX-License-Identifier: CC-BY-4.0
--->
-
 # Ganymede
 
 [NixOS] configuration for a [Lenovo Thinkpad T480s laptop].
@@ -19,7 +13,7 @@ The laptop is used as a development environment for programming.
 ## Services
 
 | Protocol | Port | Service | Product          |
-| -------- | ---- | ------- | ---------------- |
+|----------|------|---------|------------------|
 | TCP      | 22   | ssh     | OpenSSH          |
 | TCP      | 5355 | llmnr   | systemd-resolved |
 

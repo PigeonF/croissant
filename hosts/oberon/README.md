@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-
-SPDX-License-Identifier: CC-BY-4.0
--->
-
 # Oberon
 
 [NixOS] configuration for a VM running on [phoebe](../phoebe/)..

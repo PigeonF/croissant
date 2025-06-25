@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-
-SPDX-License-Identifier: CC-BY-4.0
--->
-
 # Phoebe
 
 [Nix-Darwin] configuration for a [Mac Mini M4 Pro].

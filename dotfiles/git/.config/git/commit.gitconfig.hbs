@@ -1,17 +1,13 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-
 [commit]
-    gpgsign = true
-    verbose = true
+gpgsign = true
+verbose = true
 
 [gpg]
-    format = ssh
+format = ssh
 
 [gpg "ssh"]
-    allowedSignersFile = {{#if (eq dotter.os "unix")}}~/.config{{else}}~/AppData/Roaming{{/if}}/git/allowed_signers
+allowedSignersFile = {{#if (eq dotter.os "unix")}}~/.config{{else}}~/AppData/Roaming{{/if}}/git/allowed_signers
 
 [tag]
-    gpgsign = true
-    sort = -version:refname
+gpgsign = true
+sort = -version:refname

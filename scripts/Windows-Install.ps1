@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-#
-# SPDX-License-Identifier: 0BSD
-
 <#
     .SYNOPSIS
     Download the project source code and run the Windows-Bootstrap.ps1 script.

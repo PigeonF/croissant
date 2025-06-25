@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-
-SPDX-License-Identifier: CC-BY-4.0
--->
-
 # Callisto
 
 [Nix-Darwin] configuration for a [MacBook Pro 2023 M2 Max].
