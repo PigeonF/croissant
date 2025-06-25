@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Jonas Fierlings <fnoegip@gmail.com>
-
-SPDX-License-Identifier: CC-BY-4.0
--->
-
 # Europa
 
 Scripts used to bootstrap the installation for a Windows 11 Desktop.
