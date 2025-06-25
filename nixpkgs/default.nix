@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 {
   _file = ./default.nix;
 
@@ -16,6 +16,13 @@
           };
           upstreamPackages = _: _: {
 
+          };
+          qemuStatic = final: previous: {
+            nettle = previous.nettle.overrideAttrs (
+              lib.optionalAttrs final.stdenv.hostPlatform.isStatic {
+                CCPIC = "-fPIC";
+              }
+            );
           };
         };
       in

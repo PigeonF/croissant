@@ -63,11 +63,8 @@
             check_interval = 15;
           };
 
-          services = {
-            container = {
-              limit = 12;
-              authenticationTokenConfigFile = config.sops.templates."container-authentication-token.env".path;
-              description = "Self-managed runner for docker executor (io)";
+          services =
+            let
               dockerImage = "docker.io/library/busybox";
               executor = "docker";
               registrationFlags = [
@@ -78,22 +75,50 @@
                 "--docker-volumes /cache"
                 "--docker-volumes /var/lib/containers"
               ];
+            in
+            {
+              fierlings-container = {
+                limit = 12;
+                authenticationTokenConfigFile =
+                  config.sops.templates."fierlings-container-authentication-token.env".path;
+                description = "Self-managed docker executor runner for the fierlings group (io VM on Mac Mini)";
+                inherit dockerImage executor registrationFlags;
+              };
+              pigeonf-container = {
+                limit = 6;
+                authenticationTokenConfigFile =
+                  config.sops.templates."pigeonf-container-authentication-token.env".path;
+                description = "Self-managed docker executor runner for the pigeonf account (io VM on Mac Mini, created at PigeonF/tests)";
+                inherit dockerImage executor registrationFlags;
+              };
             };
-          };
         };
       };
 
       sops = {
         templates = {
-          "container-authentication-token.env" = {
+          "fierlings-container-authentication-token.env" = {
             content = ''
               CI_SERVER_URL=https://gitlab.com
-              CI_SERVER_TOKEN=${config.sops.placeholder."services/gitlab-runner/container/authentication-token"}
+              CI_SERVER_TOKEN=${
+                config.sops.placeholder."services/gitlab-runner/fierlings-container/authentication-token"
+              }
+            '';
+          };
+          "pigeonf-container-authentication-token.env" = {
+            content = ''
+              CI_SERVER_URL=https://gitlab.com
+              CI_SERVER_TOKEN=${
+                config.sops.placeholder."services/gitlab-runner/pigeonf-container/authentication-token"
+              }
             '';
           };
         };
         secrets = {
-          "services/gitlab-runner/container/authentication-token" = {
+          "services/gitlab-runner/fierlings-container/authentication-token" = {
+            restartUnits = [ "gitlab-runner.service" ];
+          };
+          "services/gitlab-runner/pigeonf-container/authentication-token" = {
             restartUnits = [ "gitlab-runner.service" ];
           };
         };
@@ -101,12 +126,6 @@
     })
     {
       boot = {
-        binfmt = {
-          emulatedSystems = [ "x86_64-linux" ];
-          # TODO(PigeonF): Set to `true` once https://github.com/NixOS/nixpkgs/issues/392673 is fixed.
-          preferStaticEmulators = false;
-        };
-
         kernelParams = [ "console=tty0" ];
 
         loader = {

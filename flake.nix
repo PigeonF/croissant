@@ -8,7 +8,7 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=refs/heads/release-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=refs/heads/nixpkgs-unstable";
     nix-darwin = {
-      # url = "github:nix-darwin/nix-darwin?ref=nix-darwin-25.05";
+      # url = "github:nix-darwin/nix-darwin?ref=refs/heads/nix-darwin-25.05";
       url = "github:PigeonF/nix-darwin?ref=refs/heads/push-vlvowsnlollq";
       inputs.nixpkgs.follows = "nixpkgs";
     };

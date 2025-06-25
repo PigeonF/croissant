@@ -17,7 +17,9 @@
     croissant = {
       homebrew.enable = true;
       services = {
-        gitlab-tart-executor.enable = true;
+        gitlab-tart-executor = {
+          enable = true;
+        };
       };
     };
 

@@ -96,9 +96,9 @@ in
               homebrewPrefix = config.homebrew.brewPrefix;
             in
             {
-              limit = 2;
+              limit = 3;
               authenticationTokenConfigFile =
-                config.sops.templates."services/gitlab-tart-executor/authentication-token.env".path;
+                config.sops.templates."services/gitlab-runner/tart/authentication-token.env".path;
               executor = "custom";
               registrationFlags = [
                 "--custom-config-exec ${homebrewPrefix}/gitlab-tart-executor"
@@ -117,7 +117,7 @@ in
 
     sops = {
       templates = {
-        "services/gitlab-tart-executor/authentication-token.env" = {
+        "services/gitlab-runner/tart/authentication-token.env" = {
           content = ''
             CI_SERVER_URL=https://gitlab.com
             CI_SERVER_TOKEN=${config.sops.placeholder.${cfg.sops-secret}}
