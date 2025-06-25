@@ -13,7 +13,7 @@ The laptop is used as a development environment for programming.
 ## Services
 
 | Protocol | Port | Service | Product          |
-|----------|------|---------|------------------|
+| -------- | ---- | ------- | ---------------- |
 | TCP      | 22   | ssh     | OpenSSH          |
 | TCP      | 5355 | llmnr   | systemd-resolved |
 

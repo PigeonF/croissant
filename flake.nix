@@ -122,6 +122,11 @@
 
         systems = import systems;
 
+        # NOTE(PigeonF): Re-enable when GitHub CI can build aarch64-linux.
+        deploy-rs = {
+          flakeCheck = false;
+        };
+
         imports = [
           ./home-manager
           ./hosts
