@@ -5,7 +5,7 @@ keys:
   users:
     pigeonf: &pigeonf "age1nfa5tsvl33wmex09mj27kzcrl25xz5h74sg64rka2cekhjrd5frsnsymry"
   hosts:
-    io: &io "age1z4wk7uf2tz4900zh0qltsqy979485vclke4zma40np0cdenj7e7qf56rdq"
+    io: &io "age12704gjkn0np40ja7fxmpt3pyxt9j6q2nva62t2u427hvc3mdnf0qgk9fj8"
     jupiter: &jupiter "age1m7cux5pakgmvpy80s7ah4jl47ndhz2acek3h655q7e57laukuecq9ydgf6"
 creation_rules:
   - key_groups:

@@ -13,3 +13,4 @@ user:
   name: lima
 rosetta:
   enabled: true
+  binfmt: true
