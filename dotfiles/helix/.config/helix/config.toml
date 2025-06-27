@@ -6,6 +6,7 @@ theme = "catppuccin_macchiato"
 
 [editor]
 cursorline = true
+default-line-ending = "lf"
 line-number = "relative"
 rulers = [100, 120]
 true-color = true
@@ -17,3 +18,6 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+
+[keys.normal]
+"A-y" = ":yank-join"
