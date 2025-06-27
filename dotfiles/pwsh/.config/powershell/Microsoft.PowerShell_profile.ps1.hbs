@@ -36,16 +36,15 @@ function rgA {
 rg --no-ignore --hidden @args
 }
 
-$RipgrepCompletions = Get-ChildItem -Recurse '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\ripgrep\tools\' -Include
-'_rg.ps1'
+$RipgrepCompletions = Get-ChildItem -Recurse '{{ env_var "PROGRAMDATA" }}\chocolatey\lib\ripgrep\tools\' -Include '_rg.ps1'
 if (($RipgrepCompletions | Measure-Object).Count -ge 1) {
 . (($RipgrepCompletions | Sort-Object -Property FullName -Descending)[0].FullName)
 }
 {{/if}}
 
-{{!-- {{#if (is_executable "starship")}}
+{{#if (is_executable "starship")}}
 Invoke-Expression (& starship init powershell --print-full-init | Out-String)
-{{/if}} --}}
+{{/if}}
 
 {{#if (is_executable "yazi")}}
 function yy {

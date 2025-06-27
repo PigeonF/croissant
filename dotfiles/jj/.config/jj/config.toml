@@ -19,7 +19,6 @@ paginate = "never"
 
 [git]
 sign-on-push = true
-push-bookmark-prefix = "push-"
 private-commits = "description(glob:\"private:*\")"
 
 [signing]
@@ -68,6 +67,8 @@ concat(
     )
 )
 '''
+git_push_bookmark = '"push-" ++ change_id.short()'
+
 
 [template-aliases]
 starship = '''

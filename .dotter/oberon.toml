@@ -1,4 +1,3 @@
-
 includes = [".dotter/include/nixos.toml"]
 
 packages = ["git", "helix", "jj", "ssh", "starship", "yazi", "zellij"]

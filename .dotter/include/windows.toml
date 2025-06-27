@@ -1,5 +1,3 @@
-
-
 [alacritty.files]
 "dotfiles/alacritty/.config/" = "~/AppData/Roaming/"
 "dotfiles/alacritty/.config/alacritty/terminal.toml.hbs" = { target = "~/AppData/Roaming/alacritty/terminal.toml", type = "template" }
