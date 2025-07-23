@@ -23,13 +23,13 @@
           gh
           glab
           jq
-          just
           sd
           sops
           ssh-to-age
           yq
           ;
         inherit (pkgs.patchedPackages) reuse;
+        inherit (pkgs.unstablePackages) just;
       };
     };
   };
