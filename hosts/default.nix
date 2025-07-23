@@ -21,7 +21,7 @@ _: {
           name = "hosts";
           packages = [
             pkgs.age
-            pkgs.just
+            pkgs.unstablePackages.just
             pkgs.mkpasswd
             pkgs.nixos-anywhere
             pkgs.openssh
