@@ -4,7 +4,7 @@ images:
   - location: "./result/nixos.qcow2"
 cpus: 4
 memory: 6GiB
-disk: 50GB
+disk: 128GB
 ssh:
   loadDotSSHPubKeys: true
 containerd:
