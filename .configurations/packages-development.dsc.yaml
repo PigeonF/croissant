@@ -69,6 +69,13 @@ properties:
         source: winget
     - resource: Microsoft.WinGet.DSC/WinGetPackage
       directives:
+        description: Install raphamorim.rio
+        allowPrerelease: true
+      settings:
+        id: raphamorim.rio
+        source: winget
+    - resource: Microsoft.WinGet.DSC/WinGetPackage
+      directives:
         description: Install SuperCuber.dotter
         allowPrerelease: true
       settings:
