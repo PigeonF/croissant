@@ -4,6 +4,10 @@ name = "nix"
 formatter = { command = "nixfmt" }
 
 [[language]]
+name = "toml"
+indent = { tab-width = 2, unit = "  " }
+
+[[language]]
 name = "jjdescription"
 scope = "jj.description"
 file-types = [{ glob = "*.jjdescription" }]
