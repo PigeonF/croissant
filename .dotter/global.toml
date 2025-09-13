@@ -27,6 +27,9 @@ default_target_type = "symbolic"
 [pwsh.files]
 "dotfiles/pwsh/.config" = "~/.config/"
 
+[rio.files]
+"dotfiles/rio/.config" = "~/.config/"
+
 [spicetify.files]
 "dotfiles/spicetify/.config/" = "~/.config/"
 

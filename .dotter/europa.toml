@@ -8,6 +8,7 @@ packages = [
     "jj",
     "powershell",
     "pwsh",
+    "rio",
     "spicetify",
     "ssh",
     "topgrade",

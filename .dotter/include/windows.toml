@@ -27,6 +27,9 @@
 "dotfiles/pwsh/.config/powershell/" = "~/Documents/PowerShell/"
 "dotfiles/pwsh/.config/powershell/Microsoft.PowerShell_profile.ps1.hbs" = { target = "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1", type = "template" }
 
+[rio.files]
+"dotfiles/rio/.config" = "~/AppData/Local/"
+
 [spicetify.files]
 "dotfiles/spicetify/.config/" = "~/AppData/Roaming/"
 "dotfiles/spicetify/.config/spicetify/config-xpui.ini.hbs" = { target = "~/AppData/Roaming/spicetify/config-xpui.ini", type = "template" }
