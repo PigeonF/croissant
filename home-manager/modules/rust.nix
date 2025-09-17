@@ -37,6 +37,7 @@ in
           pkgs.cargo-auditable
           pkgs.cargo-binstall
           pkgs.cargo-bloat
+          pkgs.cargo-crev
           pkgs.cargo-criterion
           pkgs.cargo-cyclonedx
           pkgs.cargo-deny
@@ -50,6 +51,7 @@ in
           pkgs.cargo-release
           pkgs.cargo-semver-checks
           pkgs.cargo-show-asm
+          pkgs.cargo-vet
           pkgs.cargo-xwin
           pkgs.cargo-zigbuild
           pkgs.lldb
