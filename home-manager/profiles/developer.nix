@@ -21,7 +21,6 @@
           age
           curl
           gh
-          glab
           jq
           sd
           sops
@@ -29,7 +28,7 @@
           yq
           ;
         inherit (pkgs.patchedPackages) reuse;
-        inherit (pkgs.unstablePackages) just;
+        inherit (pkgs.unstablePackages) glab just;
       };
     };
   };
