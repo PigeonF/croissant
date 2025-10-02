@@ -28,12 +28,21 @@ in
       channel = {
         enable = false;
       };
-      nixPath = [ "nixpkgs-unstable=flake:nixpkgs-unstable" ];
+      nixPath = [
+        "nixpkgs-unstable=flake:nixpkgs-unstable"
+        "nixpkgs-master=flake:nixpkgs-master"
+      ];
       registry = {
         nixpkgs-unstable = {
           to = {
             type = "path";
             path = inputs.nixpkgs-unstable;
+          };
+        };
+        nixpkgs-master = {
+          to = {
+            type = "path";
+            path = inputs.nixpkgs-master;
           };
         };
       };

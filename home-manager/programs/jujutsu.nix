@@ -40,6 +40,7 @@ in
   config = lib.mkMerge [
     {
       programs.jujutsu = {
+        package = pkgs.masterPackages.jujutsu;
         inherit (cfg) enable;
       };
     }
