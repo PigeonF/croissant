@@ -9,6 +9,9 @@
           unstablePackages = final: _: {
             unstablePackages = inputs.nixpkgs-unstable.legacyPackages.${final.system};
           };
+          masterPackages = final: _: {
+            masterPackages = inputs.nixpkgs-master.legacyPackages.${final.system};
+          };
           patchedPackages = final: _: {
             patchedPackages = {
               reuse = final.callPackage ./reuse { };
